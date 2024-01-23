@@ -5,9 +5,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
 RM = rm -rf
 
-SRC_CUB	=	check.c close.c input.c main.c map.c
+SRC_CUB	=	arr_utils.c check.c close.c input.c main.c map.c str_utils.c
+SRC_GNL =	gnl/gnl.c gnl/gnl_utils.c
 
-SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB))
+SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB)) $(SRC_GNL)
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 GREEN	=	"\033[0;32m"
@@ -37,6 +38,9 @@ $(OBJ_DIR)/%.o: %.c
 
 val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3d
+
+a: $(NAME)
+	@./cub3d maps/map1.cub
 
 clean:
 		@$(RM) $(OBJS) $(OBJ_DIR)
