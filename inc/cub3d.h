@@ -6,6 +6,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <math.h>
 # include "../mlx_linux/mlx.h"
 # include "../libft/src/libft.h"
 # include "../gnl/gnl.h"
@@ -21,11 +22,28 @@ typedef struct	s_map
 	int		x;
 }				t_map;
 
+typedef struct	s_player
+{
+	int	x;
+	int	y;
+}				t_player;
+
+typedef struct	s_ray
+{
+	int	wall_dist;
+	int	dir;
+}				t_ray;
+
 typedef struct	s_game
 {
+	int			pov;
 	void		*win;
 	void		*mlx;
+	int			win_y;
+	int			win_x;
+	t_ray		*ray;
 	t_map		*map;
+	t_player	*player;
 }				t_game;
 
 //arr_utils.c
