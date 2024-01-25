@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:30:24 by mortins-          #+#    #+#             */
-/*   Updated: 2023/09/12 18:28:18 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:06:04 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*d)(void *));
 t_list			*ft_lstnew(void *data);
 int				ft_lstsize(t_list *lst);
 
-// VV----------------- FT_PRINTF -----------------VV
+// VV----------------- //ft_printf -----------------VV
 
 int				ft_printf(const char *s, ...);
 

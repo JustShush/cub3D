@@ -26,12 +26,12 @@ typedef struct	s_player
 {
 	int	x;
 	int	y;
+	int	dir;
 }				t_player;
 
 typedef struct	s_ray
 {
 	int	wall_dist;
-	int	dir;
 }				t_ray;
 
 typedef struct	s_game
