@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/25 15:07:51 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:09:19 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,78 @@ void	player_pos(t_game *game, char **map, int y, int x)
 	}
 }
 
-//Checks if point corresponds with a wall(1) tile
-//Puts pixel for now
-int	check_wall(t_game *game, int ay, int ax)
-{	
-	if (game->map->tilemap[ay/64][ax/64] == '1') // is wall
+int	point_check(t_game *game, int y, int x)
+{
+	if (y >= 0 && x >= 0 && y <= game->win_y && x <= game->win_x)
+		return (0);
+	return (1);
+}
+
+//Takes 2 points and returns their distance
+double	point_dist(t_game *game, int ay, int ax, int by, int bx)
+{
+	double	distorted;
+	(void)game;
+	//Switch to cos() and sin() for better preformence
+	distorted = sqrt(pow(ax - bx, 2) + pow(ay - by, 2));
+	return (distorted);
+		
+}
+
+void		draw_wall(t_game *game, double wall_dist)
+{
+	float	draw_start;
+	float	pl_proj_plane_dis;
+	float	proj_column_height;
+
+	pl_proj_plane_dis = (game->win_x/2) / tan((game->pov / 2 * 2 * M_PI)/360);
+	proj_column_height = (float)((64 / wall_dist) * pl_proj_plane_dis);
+	draw_start = ((float)(game->win_y / 2) - (float)(proj_column_height / 2));
+	/* while (draw_start <= ((float)(game->win_y / 2) + (float)(proj_column_height / 2)))
 	{
-		mlx_pixel_put(game->mlx, game->win, ax, ay, RED_PIXEL);
-		return (1);
+		mlx_pixel_put(game->mlx, game->win, game->ray->angle, draw_start, RED_PIXEL);
+		draw_start++;
+	} */
+	mlx_pixel_put(game->mlx, game->win, game->ray->angle, draw_start, RED_PIXEL);
+}
+
+//Check intersection of ray and horizontal lines
+void	horizontal_intersection(t_game *game,  t_ray *ray)
+{
+	if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+			ray->ay = round(game->player->y / 64) * (64) - 1;
+		else //If ray is facing down
+			ray->ay = round(game->player->y / 64) * (64) + 64;
+		ray->ax = game->player->x + (float)(game->player->y - ray->ay)/tan((ray->angle * 2 * M_PI)/360);
+		while (!point_check(game, ray->ay, ray->ax) && game->map->tilemap[ray->ay/64][ray->ax/64] != '1')
+		{
+			ray->ax += 64/tan((ray->angle * 2 * M_PI)/360);
+			if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+				ray->ay -= 64;
+			else //If ray is facing down
+				ray->ay += 64; 
+		}
+}
+
+//Check intersection of ray and vertical lines
+void	vertical_intersection(t_game *game, t_ray *ray)
+{
+	if ((ray->angle < 90 && ray->angle >= 0) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
+		ray->ax = round(game->player->x / 64) * (64) + 64;
+	else //If ray is facing left
+		ray->ax = round(game->player->x / 64) * (64) - 1;
+	ray->ay = game->player->y + (float)(game->player->x - ray->ax) * tan((ray->angle * 2 * M_PI)/360);
+	while (!point_check(game, ray->ay, ray->ax) && game->map->tilemap[ray->ay/64][ray->ax/64] != '1')
+	{
+		if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+			ray->ay -= 64;
+		else //If ray is facing down
+			ray->ay += 64; 
+		if ((ray->angle >= 0 && ray->angle < 90) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
+			ray->ax += 64;
+		else //If ray is facing left
+			ray->ax -= 64;
 	}
-	return (0);
 }
 
 //Raycast loop. For each ray:
@@ -54,52 +116,25 @@ int	check_wall(t_game *game, int ay, int ax)
 //	- Find distance between player and wall intersection point
 //	- Draw line on screen.
 //Sorry for monstrosity
-int	raycast(t_game *game)
+int	raycast(t_game *game, t_ray *ray)
 {
-	int		ax;
-	int		ay;
-	float	column;
-	float	ray_angle;
-	int		pl_proj_plane_dis;
-	
+	double		hdist;
+	double		vdist;
+	float		column;
 
+	ray->angle = 0;
 	column = (float)game->pov/game->win_x;
-	ray_angle = game->player->dir - (game->pov / 2); //if pov 60 and pdir=90 fisrt ray_angle is 60
-	pl_proj_plane_dis = (game->win_x/2) / tan((game->pov / 2 * 2 * M_PI)/360);
-	while (ray_angle < game->player->dir + (game->pov / 2)) //if pov 60 and pdir=90 last ray_angle is 120
+	while (ray->angle < game->win_x)
 	{
-		//Check intersection of ray and horizontal lines
-		if (ray_angle > 0 && ray_angle < 180) //If ray is facing up
-			ay = round(game->player->y / 64) * (64) - 1;
-		else //If ray is facing down
-			ay = round(game->player->y / 64) * (64) + 64;
-		ax = game->player->x + (float)(game->player->y - ay)/tan((ray_angle * 2 * M_PI)/360);
-		while (check_wall(game, ay, ax) == 0)
-		{
-			ax += 64/tan((ray_angle * 2 * M_PI)/360);
-			if (ray_angle > 0 && ray_angle < 180) //If ray is facing up
-				ay -= 64;
-			else //If ray is facing down
-				ay += 64; 
-		}
-		//Check intersection of ray and vertical lines
-		if ((ray_angle < 90 && ray_angle > 0) || (ray_angle > 270 && ray_angle < 360)) //If ray is facing right
-			ax = round(game->player->x / 64) * (64) + 64;
-		else //If ray is facing left
-			ax = round(game->player->x / 64) * (64) - 1;
-		ay = game->player->y + (float)(game->player->x - ax) * tan((ray_angle * 2 * M_PI)/360);
-		while (ay > 0 && check_wall(game, ay, ax) == 0)
-		{
-			if (ray_angle > 0 && ray_angle < 180) //If ray is facing up
-				ay -= 64;
-			else //If ray is facing down
-				ay += 64; 
-			if ((ray_angle > 0 && ray_angle < 90) || (ray_angle > 270 && ray_angle < 360)) //If ray is facing right
-				ax += 64;
-			else //If ray is facing left
-				ax -= 64;
-		}
-		ray_angle += column;
+		horizontal_intersection(game, game->ray);
+		hdist = point_dist(game, game->player->y, game->player->x, ray->ay, ray->ax);
+		vertical_intersection(game, game->ray);
+		vdist = point_dist(game, game->player->y, game->player->x, ray->ay, ray->ax);
+		if (hdist < vdist)
+			draw_wall(game, hdist);
+		else
+			draw_wall(game, vdist);
+		ray->angle += column;
 	}
 	return (0);
 }
@@ -109,7 +144,7 @@ int	raycast(t_game *game)
 //Raycast based on player's direction and pov
 int	render(t_game *game)
 {
-	raycast(game);
+	raycast(game, game->ray);
 	return(0);
 }
 

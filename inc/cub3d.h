@@ -32,6 +32,9 @@ typedef struct	s_player
 typedef struct	s_ray
 {
 	int	wall_dist;
+	int	ax;
+	int	ay;
+	int	angle;
 }				t_ray;
 
 typedef struct	s_game
