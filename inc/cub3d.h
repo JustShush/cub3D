@@ -60,7 +60,7 @@ void	arr_print(char *str, char **arr);
 
 //check.c
 int		check_suffix(char *str);
-int	map_check(t_map *map, char **av);
+int		map_check(t_map *map, char **av);
 
 //close.c
 int		close_game(t_game *game);
@@ -70,7 +70,6 @@ int		input(int key, t_game *game);
 
 //init.c
 void	init(t_game *game);
-void	player_pos(t_game *game, char **map);
 
 //map.c
 int		map_init(t_map *map, char *map_path);
