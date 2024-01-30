@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:35:22 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/25 13:02:23 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/30 13:13:00 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int	map_init(t_map *map, char *map_path)
 
 	tilemap(map, map_path);
 
-	arr_print("TILEMAP", map->tilemap);
-	printf("\nmap->north: %s", map->north);
+	printf("map->north: %s", map->north);
 	printf("map->west: %s", map->west);
 	printf("map->east: %s", map->east);
 	printf("map->south: %s", map->south);

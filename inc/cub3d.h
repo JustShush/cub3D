@@ -11,6 +11,12 @@
 # include "../libft/src/libft.h"
 # include "../gnl/gnl.h"
 
+# define	M_PI			3.14159265358979323846
+# define	RED_PIXEL		0xFF0000
+# define	ORANGE_PIXEL	0xFF8000
+# define	GREEN_PIXEL		0x00FF00
+# define	BLUE_PIXEL		0x0000FF
+
 typedef struct	s_map
 {
 	char	**tilemap;
@@ -24,17 +30,17 @@ typedef struct	s_map
 
 typedef struct	s_player
 {
-	int	x;
-	int	y;
-	int	dir;
+	int		x;
+	int		y;
+	float	dir;
 }				t_player;
 
 typedef struct	s_ray
 {
-	int	wall_dist;
-	int	ax;
-	int	ay;
-	int	angle;
+	int		ax;
+	int		ay;
+	float	angle;
+	int		wall_dist;
 }				t_ray;
 
 typedef struct	s_game
@@ -54,16 +60,22 @@ void	arr_print(char *str, char **arr);
 
 //check.c
 int		check_suffix(char *str);
-int		map_check(t_map *map, char **av);
+int	map_check(t_map *map, char **av);
 
 //close.c
 int		close_game(t_game *game);
 
 //input.c
-int		esc_key(int key, t_game *game);
+int		input(int key, t_game *game);
+
+//init.c
+void	init(t_game *game);
+void	player_pos(t_game *game, char **map);
 
 //map.c
 int		map_init(t_map *map, char *map_path);
+
+int		render(t_game *game);
 
 //str_utils.c
 int		first_str(char *s1, char *s2);
