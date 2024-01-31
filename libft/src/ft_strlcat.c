@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 14:52:01 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:47:21 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:56 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 //	Appends the string 'src' to the end of 'dest'
 //	It will append at most 'size' - strlen('dest') - 1 bytes
 
-unsigned int	ft_strlcat(char *dest, const char *src, size_t size)
+unsigned int	ft_strlcat(char *dest, const char *src, int size)
 {
-	size_t	d;
-	size_t	s;
+	int	d;
+	int	s;
 
 	d = ft_strlen(dest);
 	s = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:37:33 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:45:31 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:50 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //	The memory  is  set  to zero
 //	Returns a pointer to the allocated memory
 
-void	*ft_calloc(size_t n, size_t size)
+void	*ft_calloc(int n, int size)
 {
 	void	*buff;
 

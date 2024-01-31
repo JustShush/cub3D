@@ -5,10 +5,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
 RM = rm -rf
 
-SRC_CUB	=	arr_utils.c check.c close.c init.c input.c main.c map.c render.c str_utils.c
+SRC_CUB	=	close.c init.c input.c main.c render.c str_utils.c
+SRC_MAP =	$(addprefix map/, check.c map.c utils.c)
 SRC_GNL =	gnl/gnl.c gnl/gnl_utils.c
 
-SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB)) $(SRC_GNL)
+SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB) $(SRC_MAP)) $(SRC_GNL)
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
 
 GREEN	=	"\033[0;32m"

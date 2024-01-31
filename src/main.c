@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/30 13:21:23 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:19:18 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,29 @@
 // - Exits cleanly with ESC and Window X button;
 int	main(int ac, char **av)
 {
+	t_general	*gen;
+
+	gen = NULL;
 	if (ac != 2)
 		return (printf("Error\nIncorrect ammount of arguments\n"));
+	
+	gen = init(gen, av);
+	gen->mlx = mlx_init();
 
-	t_map		map;
-	t_ray		ray;
-	t_game		game;
-	t_player	player;
+	if(check_map(gen) == 0)
+		return 0;
+	
+	player_pos(gen, gen->map->tilemap);
+	printf("PLAYER Y:%i\n", gen->player->y);
+	printf("PLAYER X:%i\n", gen->player->x);
 
-	game.map = &map;
-	game.player = &player;
-	game.ray = &ray;
+	gen->mlx = mlx_init();
+	gen->win = mlx_new_window(gen->mlx, gen->win_x, gen->win_y, "cub3d");
 
-	if (map_check(&map, av))
-		return (1);
-	init(&game);
+	mlx_hook(gen->win, 17, 0, close_game, gen);
+	mlx_hook(gen->win, 2, 1L << 0, input, gen);
 
-	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, game.win_x, game.win_y, "cub3d");
-
-	mlx_hook(game.win, 17, 0, close_game, &game);
-	mlx_hook(game.win, 2, 1L << 0, input, &game);
-
-	mlx_loop_hook(game.mlx, render, &game);
-	mlx_loop(game.mlx);
+	mlx_loop_hook(gen->mlx, render, gen);
+	mlx_loop(gen->mlx);
 	return(0);
 }

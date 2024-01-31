@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:29:30 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:46:40 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:52 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 //	Scans the initial 'n' bytes of the memory area pointed to by 's' for the
 //	first instance of 'c'
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, int n)
 {
-	size_t	i;
+	int	i;
 	char	*buff;
 
 	i = 0;

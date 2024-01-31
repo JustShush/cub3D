@@ -5,19 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 11:35:22 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/30 13:13:00 by ddiniz-m         ###   ########.fr       */
+/*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
+/*   Updated: 2024/01/31 13:08:25 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../../inc/cub3d.h"
 
-int	getY(int fd)
+void	readmap(char **map, char *file)
+{
+	int		fd;
+	int		i;
+	char	*line;
+
+	i = 0;
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		printf("Error - Map not found\n");
+		close(fd);
+		return;
+	}
+	line = gnl(fd);
+	while (line)
+	{
+		map[i] = ft_strdup(line);
+		free(line);
+		i++;
+		line = gnl(fd);
+	}
+	map[i] = NULL;
+	close(fd);
+}
+
+int	numberoflines(char *file)
+{
+	int		fd;
+	int		i;
+	char	*line;
+
+	i = 0;
+	fd = open(file, O_RDONLY);
+	line = gnl(fd);
+	while (line)
+	{
+		i++;
+		free(line);
+		line = gnl(fd);
+	}
+	free(line);
+	close(fd);
+	return (i);
+}
+
+int	getY(char *file)
 {
 	int		i;
+	int		fd;
 	char	*str;
 
 	i = 0;
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (printf("Error\nCould not open file\n"));
 	while (1)
 	{
 		str = gnl(fd);
@@ -27,11 +77,10 @@ int	getY(int fd)
 			i++;
 		free(str);
 	}
+	close(fd);
 	return (i);
 }
 
-//This initizalizes map->tilemap to only have the actual map;
-// Also initializes the map->(north, south, west and east) strings;
 void	tilemap(t_map *map, char *map_path)
 {
 	int		i;
@@ -39,6 +88,7 @@ void	tilemap(t_map *map, char *map_path)
 	char	*buf;
 
 	i = 0;
+	map->y = getY(map_path);
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 	{
@@ -65,24 +115,15 @@ void	tilemap(t_map *map, char *map_path)
 	return ;
 }
 
-//For now, this function opens the .cub file, finds the number of lines it has
-//	and separates the elements in the respective arrays/str of the struct t_map
-int	map_init(t_map *map, char *map_path)
+char	**map_init(char *file)
 {
-	int	fd;
+	char	**map;
+	int		i;
 
-	fd = open(map_path, O_RDONLY);
-	if (fd == -1)
-		return (printf("Error\nCould not open file\n"));
-
-	map->y = getY(fd);
-	close(fd);
-
-	tilemap(map, map_path);
-
-	printf("map->north: %s", map->north);
-	printf("map->west: %s", map->west);
-	printf("map->east: %s", map->east);
-	printf("map->south: %s", map->south);
-	return (0);
+	i = 0;
+	map = malloc(sizeof(char *) * (numberoflines(file) + 1));
+	if (!map)
+		return NULL;
+	readmap(map, file);
+	return (map);
 }

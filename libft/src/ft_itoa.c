@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:59:23 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:46:10 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:51 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 //	Returns the number of bytes in the integer 'x'
 
-size_t	ft_intsize(int x)
+int	ft_intsize(int x)
 {
-	size_t	count;
+	int	count;
 
 	count = 0;
 	if (x <= 0)

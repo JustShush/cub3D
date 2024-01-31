@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:32:18 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:46:48 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:55 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //	Fills the first 'n' bytes of the memory area 's' with 'c'
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memset(void *s, int c, int n)
 {
 	char	*buff;
 

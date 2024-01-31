@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mortins- <mortins-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:23:00 by mortins-          #+#    #+#             */
-/*   Updated: 2023/08/31 13:47:32 by mortins-         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:27:58 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 //	Locates the first occurrence of the string 'lil' in the string 'big'
 //	No more than 'n' characters are searched
 
-char	*ft_strnstr(const char *big, const char *lil, size_t n)
+char	*ft_strnstr(const char *big, const char *lil, int n)
 {
-	size_t	b;
-	size_t	l;
+	int	b;
+	int	l;
 
 	b = 0;
 	if (!lil[0])
