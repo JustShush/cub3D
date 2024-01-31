@@ -76,7 +76,8 @@ int		map_init(t_map *map, char *map_path);
 
 int		render(t_game *game);
 
-//str_utils.c
+//utils.c
+double	norm(double angle);
 int		first_str(char *s1, char *s2);
 
 #endif

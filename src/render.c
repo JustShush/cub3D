@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/30 17:54:40 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:48:37 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 //Checks if point is inside the screen
 int	point_check(t_game *game, int y, int x)
 {
-	if (y >= 0 && x >= 0 && y <= game->win_y && x <= game->win_x)
-		return (0);
+	if (y >= 0 && x >= 0 && y < game->win_y && x < game->win_x 
+		&& game->ray->ay/64 < game->map->y 
+		&& game->ray->ax/64 < (int)ft_strlen(game->map->tilemap[game->ray->ay/64])
+		&& game->map->tilemap[game->ray->ay/64][game->ray->ax/64] != '1')
+		return(0);
 	return (1);
 }
 
@@ -77,19 +80,19 @@ void		draw_wall(t_game *game, double wall_dist, int i, int flag)
 //Check intersection of ray and horizontal lines
 void	horizontal_intersection(t_game *game,  t_ray *ray)
 {
-	if (ray->angle >= 0 && ray->angle < 180) //If ray is facing up
+	if (ray->angle >= 0 && ray->angle <= 180) //If ray is facing up
 			ray->ay = round(game->player->y / 64) * (64) - 1;
-	else //If ray is facing down
-		ray->ay = round(game->player->y / 64) * (64) + 64;
-	ray->ax = game->player->x + (float)(game->player->y - ray->ay)/tan(ray->angle * M_PI / 180);
-	while (!point_check(game, ray->ay, ray->ax) && game->map->tilemap[ray->ay/64][ray->ax/64] != '1')
-	{
-		ray->ax += 64/tan(ray->angle * M_PI / 180);
-		if (ray->angle >= 0 && ray->angle < 180) //If ray is facing up
-			ray->ay -= 64;
 		else //If ray is facing down
-			ray->ay += 64; 
-	}
+			ray->ay = round(game->player->y / 64) * (64) + 64;
+		ray->ax = round(game->player->x + (float)(game->player->y - ray->ay)/tan((ray->angle * 2 * M_PI)/360));
+		while (!point_check(game, ray->ay, ray->ax))
+		{
+			ray->ax += round(64/tan((ray->angle * 2 * M_PI)/360));
+			if (ray->angle > 0 && ray->angle <= 180) //If ray is facing up
+				ray->ay -= 64;
+			else //If ray is facing down
+				ray->ay += 64;
+		}
 }
 
 //Check intersection of ray and vertical lines
@@ -99,13 +102,13 @@ void	vertical_intersection(t_game *game, t_ray *ray)
 		ray->ax = round(game->player->x / 64) * (64) + 64;
 	else //If ray is facing left
 		ray->ax = round(game->player->x / 64) * (64) - 1;
-	ray->ay = game->player->y + (float)(game->player->x - ray->ax) * tan(ray->angle * M_PI / 180);
-	while (!point_check(game, ray->ay, ray->ax) && game->map->tilemap[ray->ay/64][ray->ax/64] != '1')
+	ray->ay = round(game->player->y + (float)(game->player->x - ray->ax) * tan((ray->angle * 2 * M_PI)/360));
+	while (!point_check(game, ray->ay, ray->ax))
 	{
-		if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+		if (ray->angle >= 0 && ray->angle <= 180) //If ray is facing up
 			ray->ay -= 64;
 		else //If ray is facing down
-			ray->ay += 64;
+			ray->ay += 64; 
 		if ((ray->angle >= 0 && ray->angle < 90) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
 			ray->ax += 64;
 		else //If ray is facing left
@@ -125,9 +128,9 @@ int	raycast(t_game *game, t_ray *ray)
 	float		column;
 
 	i = 0;
-	ray->angle = game->player->dir + (game->pov / 2);
 	column = (float)game->pov/game->win_x;
-	while (ray->angle >= game->player->dir - (game->pov / 2))
+	ray->angle = game->player->dir + (game->pov / 2);
+	while (i <= game->win_x && ray->angle >= game->player->dir - (game->pov / 2))
 	{
 		horizontal_intersection(game, game->ray);
 		hdist = point_dist(game, game->player->y, ray->ay);
@@ -137,7 +140,7 @@ int	raycast(t_game *game, t_ray *ray)
 			draw_wall(game, hdist, i, 0);
 		else
 			draw_wall(game, vdist, i, 1);
-		ray->angle -= column;
+		ray->angle = norm(ray->angle - column);
 		i++;
 	}
 	return (0);

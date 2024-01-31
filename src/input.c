@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:49:01 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/30 18:46:10 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:39:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,29 @@ int	esc_key(int key, t_game *game)
 int	input(int key, t_game *game)
 {
 	esc_key(key, game);
+	if (key == 65363) //left arrow
+		game->player->dir = norm(game->player->dir - 10);
+	if (key == 65361) //right arrow
+		game->player->dir = norm(game->player->dir + 10);
 	if (key == 97)//A
 	{
-		game->player->x -= fabs(cos((game->player->dir + 90) * M_PI/180) * 10);
-		game->player->y -= fabs(sin((game->player->dir - 90) * M_PI/180) * 10);
+		game->player->x -= cos((game->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		game->player->y -= sin((game->player->dir * M_PI/180) + (M_PI / 2)) * 10;
 	}
 	if (key == 100) //D
 	{
-		game->player->x += fabs(cos((game->player->dir + 90) * M_PI/180) * 10);
-		game->player->y += fabs(sin((game->player->dir - 90) * M_PI/180) * 10);
-	}
-	if (key == 115)//S
-	{
-		game->player->x += fabs(cos(game->player->dir * M_PI/180) * 10);
-		game->player->y += fabs(sin(game->player->dir * M_PI/180) * 10);
+		game->player->x += cos((game->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		game->player->y += sin((game->player->dir * M_PI/180) + (M_PI / 2)) * 10;
 	}
 	if (key == 119)//W
 	{
-		game->player->x -= fabs(cos(game->player->dir * M_PI/180) * 10);
-		game->player->y -= fabs(sin(game->player->dir * M_PI/180) * 10);
+		game->player->x -= cos((game->player->dir * M_PI/180)) * 10;
+		game->player->y -= sin((game->player->dir * M_PI/180)) * 10;
 	}
-	if (key == 65363) //left arrow
+	if (key == 115)//S
 	{
-		if (game->player->dir == 0)
-			game->player->dir = 360;
-		else
-			game->player->dir -= 10;
-	}
-	if (key == 65361) //right arrow
-	{
-		if (game->player->dir == 360)
-			game->player->dir = 0;
-		else
-			game->player->dir += 10;
+		game->player->x += cos((game->player->dir * M_PI/180)) * 10;
+		game->player->y += sin((game->player->dir * M_PI/180)) * 10;
 	}
 	printf("Player Dir: %f\n", game->player->dir);
 	printf("Player y: %d; ", game->player->y);

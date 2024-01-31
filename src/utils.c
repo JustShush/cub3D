@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_utils.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/23 15:39:32 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/01/31 16:50:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+double	norm(double angle)
+{
+	while (angle < 0)
+		angle += 360;
+	while (angle >= 360)
+		angle -= 360;
+	return (angle);
+}
 
 //Returns 0 if s1's first non space chars are equal to s2
 int	first_str(char *s1, char *s2)
