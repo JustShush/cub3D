@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/31 15:45:32 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/01 10:51:59 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,18 @@ void	draw_wall(t_general *gen, double wall_dist, int i, int flag)
 //Check intersection of ray and horizontal lines
 void	horizontal_intersection(t_general *gen, t_ray *ray)
 {
-	if (ray->angle >= 0 && ray->angle < 180) //If ray is facing up
+	if (ray->angle >= 0 && ray->angle <= 180) //If ray is facing up
 		ray->ay = round(gen->player->y / 64) * (64) - 1;
 	else //If ray is facing down
 		ray->ay = round(gen->player->y / 64) * (64) + 64;
-	ray->ax = gen->player->x + (float)((gen->player->y - ray->ay)/tan(ray->angle * M_PI / 180));
+	ray->ax = round(gen->player->x + (float)(gen->player->y - ray->ay)/tan((ray->angle * 2 * M_PI)/360));
 	while (!point_check(gen, ray->ay, ray->ax))
 	{
-		ray->ax += 64/tan(ray->angle * M_PI / 180);
-		if (ray->angle >= 0 && ray->angle < 180) //If ray is facing up
+		ray->ax += round(64/tan((ray->angle * 2 * M_PI)/360));
+		if (ray->angle > 0 && ray->angle <= 180) //If ray is facing up
 			ray->ay -= 64;
 		else //If ray is facing down
 			ray->ay += 64;
-		if ((ray->angle >= 0 && ray->angle < 90) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
-			ray->ax -= 64;
-		else //If ray is facing left
-			ray->ax += 64;
 	}
 }
 
@@ -106,13 +102,13 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 		ray->ax = round(gen->player->x / 64) * (64) + 64;
 	else //If ray is facing left
 		ray->ax = round(gen->player->x / 64) * (64) - 1;
-	ray->ay = gen->player->y + (float)((gen->player->x - ray->ax) * tan(ray->angle * M_PI / 180));
+	ray->ay = round(gen->player->y + (float)(gen->player->x - ray->ax) * tan((ray->angle * 2 * M_PI)/360));
 	while (!point_check(gen, ray->ay, ray->ax))
 	{
-		if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+		if (ray->angle >= 0 && ray->angle <= 180) //If ray is facing up
 			ray->ay -= 64;
 		else //If ray is facing down
-			ray->ay += 64;
+			ray->ay += 64; 
 		if ((ray->angle >= 0 && ray->angle < 90) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
 			ray->ax += 64;
 		else //If ray is facing left
@@ -132,9 +128,9 @@ int	raycast(t_general *gen, t_ray *ray)
 	float		column;
 
 	i = 0;
-	ray->angle = gen->player->dir + (gen->pov / 2);
 	column = (float)gen->pov/gen->win_x;
-	while (ray->angle > gen->player->dir - (gen->pov / 2))
+	ray->angle = gen->player->dir + (gen->pov / 2);
+	while (i <= gen->win_x && ray->angle >= gen->player->dir - (gen->pov / 2))
 	{
 		horizontal_intersection(gen, gen->ray);
 		hdist = point_dist(gen, gen->player->y, ray->ay);
@@ -144,7 +140,7 @@ int	raycast(t_general *gen, t_ray *ray)
 			draw_wall(gen, hdist, i, 0);
 		else
 			draw_wall(gen, vdist, i, 1);
-		ray->angle -= column;
+		ray->angle = norm(ray->angle - column);
 		i++;
 	}
 	return (0);

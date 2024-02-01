@@ -82,7 +82,8 @@ t_general	*init(t_general *gen, char **av);
 int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
-//str_utils.c
-int			first_str(char *s1, char *s2);
+//utils.c
+double	norm(double angle);
+int		first_str(char *s1, char *s2);
 
 #endif

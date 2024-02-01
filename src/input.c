@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:49:01 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/31 15:54:49 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/01 10:50:39 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,40 +23,29 @@ int	esc_key(int key, t_general *gen)
 int	input(int key, t_general *gen)
 {
 	esc_key(key, gen);
+	if (key == 65363) //left arrow
+		gen->player->dir = norm(gen->player->dir - 10);
+	if (key == 65361) //right arrow
+		gen->player->dir = norm(gen->player->dir + 10);
 	if (key == 97)//A
 	{
-		gen->player->x -= fabs(cos((gen->player->dir + 90) * M_PI/180) * 10);
-		gen->player->y -= fabs(sin((gen->player->dir + 90) * M_PI/180) * 10);
+		gen->player->x -= cos((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		gen->player->y -= sin((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
 	}
 	if (key == 100) //D
 	{
-		gen->player->x += fabs(cos((gen->player->dir + 90) * M_PI/180) * 10);
-		gen->player->y += fabs(sin((gen->player->dir + 90) * M_PI/180) * 10);
-	}
-	if (key == 115)//S
-	{
-		gen->player->x += fabs(cos(gen->player->dir * M_PI/180) * 10);
-		gen->player->y += fabs(sin(gen->player->dir * M_PI/180) * 10);
+		gen->player->x += cos((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		gen->player->y += sin((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
 	}
 	if (key == 119)//W
 	{
-		gen->player->y -= fabs(sin(gen->player->dir * M_PI/180) * 10);
-		gen->player->x -= fabs(cos(gen->player->dir * M_PI/180) * 10);
-			
+		gen->player->x -= cos((gen->player->dir * M_PI/180)) * 10;
+		gen->player->y -= sin((gen->player->dir * M_PI/180)) * 10;
 	}
-	if (key == 65363) //left arrow
+	if (key == 115)//S
 	{
-		if (gen->player->dir == 0)
-			gen->player->dir = 360;
-		else
-			gen->player->dir -= 10;
-	}
-	if (key == 65361) //right arrow
-	{
-		if (gen->player->dir == 360)
-			gen->player->dir = 0;
-		else
-			gen->player->dir += 10;
+		gen->player->x += cos((gen->player->dir * M_PI/180)) * 10;
+		gen->player->y += sin((gen->player->dir * M_PI/180)) * 10;
 	}
 	printf("Player Dir: %f\n", gen->player->dir);
 	printf("Player y: %d; ", gen->player->y);
