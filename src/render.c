@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/01 10:51:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/02 13:35:37 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	draw_wall(t_general *gen, double wall_dist, int i, int flag)
 	float	pl_proj_plane_dis;
 	float	proj_column_height;
 
+	if (wall_dist <= 0)
+		return ;
 	pl_proj_plane_dis = (gen->win_x/2) / tan(gen->pov / 2 * M_PI / 180);
 	proj_column_height = (float)((64 / wall_dist) * pl_proj_plane_dis);
 	draw_start = ((float)(gen->win_y / 2) - (float)(proj_column_height / 2));
@@ -84,11 +86,11 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 		ray->ay = round(gen->player->y / 64) * (64) - 1;
 	else //If ray is facing down
 		ray->ay = round(gen->player->y / 64) * (64) + 64;
-	ray->ax = round(gen->player->x + (float)(gen->player->y - ray->ay)/tan((ray->angle * 2 * M_PI)/360));
+	ray->ax = round(gen->player->x + (float)(gen->player->y - ray->ay)/tan((ray->angle * M_PI)/180));
 	while (!point_check(gen, ray->ay, ray->ax))
 	{
-		ray->ax += round(64/tan((ray->angle * 2 * M_PI)/360));
-		if (ray->angle > 0 && ray->angle <= 180) //If ray is facing up
+		ray->ax += round(64 / tan((ray->angle * M_PI)/180));
+		if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
 			ray->ay -= 64;
 		else //If ray is facing down
 			ray->ay += 64;
@@ -102,17 +104,18 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 		ray->ax = round(gen->player->x / 64) * (64) + 64;
 	else //If ray is facing left
 		ray->ax = round(gen->player->x / 64) * (64) - 1;
-	ray->ay = round(gen->player->y + (float)(gen->player->x - ray->ax) * tan((ray->angle * 2 * M_PI)/360));
+	ray->ay = round(gen->player->y + (float)(gen->player->x - ray->ax) * tan((ray->angle * M_PI) / 180));
 	while (!point_check(gen, ray->ay, ray->ax))
 	{
-		if (ray->angle >= 0 && ray->angle <= 180) //If ray is facing up
+		/* ray->ay += round(64 * tan((ray->angle * M_PI) / 180)); */
+		if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
 			ray->ay -= 64;
 		else //If ray is facing down
 			ray->ay += 64; 
-		if ((ray->angle >= 0 && ray->angle < 90) || (ray->angle > 270 && ray->angle <= 360)) //If ray is facing right
-			ray->ax += 64;
-		else //If ray is facing left
+		if (ray->angle >= 90 && ray->angle < 270) //Facing left
 			ray->ax -= 64;
+		else //Facing right
+			ray->ax += 64;
 	}
 }
 
@@ -140,15 +143,49 @@ int	raycast(t_general *gen, t_ray *ray)
 			draw_wall(gen, hdist, i, 0);
 		else
 			draw_wall(gen, vdist, i, 1);
+		mlx_pixel_put(gen->mlx, gen->win, ray->ax, ray->ay, RED_PIXEL);
 		ray->angle = norm(ray->angle - column);
 		i++;
 	}
 	return (0);
 }
 
+void	put_line(t_general *gen, int y, int x)
+{
+	int	j = 0;
+	while (j++ < 10)
+		mlx_pixel_put(gen->mlx, gen->win, x + j, y, RED_PIXEL);
+}
+
+void	put_square(t_general *gen, int y, int x)
+{
+	int	i = 0;
+	while (i++ < 10)
+		put_line(gen, y, x);
+}
+
+void	minimap(t_general *gen)
+{
+	int	i;
+	int	j;
+
+	i = gen->win_y - 100;
+	while (i < gen->win_y)
+	{
+		j = gen->win_x - 120;
+		while (j < gen->win_x)
+		{
+			put_square(gen, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
 //Raycast based on player's direction and pov
 int	render(t_general *gen)
 {
 	raycast(gen, gen->ray);
+	minimap(gen);
 	return(0);
 }
