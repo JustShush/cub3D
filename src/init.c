@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/31 15:33:50 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/04 02:32:43 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ void	player_pos(t_general *gen, char **map)
 
 t_general	*init(t_general *gen, char **av)
 {
+	t_ray ray;
 	gen = (t_general *)malloc(sizeof(t_general));
 	gen->textures = (t_textures *)malloc(sizeof(t_textures));
 	gen->textures->C = (t_RGB *)malloc(sizeof(t_RGB));
 	gen->textures->F = (t_RGB *)malloc(sizeof(t_RGB));
 	gen->map = (t_map *)malloc(sizeof(t_map));
 	gen->player = (t_player *)malloc(sizeof(t_player));
-	gen->ray = (t_ray *)malloc(sizeof(t_ray));
+	gen->ray = &ray;
 	gen->file = map_init(av[1]);
 	tilemap(gen->map, av[1]);
 /* 	printf("\n");

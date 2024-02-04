@@ -12,7 +12,7 @@
 # include "../gnl/gnl.h"
 # include "graphics.h"
 
-# define	M_PI			3.14159265358979323846
+# define	PI			3.14159265358979323846
 # define	RED_PIXEL		0xFF0000
 # define	ORANGE_PIXEL	0xFF8000
 # define	GREEN_PIXEL		0x00FF00
@@ -38,8 +38,10 @@ typedef struct	s_player
 
 typedef struct	s_ray
 {
-	int		ax;
-	int		ay;
+	int		hx;
+	int		hy;
+	int		vy;
+	int		vx;
 	float	angle;
 	int		wall_dist;
 }				t_ray;

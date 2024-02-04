@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/31 13:08:25 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/04 01:11:56 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,7 @@ void	tilemap(t_map *map, char *map_path)
 char	**map_init(char *file)
 {
 	char	**map;
-	int		i;
 
-	i = 0;
 	map = malloc(sizeof(char *) * (numberoflines(file) + 1));
 	if (!map)
 		return NULL;

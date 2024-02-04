@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:49:01 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/01 10:50:39 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/04 01:36:21 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,23 @@ int	input(int key, t_general *gen)
 		gen->player->dir = norm(gen->player->dir + 10);
 	if (key == 97)//A
 	{
-		gen->player->x -= cos((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
-		gen->player->y -= sin((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		gen->player->x -= cos((gen->player->dir * PI/180) + (PI / 2)) * 10;
+		gen->player->y -= sin((gen->player->dir * PI/180) + (PI / 2)) * 10;
 	}
 	if (key == 100) //D
 	{
-		gen->player->x += cos((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
-		gen->player->y += sin((gen->player->dir * M_PI/180) + (M_PI / 2)) * 10;
+		gen->player->x += cos((gen->player->dir * PI/180) + (PI / 2)) * 10;
+		gen->player->y += sin((gen->player->dir * PI/180) + (PI / 2)) * 10;
 	}
 	if (key == 119)//W
 	{
-		gen->player->x -= cos((gen->player->dir * M_PI/180)) * 10;
-		gen->player->y -= sin((gen->player->dir * M_PI/180)) * 10;
+		gen->player->x -= cos((gen->player->dir * PI/180)) * 10;
+		gen->player->y -= sin((gen->player->dir * PI/180)) * 10;
 	}
 	if (key == 115)//S
 	{
-		gen->player->x += cos((gen->player->dir * M_PI/180)) * 10;
-		gen->player->y += sin((gen->player->dir * M_PI/180)) * 10;
+		gen->player->x += cos((gen->player->dir * PI/180)) * 10;
+		gen->player->y += sin((gen->player->dir * PI/180)) * 10;
 	}
 	printf("Player Dir: %f\n", gen->player->dir);
 	printf("Player y: %d; ", gen->player->y);
