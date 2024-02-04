@@ -33,7 +33,7 @@ typedef struct	s_player
 {
 	int		x;
 	int		y;
-	float	dir;
+	float	an;
 }				t_player;
 
 typedef struct	s_ray
@@ -42,7 +42,7 @@ typedef struct	s_ray
 	int		hy;
 	int		vy;
 	int		vx;
-	float	angle;
+	float	an;
 	int		wall_dist;
 }				t_ray;
 
@@ -86,6 +86,7 @@ int			point_check(t_general *gen, int y, int x);
 
 //utils.c
 double	norm(double angle);
+float	toRad(float d);
 int		first_str(char *s1, char *s2);
 
 #endif

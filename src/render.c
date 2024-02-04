@@ -6,7 +6,7 @@
 /*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/04 03:04:51 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/04 13:25:14 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,17 @@ int	point_check(t_general *gen, int y, int x)
 	return (1);
 }
 
-double	toRad(double d)
-{
-	return (d * PI / 180);
-}
-
 //Takes 2 points' y coordinates and returns their distance
-double	point_dist(t_general *gen, int ay, int by)
+float	dist(t_general *gen, t_ray *ray, int y, int x)
 {
-	double beta;
-	double	fix;
-	double	dist;
+	float	beta;
+	float	fix;
+	float	dist;
 
-	beta = fabs(gen->player->dir - gen->ray->angle);
-	dist = abs(ay - by) / sin(toRad(gen->ray->angle));
-	fix = fabs(dist * cos(beta * PI / 180));
+	dist = (cos(toRad(ray->an))*(x - gen->player->x)) - (sin(toRad(ray->an))*(y - gen->player->y));
+	beta = norm(gen->player->an - ray->an);
+	fix = dist * cos(toRad(beta));
 	return (fix);
-		
 }
 
 void	draw_floor(t_general *gen, float draw_start, int i)
@@ -94,25 +88,25 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 	i = 0;
 	by = 0;
 	bx = 0;
-	if (ray->angle == 0 || ray->angle == 180)
+	if (ray->an == 0 || ray->an == 180)
 	{
 		ray->hx = gen->player->x;
 		ray->hy = gen->player->y;
 		i = 8;
 	}
-	else if (ray->angle > 0 && ray->angle < 180) //If ray is facing up
+	else if (sin(toRad(ray->an)) > 0.001) //If ray is facing up
 	{	
-		ray->hy = round(gen->player->y / 64) * (64) - 1;
-		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->angle)));
+		ray->hy = round(gen->player->y / 64) * (64) - 0.001;
+		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an)));
 		by = -64;
-		bx = 64 / tan(toRad(ray->angle));
+		bx = 64 / tan(toRad(ray->an));
 	}
 	else //If ray is facing down
 	{
 		ray->hy = round(gen->player->y / 64) * (64) + 64;
-		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->angle)));
+		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an)));
 		by = 64;
-		bx = -64 / tan(toRad(ray->angle));
+		bx = -64 / tan(toRad(ray->an));
 	}
 	while (i < 8 && !point_check(gen, ray->vy, ray->vx))
 	{
@@ -132,25 +126,25 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	i = 0;
 	by = 0;
 	bx = 0;
-	if (ray->angle == 90 || ray->angle == 270 || ray->angle == 360)
+	if (ray->an == 90 || ray->an == 270 || ray->an == 360)
 	{
 		ray->vx = gen->player->x;
 		ray->vy = gen->player->y;
 		i = 8;
 	}
-	else if (ray->angle > 90 && ray->angle < 270) //If ray is facing left
+	else if ((cos(toRad(ray->an)) > 0.001)) //If ray is facing left
 	{
 		ray->vx = round(gen->player->x / 64) * (64) + 64;
-		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->angle)));
+		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an)));
 		bx = -64;
-		by = (64) / tan(toRad(ray->angle));
+		by = (64) / tan(toRad(ray->an));
 	}
-	else if ((ray->angle < 90 && ray->angle > 0) || (ray->angle > 270 && ray->angle < 360)) //If ray is facing right
+	else if ((cos(toRad(ray->an)) < -0.001)) //If ray is facing right
 	{
-		ray->vx = round(gen->player->x / 64) * (64) - 1;
-		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->angle)));
+		ray->vx = round(gen->player->x / 64) * (64) - 0.001;
+		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an)));
 		bx = 64;
-		by = -64 / tan(toRad(ray->angle));
+		by = -64 / tan(toRad(ray->an));
 	}
 	while (i < 8 && !point_check(gen, ray->vy, ray->vx))
 	{
@@ -173,18 +167,18 @@ int	raycast(t_general *gen, t_ray *ray)
 
 	i = 0;
 	column = (float)gen->pov/gen->win_x;
-	ray->angle = gen->player->dir + (gen->pov / 2);
+	ray->an = norm(gen->player->an + (gen->pov / 2));
 	while (i < gen->win_x)
 	{
 		horizontal_intersection(gen, gen->ray);
-		hdist = point_dist(gen, gen->player->y, ray->hy);
+		hdist = dist(gen, ray, ray->hy, ray->hx);
 		vertical_intersection(gen, gen->ray);
-		vdist = point_dist(gen, gen->player->y, ray->vy);
+		vdist = dist(gen, ray, ray->vy, ray->vx);
 		if (hdist <= vdist)
 			draw_wall(gen, hdist, i, 0);
 		else
 			draw_wall(gen, vdist, i, 1);
-		ray->angle = norm(ray->angle - column);
+		ray->an = norm(ray->an - column);
 		i++;
 	}
 	return (0);
