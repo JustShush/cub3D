@@ -6,11 +6,13 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/05 11:44:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:20:24 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int	minimap(t_general *gen);
 
 //What the program does:
 // - Checks for correct arguments;
@@ -42,6 +44,7 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
 
+	//mlx_loop_hook(gen->mlx, minimap, gen);
 	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return(0);
