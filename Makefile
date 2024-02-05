@@ -21,7 +21,7 @@ OBJ_DIR	=	obj
 LFT_DIR	=	libft
 
 LIBFT	=	$(LFT_DIR)/libft.a
-INC		=	-L ./mlx_linux -lmlx -lXext -lX11
+INC		=	-L ./mlx_linux -lmlx -lXext -lX11 -lm
 
 all: $(NAME)
 

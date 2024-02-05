@@ -12,7 +12,7 @@
 # include "../gnl/gnl.h"
 # include "graphics.h"
 
-# define	M_PI			3.14159265358979323846
+# define	PI			3.14159265358979323846
 # define	RED_PIXEL		0xFF0000
 # define	ORANGE_PIXEL	0xFF8000
 # define	GREEN_PIXEL		0x00FF00
@@ -33,14 +33,16 @@ typedef struct	s_player
 {
 	int		x;
 	int		y;
-	float	dir;
+	float	an;
 }				t_player;
 
 typedef struct	s_ray
 {
-	int		ax;
-	int		ay;
-	float	angle;
+	int		hx;
+	int		hy;
+	int		vy;
+	int		vx;
+	float	an;
 	int		wall_dist;
 }				t_ray;
 
@@ -84,6 +86,7 @@ int			point_check(t_general *gen, int y, int x);
 
 //utils.c
 double	norm(double angle);
+float	toRad(float d);
 int		first_str(char *s1, char *s2);
 
 #endif

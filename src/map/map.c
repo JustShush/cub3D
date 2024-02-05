@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/02 13:02:06 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/05 11:05:18 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,7 @@ void	tilemap(t_map *map, char *map_path)
 char	**map_init(char *file)
 {
 	char	**map;
-	int		i;
 
-	i = 0;
 	map = malloc(sizeof(char *) * (numberoflines(file) + 1));
 	if (!map)
 		return NULL;

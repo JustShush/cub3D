@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/01/31 16:50:07 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/04 13:16:32 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ double	norm(double angle)
 	while (angle >= 360)
 		angle -= 360;
 	return (angle);
+}
+
+float	toRad(float d)
+{
+	return (d * PI / 180);
 }
 
 //Returns 0 if s1's first non space chars are equal to s2
