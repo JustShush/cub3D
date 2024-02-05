@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:49:01 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/04 13:17:04 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/05 12:40:21 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,40 @@ int	esc_key(int key, t_general *gen)
 	return (0);
 }
 
-//A and W dont work correctly. Have to add or subtract based on the players direction.
-int	input(int key, t_general *gen)
+int	key_press(int key, t_general *gen)
 {
 	esc_key(key, gen);
 	if (key == 65363) //left arrow
-		gen->player->an = norm(gen->player->an - 10);
+		gen->key->l = 1;
 	if (key == 65361) //right arrow
-		gen->player->an = norm(gen->player->an + 10);
-	/* if (key == 97)//A
-	{
-		gen->player->x -= cos((gen->player->an) * 10;
-		gen->player->y -= sin((gen->player->an) * 10;
-	}
-	if (key == 100) //D
-	{
-		gen->player->x += cos(toRad(gen->player->an)) * 10;
-		gen->player->y += sin(toRad(gen->player->an)) * 10;
-	} */
+		gen->key->r = 1;
+	if (key == 97)//A
+		gen->key->a = 1;
+	if (key == 100)//D
+		gen->key->d = 1;
 	if (key == 119)//W
-	{
-		gen->player->x -= cos(toRad(gen->player->an)) * 10;
-		gen->player->y -= sin(toRad(gen->player->an)) * 10;
-	}
+		gen->key->w = 1;
 	if (key == 115)//S
-	{
-		gen->player->x += cos(toRad(gen->player->an)) * 10;
-		gen->player->y += sin(toRad(gen->player->an)) * 10;
-	}
+		gen->key->s = 1;
 	printf("Player Dir: %f\n", gen->player->an);
 	printf("Player y: %d; ", gen->player->y);
 	printf("Player X: %d\n; ", gen->player->x);
-	/* printf("Key: %i\n", key); */
+	return (0);
+}
+
+int	key_release(int key, t_general *gen)
+{
+	if (key == 65363) //left arrow
+		gen->key->l = 0;
+	if (key == 65361) //right arrow
+		gen->key->r = 0;
+	if (key == 97)//A
+		gen->key->a = 0;
+	if (key == 100)//D
+		gen->key->d = 0;
+	if (key == 119)//W
+		gen->key->w = 0;
+	if (key == 115)//S
+		gen->key->s = 0;
 	return (0);
 }

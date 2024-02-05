@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/04 13:07:53 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/05 11:52:59 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_general	*init(t_general *gen, char **av)
 	gen->textures->C = (t_RGB *)malloc(sizeof(t_RGB));
 	gen->textures->F = (t_RGB *)malloc(sizeof(t_RGB));
 	gen->map = (t_map *)malloc(sizeof(t_map));
+	gen->key = (t_key *)malloc(sizeof(t_key));
 	gen->player = (t_player *)malloc(sizeof(t_player));
 	gen->ray = &ray;
 	gen->file = map_init(av[1]);
@@ -64,6 +65,12 @@ t_general	*init(t_general *gen, char **av)
 	printf("\n\nTILEMAP\n\n");
 	printf_array(gen->map->tilemap);
 	printf("\n\n"); */
+	gen->key->w = 0;
+	gen->key->d = 0;
+	gen->key->s = 0;
+	gen->key->a = 0;
+	gen->key->l = 0;
+	gen->key->r = 0;
 	gen->pov = 60;
 	gen->win_x = 640;
 	gen->win_y = 400;

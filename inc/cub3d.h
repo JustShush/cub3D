@@ -29,6 +29,16 @@ typedef struct	s_map
 	int		x;
 }				t_map;
 
+typedef struct	s_key
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	l;
+	int	r;
+}				t_key;
+
 typedef struct	s_player
 {
 	int		x;
@@ -54,6 +64,7 @@ typedef struct	s_general
 	int			win_y;
 	int			win_x;
 	char		**file;
+	t_key		*key;
 	t_ray		*ray;
 	t_map		*map;
 	t_player	*player;
@@ -74,7 +85,8 @@ void		tilemap(t_map *map, char *map_path);
 int			close_game(t_general *gen);
 
 //input.c
-int			input(int key, t_general *gen);
+int	key_release(int key, t_general *gen);
+int	key_press(int key, t_general *gen);
 
 //init.c
 void		player_pos(t_general *gen, char **map);

@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/05 11:05:34 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:53:42 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 void	draw_wall(t_general *gen, double wall_dist, int i, int flag)
 {
 	float	draw_start;
-	float	pl_proj_plane_dis;
+	float	proj_plane_dis;
 	float	proj_column_height;
 
-	pl_proj_plane_dis = (gen->win_x/2) / tan(toRad(gen->pov));
-	proj_column_height = (float)((64 / wall_dist) * pl_proj_plane_dis);
+	proj_plane_dis = (gen->win_x/2) / tan(toRad(gen->pov));
+	proj_column_height = (float)((64 / wall_dist) * proj_plane_dis);
 	draw_start = ((float)(gen->win_y / 2) - (float)(proj_column_height / 2));
 	if (wall_dist < 0 || draw_start < 0 || draw_start > gen->win_y)
 		return ;
@@ -88,27 +88,27 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 	i = 0;
 	by = 0;
 	bx = 0;
-	if (ray->an == 0 || ray->an == 180)
+	if (sin(toRad(ray->an)) > 0.001) //If ray is facing up
+	{	
+		ray->hy = gen->player->y / 64 * (64) - 0.001;
+		ray->hx = gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an));
+		by = -64;
+		bx = 64 / tan(toRad(ray->an));
+	}
+	else if (sin(toRad(ray->an)) < -0.001)//If ray is facing down
+	{
+		ray->hy = gen->player->y / 64 * (64) + 64;
+		ray->hx = gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an));
+		by = 64;
+		bx = -64 / tan(toRad(ray->an));
+	}
+	else
 	{
 		ray->hx = gen->player->x;
 		ray->hy = gen->player->y;
 		i = 8;
 	}
-	else if (sin(toRad(ray->an)) > 0.001) //If ray is facing up
-	{	
-		ray->hy = round(gen->player->y / 64) * (64) - 0.001;
-		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an)));
-		by = -64;
-		bx = 64 / tan(toRad(ray->an));
-	}
-	else //If ray is facing down
-	{
-		ray->hy = round(gen->player->y / 64) * (64) + 64;
-		ray->hx = round(gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an)));
-		by = 64;
-		bx = -64 / tan(toRad(ray->an));
-	}
-	while (i < 8 && !point_check(gen, ray->vy, ray->vx))
+	while (i < 8 && !point_check(gen, ray->hy, ray->hx))
 	{
 		ray->hx += bx;
 		ray->hy += by;
@@ -126,25 +126,25 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	i = 0;
 	by = 0;
 	bx = 0;
-	if (ray->an == 90 || ray->an == 270 || ray->an == 360)
+	if ((cos(toRad(ray->an)) > 0.001)) //If ray is facing left
+	{
+		ray->vx = gen->player->x / 64 * (64) + 64;
+		ray->vy = gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an));
+		bx = 64;
+		by = (-64) / tan(toRad(ray->an));
+	}
+	else if ((cos(toRad(ray->an)) < -0.001)) //If ray is facing right
+	{
+		ray->vx = gen->player->x / 64 * (64) - 0.001;
+		ray->vy = gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an));
+		bx = -64;
+		by = 64 / tan(toRad(ray->an));
+	}
+	else
 	{
 		ray->vx = gen->player->x;
 		ray->vy = gen->player->y;
 		i = 8;
-	}
-	else if ((cos(toRad(ray->an)) > 0.001)) //If ray is facing left
-	{
-		ray->vx = round(gen->player->x / 64) * (64) + 64;
-		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an)));
-		bx = -64;
-		by = (64) / tan(toRad(ray->an));
-	}
-	else if ((cos(toRad(ray->an)) < -0.001)) //If ray is facing right
-	{
-		ray->vx = round(gen->player->x / 64) * (64) - 0.001;
-		ray->vy = round(gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an)));
-		bx = 64;
-		by = -64 / tan(toRad(ray->an));
 	}
 	while (i < 8 && !point_check(gen, ray->vy, ray->vx))
 	{
@@ -184,42 +184,24 @@ int	raycast(t_general *gen, t_ray *ray)
 	return (0);
 }
 
-void	put_line(t_general *gen, int y, int x)
-{
-	int	j = 0;
-	while (j++ < 10)
-		mlx_pixel_put(gen->mlx, gen->win, x + j, y, RED_PIXEL);
-}
-
-void	put_square(t_general *gen, int y, int x)
-{
-	int	i = 0;
-	while (i++ < 10)
-		put_line(gen, y, x);
-}
-
-void	minimap(t_general *gen)
-{
-	int	i;
-	int	j;
-
-	i = gen->win_y - 100;
-	while (i < gen->win_y)
-	{
-		j = gen->win_x - 120;
-		while (j < gen->win_x)
-		{
-			put_square(gen, i, j);
-			j++;
-		}
-		i++;
-	}
-}
-
 //Raycast based on player's direction and pov
 int	render(t_general *gen)
 {
+
+	if (gen->key->l == 1)
+		gen->player->an = norm(gen->player->an - 1);
+	if (gen->key->r == 1)
+		gen->player->an = norm(gen->player->an + 1);
+	if (gen->key->w == 1)//W
+	{
+		gen->player->x += cos(toRad(gen->player->an));
+		gen->player->y += sin(toRad(gen->player->an));
+	}
+	if (gen->key->s == 1)//S
+	{
+		gen->player->x -= cos(toRad(gen->player->an));
+		gen->player->y -= sin(toRad(gen->player->an));
+	}
 	raycast(gen, gen->ray);
-	minimap(gen);
 	return(0);
 }
