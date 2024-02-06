@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/05 11:41:53 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:01:12 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,18 @@ int get_start_map(char **map)
 		i--;
 	return (i);
 
+}
+
+//Checks if file_path has ".cub" suffix
+int	check_suffix(char *file_path)
+{
+	while (*file_path)
+	{
+		if (ft_strcmp(file_path, ".cub") == 0)
+			return (0);
+		file_path++;
+	}
+	return (1);
 }
 
 int check_char(char **map)
