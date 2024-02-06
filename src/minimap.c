@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 13:13:52 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:46:12 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,24 @@ void	put_square(t_general *gen, int y, int x, int color)
 
 void	draw_player(t_general *gen)
 {
+	int	i;
+	int	j;
 	int	x;
 	int	y;
 
+	j = gen->player->an + 30;
 	x = gen->player->x * 20 / 64;
 	y = (gen->player->y * 20 / 64) + 300;
+	while (j > gen->player->an - 30)
+	{
+		i = 0;
+		while (i < 20)
+		{
+			mlx_pixel_put(gen->mlx, gen->win, x - (cos(toRad(j)) * i), y - (sin(toRad(j) ) * i), GREEN_PIXEL);
+			i++;
+		}
+		j--;
+	}
 	mlx_pixel_put(gen->mlx, gen->win, x, y, ORANGE_PIXEL);
 }
 

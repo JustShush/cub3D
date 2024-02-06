@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 15:08:26 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:35:05 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,19 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 	}
 }
 
-void	draw_wall(t_general *gen, double wall_dist, int i, int flag)
+void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 {
 	float	draw_start;
 	float	proj_plane_dis;
 	float	proj_column_height;
 
 	proj_plane_dis = (gen->win_x/2) / tan(toRad(gen->pov));
-	proj_column_height = (float)((64 / wall_dist) * proj_plane_dis);
-	draw_start = ((float)(gen->win_y / 2) - (float)(proj_column_height / 2));
+	proj_column_height = ((64 / wall_dist) * proj_plane_dis);
+	draw_start = ((float)(gen->win_y / 2) - (proj_column_height / 2));
 	if (wall_dist < 0 || draw_start < 0 || draw_start > gen->win_y)
 		return ;
 	draw_ceiling(gen, draw_start, i);
-	while (draw_start <= ((float)(gen->win_y / 2) + (float)(proj_column_height / 2)))
+	while (draw_start <= ((float)(gen->win_y / 2) + (proj_column_height / 2)))
 	{
 		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
 		{
@@ -101,14 +101,14 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 	if (sin(toRad(ray->an)) > 0.001) //If ray is facing up
 	{	
 		ray->hy = gen->player->y / 64 * (64) - 0.001;
-		ray->hx = gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an));
+		ray->hx = gen->player->x + (gen->player->y - ray->hy) / tan(toRad(ray->an));
 		by = -64;
 		bx = 64 / tan(toRad(ray->an));
 	}
 	else if (sin(toRad(ray->an)) < -0.001)//If ray is facing down
 	{
 		ray->hy = gen->player->y / 64 * (64) + 64;
-		ray->hx = gen->player->x + (float)(gen->player->y - ray->hy) / tan(toRad(ray->an));
+		ray->hx = gen->player->x + (gen->player->y - ray->hy) / tan(toRad(ray->an));
 		by = 64;
 		bx = -64 / tan(toRad(ray->an));
 	}
@@ -139,14 +139,14 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	if ((cos(toRad(ray->an)) > 0.001)) //If ray is facing left
 	{
 		ray->vx = gen->player->x / 64 * (64) + 64;
-		ray->vy = gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an));
+		ray->vy = gen->player->y + (gen->player->x - ray->vx) * tan(toRad(ray->an));
 		bx = 64;
 		by = (-64) / tan(toRad(ray->an));
 	}
 	else if ((cos(toRad(ray->an)) < -0.001)) //If ray is facing right
 	{
 		ray->vx = gen->player->x / 64 * (64) - 0.001;
-		ray->vy = gen->player->y + (float)(gen->player->x - ray->vx) * tan(toRad(ray->an));
+		ray->vy = gen->player->y + (gen->player->x - ray->vx) * tan(toRad(ray->an));
 		bx = -64;
 		by = 64 / tan(toRad(ray->an));
 	}
@@ -198,29 +198,29 @@ int	raycast(t_general *gen, t_ray *ray)
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an - 1);
-	if (gen->key->r == 1)
 		gen->player->an = norm(gen->player->an + 1);
+	if (gen->key->r == 1)
+		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->w == 1)//W
 	{
-		float tmp1;
-		float tmp2;
-
-		tmp1 = sin(toRad(gen->player->an)) * sign(gen->player->an, 0);
-		tmp2 = cos(toRad(gen->player->an)) * sign(gen->player->an, 1);
-		
-		gen->player->y -= tmp1;
-		gen->player->x -= tmp2;
-		printf("sign sin: %d\n", sign(gen->player->an, 0));
-		printf("sign cos: %d\n", sign(gen->player->an, 1));
-		printf("sin: %f\n", sin(toRad(gen->player->an)));
-		printf("cos: %f\n", cos(toRad(gen->player->an)));
-		printf("y-=: %f\n", tmp1);
-		printf("x-=: %f\n", tmp2);
-
-		printf("Player y: %d\n", gen->player->y);
-		printf("Player X: %d\n;", gen->player->x);
-		printf("Player Dir: %f\n", gen->player->an);
+		gen->player->y -= sin(toRad(gen->player->an));
+		gen->player->x -= cos(toRad(gen->player->an));
+		printf("SIN:%f\n", sin(toRad(gen->player->an)));
+		printf("COS:%f\n", cos(toRad(gen->player->an)));
+	}
+	if (gen->key->s == 1)
+	{
+		gen->player->y += sin(toRad(gen->player->an));
+		gen->player->x += cos(toRad(gen->player->an));
+	}
+	if (gen->key->a == 1)
+	{
+		gen->player->y -= sin(toRad(gen->player->an) + 90);
+		gen->player->x -= cos(toRad(gen->player->an) + 90);
+	}
+	if (gen->key->d == 1)
+	{
+		;
 	}
 	draw_player(gen);
 	minimap(gen);

@@ -41,19 +41,19 @@ typedef struct	s_key
 
 typedef struct	s_player
 {
-	int		x;
-	int		y;
-	float	an;
+	float		x;
+	float		y;
+	float		an;
 }				t_player;
 
 typedef struct	s_ray
 {
-	int		hx;
-	int		hy;
-	int		vy;
-	int		vx;
-	float	an;
-	int		wall_dist;
+	float		hx;
+	float		hy;
+	float		vy;
+	float		vx;
+	float		an;
+	float		wall_dist;
 }				t_ray;
 
 typedef struct	s_general
