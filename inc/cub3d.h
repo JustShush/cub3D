@@ -85,8 +85,8 @@ void		tilemap(t_map *map, char *map_path);
 int			close_game(t_general *gen);
 
 //input.c
-int	key_release(int key, t_general *gen);
-int	key_press(int key, t_general *gen);
+int			key_release(int key, t_general *gen);
+int			key_press(int key, t_general *gen);
 
 //init.c
 void		player_pos(t_general *gen, char **map);
@@ -96,9 +96,16 @@ t_general	*init(t_general *gen, char **av);
 int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
-//utils.c
-double	norm(double angle);
-float	toRad(float d);
-int		first_str(char *s1, char *s2);
+//minimap.c
+void		mini_ray(t_general *gen, t_ray *ray);
+int			minimap(t_general *gen);
+void		draw_player(t_general *gen);
+void		put_square(t_general *gen, int y, int x, int color);
+
+//render_utils.c
+double		norm(double angle);
+float		toRad(float d);
+int			sign(int an, int flag);
+int			first_str(char *s1, char *s2);
 
 #endif

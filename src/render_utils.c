@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/04 13:16:32 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/06 12:14:53 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ double	norm(double angle)
 float	toRad(float d)
 {
 	return (d * PI / 180);
+}
+
+int	sign(int an, int flag)
+{
+	int sign;
+
+	if (flag == 0)
+		sign = (sin(toRad(an)) > 0) ? 1 : ((sin(toRad(an)) < 0) ? -1 : 0);
+	if (flag == 1)
+		sign = (cos(toRad(an)) > 0) ? 1 : ((cos(toRad(an)) < 0) ? -1 : 0);
+	return (sign);
 }
 
 //Returns 0 if s1's first non space chars are equal to s2
