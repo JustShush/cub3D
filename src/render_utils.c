@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 12:14:53 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:27:11 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ float	toRad(float d)
 	return (d * PI / 180);
 }
 
+//If flag == 1, returns cos(angle) sign
+//If flag == 0, returns sin(angle) sign
 int	sign(int an, int flag)
 {
 	int sign;

@@ -54,5 +54,6 @@ int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);
 int		getY(char *file);
+int		check_suffix(char *file_path);
 
 #endif //BUC3D_BUC3D_H

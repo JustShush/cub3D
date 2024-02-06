@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 12:47:50 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:13:52 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	put_square(t_general *gen, int y, int x, int color)
 		j++;
 	}
 }
-
 
 void	draw_player(t_general *gen)
 {

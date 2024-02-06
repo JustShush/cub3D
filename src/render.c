@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 12:58:34 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:08:26 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,15 +201,26 @@ int	render(t_general *gen)
 		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->r == 1)
 		gen->player->an = norm(gen->player->an + 1);
-	if (gen->key->w == 1 || gen->key->s == 1)//W
+	if (gen->key->w == 1)//W
 	{
-		gen->player->x += cos(toRad(gen->player->an));
-		gen->player->y += sin(toRad(gen->player->an));
-	}
-	if (gen->key->s == 1)//S
-	{
-		gen->player->x -= cos(toRad(gen->player->an));
-		gen->player->y -= sin(toRad(gen->player->an));
+		float tmp1;
+		float tmp2;
+
+		tmp1 = sin(toRad(gen->player->an)) * sign(gen->player->an, 0);
+		tmp2 = cos(toRad(gen->player->an)) * sign(gen->player->an, 1);
+		
+		gen->player->y -= tmp1;
+		gen->player->x -= tmp2;
+		printf("sign sin: %d\n", sign(gen->player->an, 0));
+		printf("sign cos: %d\n", sign(gen->player->an, 1));
+		printf("sin: %f\n", sin(toRad(gen->player->an)));
+		printf("cos: %f\n", cos(toRad(gen->player->an)));
+		printf("y-=: %f\n", tmp1);
+		printf("x-=: %f\n", tmp2);
+
+		printf("Player y: %d\n", gen->player->y);
+		printf("Player X: %d\n;", gen->player->x);
+		printf("Player Dir: %f\n", gen->player->an);
 	}
 	draw_player(gen);
 	minimap(gen);

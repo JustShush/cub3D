@@ -108,14 +108,4 @@ float		toRad(float d);
 int			sign(int an, int flag);
 int			first_str(char *s1, char *s2);
 
-#endif//Checks if file_path has ".cub" suffix
-int	check_suffix(char *file_path)
-{
-	while (*file_path)
-	{
-		if (ft_strcmp(file_path, ".cub") == 0)
-			return (0);
-		file_path++;
-	}
-	return (1);
-}
+#endif
