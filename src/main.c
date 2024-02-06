@@ -19,6 +19,40 @@ int	minimap(t_general *gen);
 // - Initializes a map struct and it's tilemap array and (N,S,W,E) strings.
 // - Opens a window with a pixel at the center;
 // - Exits cleanly with ESC and Window X button;
+
+int sizeofmap_x(t_general *gen)
+{
+	int i = gen->map_start;
+	int j = 0;
+	int res = 0;
+
+	while(gen->file[i])
+	{
+		j = 0;
+		while(gen->file[i][j])
+			j++;
+		if(j > res)
+			res = j;
+		i++;
+	}
+	res -= 1;
+	return res;
+}
+
+int sizeofmap_y(t_general *gen)
+{
+	int i = gen->map_start;
+	int res = 0;
+
+	while(gen->file[i])
+	{
+		res++;
+		i++;
+	}
+	res -= 1;
+	return res;
+}
+
 int	main(int ac, char **av)
 {
 	t_general	*gen;
@@ -45,17 +79,10 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
 
 	//mlx_loop_hook(gen->mlx, minimap, gen);
-	mlx_loop_hook(gen->mlx, r//Checks if file_path has ".cub" suffix
-int	check_suffix(char *file_path)
-{
-	while (*file_path)
-	{
-		if (ft_strcmp(file_path, ".cub") == 0)
-			return (0);
-		file_path++;
-	}
-	return (1);
-}ender, gen);
+	gen->img = malloc(sizeof(t_data));
+	gen->map_width = sizeofmap_x(gen) * SCALE;
+	gen->map_height = sizeofmap_y(gen) * SCALE;
+	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return(0);
 }

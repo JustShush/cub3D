@@ -64,6 +64,10 @@ typedef struct	s_general
 	int			win_y;
 	int			win_x;
 	char		**file;
+	int			map_start;
+	int 		map_width;
+	int 		map_height;
+    t_data      *img;
 	t_key		*key;
 	t_ray		*ray;
 	t_map		*map;
@@ -101,6 +105,7 @@ void		mini_ray(t_general *gen, t_ray *ray);
 int			minimap(t_general *gen);
 void		draw_player(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 //render_utils.c
 double		norm(double angle);
@@ -108,14 +113,4 @@ float		toRad(float d);
 int			sign(int an, int flag);
 int			first_str(char *s1, char *s2);
 
-#endif//Checks if file_path has ".cub" suffix
-int	check_suffix(char *file_path)
-{
-	while (*file_path)
-	{
-		if (ft_strcmp(file_path, ".cub") == 0)
-			return (0);
-		file_path++;
-	}
-	return (1);
-}
+#endif

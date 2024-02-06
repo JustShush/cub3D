@@ -17,15 +17,15 @@ void	put_square(t_general *gen, int y, int x, int color)
 	int	j = 0;
 	int	i = 0;
 
-	while (j < 20)
+	while (j < SCALE)
 	{
 		i = 0;
-		while (i < 20)
+		while (i < SCALE)
 		{
 			if (j == 0 || i == 0)
-				mlx_pixel_put(gen->mlx, gen->win, x + i, y + j, 0x000000);
+				my_mlx_pixel_put(gen->img, x + i, y + j, 0x00000000);
 			else
-				mlx_pixel_put(gen->mlx, gen->win, x + i, y + j, color);
+				my_mlx_pixel_put(gen->img, x + i, y + j, color);
 			i++;
 		}
 		j++;
@@ -38,9 +38,9 @@ void	draw_player(t_general *gen)
 	int	x;
 	int	y;
 
-	x = gen->player->x * 20 / 64;
-	y = (gen->player->y * 20 / 64) + 300;
-	mlx_pixel_put(gen->mlx, gen->win, x, y, ORANGE_PIXEL);
+	x = gen->player->x * SCALE / 64;
+	y = (gen->player->y * SCALE / 64);
+	my_mlx_pixel_put(gen->img, x, y, 0x00FF0000);
 }
 
 void	mini_ray(t_general *gen, t_ray *ray)
@@ -51,23 +51,30 @@ void	mini_ray(t_general *gen, t_ray *ray)
 
 int	minimap(t_general *gen)
 {
-	int	i;
-	int	j;
-	int	k;
+	int y = 0;
+	int x = 0;
+	int map_x = 0;
+	int map_y = 0;
 
-	k = 0;
-	j = gen->win_y - 100;
-	while (j < gen->win_y && k < 100)
+	while(gen->map->tilemap[y] && map_y <= gen->map_height && map_x <= gen->map_width)
 	{
-		i = 0;
-		while (i < 120)
+		while(gen->map->tilemap[y][x] && map_y <= gen->map_height && map_x <= gen->map_width && gen->map->tilemap[y][x] != '\n')
 		{
-			if (gen->map->tilemap[k / 20][i / 20] == '1')
-				put_square(gen, j, i, RED_PIXEL);
-			i += 20;
+			if(gen->map->tilemap[y][x] == '1')
+				put_square(gen, map_y, map_x, 0x00000FFF);
+			else if(gen->map->tilemap[y][x] == '0')
+				put_square(gen, map_y, map_x, 0x00FFF000);
+			else if(gen->map->tilemap[y][x] == 'W' || gen->map->tilemap[y][x] == 'E' || gen->map->tilemap[y][x] == 'N' || gen->map->tilemap[y][x] == 'S')
+				put_square(gen, map_y, map_x, 0x00FFF000);
+			else if(gen->map->tilemap[y][x] == ' ' || gen->map->tilemap[y][x] == '\t')
+				put_square(gen, map_y, map_x, 0x000000FF);
+			map_x += SCALE;
+			x++;
 		}
-		k += 20;
-		j += 20;
+		map_y += SCALE;
+		map_x = 0;
+		x = 0;
+		y++;
 	}
 	return (0);
 }
