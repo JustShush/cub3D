@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 12:18:11 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:58:34 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int	render(t_general *gen)
 		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->r == 1)
 		gen->player->an = norm(gen->player->an + 1);
-	if (gen->key->w == 1)//W
+	if (gen->key->w == 1 || gen->key->s == 1)//W
 	{
 		gen->player->x += cos(toRad(gen->player->an));
 		gen->player->y += sin(toRad(gen->player->an));
