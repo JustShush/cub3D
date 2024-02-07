@@ -26,7 +26,6 @@ typedef struct	s_map
 	char	*east;
 	char	*south;
 	int		y;
-	int		x;
 }				t_map;
 
 typedef struct	s_key
@@ -97,9 +96,8 @@ int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
 //minimap.c
-void		mini_ray(t_general *gen, t_ray *ray);
+void		put_rays(t_general *gen, int angle, int py, int px, int len);
 int			minimap(t_general *gen);
-void		draw_player(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
 
 //render_utils.c
