@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/05 13:55:19 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:41:11 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,6 @@ t_general	*init(t_general *gen, char **av)
 	gen->ray = &ray;
 	gen->file = map_init(av[1]);
 	tilemap(gen->map, av[1]);
-/* 	printf("\n");
-	printf("\nFILE\n");
-	printf_array(gen->file);
-	printf("\n\nTILEMAP\n\n");
-	printf_array(gen->map->tilemap);
-	printf("\n\n"); */
 	gen->key->w = 0;
 	gen->key->d = 0;
 	gen->key->s = 0;

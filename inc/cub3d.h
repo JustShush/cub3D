@@ -41,19 +41,19 @@ typedef struct	s_key
 
 typedef struct	s_player
 {
-	int		x;
-	int		y;
-	float	an;
+	float		x;
+	float		y;
+	float		an;
 }				t_player;
 
 typedef struct	s_ray
 {
-	int		hx;
-	int		hy;
-	int		vy;
-	int		vx;
-	float	an;
-	int		wall_dist;
+	float		hx;
+	float		hy;
+	float		vy;
+	float		vx;
+	float		an;
+	float		wall_dist;
 }				t_ray;
 
 typedef struct	s_general
@@ -67,7 +67,7 @@ typedef struct	s_general
 	int			map_start;
 	int 		map_width;
 	int 		map_height;
-    t_data      *img;
+	t_data		*img;
 	t_key		*key;
 	t_ray		*ray;
 	t_map		*map;
@@ -105,12 +105,14 @@ void		mini_ray(t_general *gen, t_ray *ray);
 int			minimap(t_general *gen);
 void		draw_player(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int 		sizeofmap_x(t_general *gen);
+int			sizeofmap_y(t_general *gen);
 
 //render_utils.c
 double		norm(double angle);
 float		toRad(float d);
 int			sign(int an, int flag);
 int			first_str(char *s1, char *s2);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

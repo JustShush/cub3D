@@ -15,7 +15,7 @@
 #include "../mlx_linux/mlx.h"
 #include "../gnl/gnl.h"
 
-#define SCALE 10
+#define SCALE 20
 
 typedef struct s_img
 {
@@ -29,11 +29,11 @@ typedef struct s_img
 }				t_img;
 
 typedef struct	s_data {
-    void	*img;
-    char	*addr;
-    int		bits_per_pixel;
-    int		line_length;
-    int		endian;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
 }				t_data;
 
 typedef struct RGB
@@ -64,5 +64,6 @@ int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);
 int		getY(char *file);
+int		check_suffix(char *file_path);
 
 #endif //BUC3D_BUC3D_H

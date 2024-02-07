@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 13:01:04 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:15:50 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,6 @@ int	minimap(t_general *gen);
 // - Initializes a map struct and it's tilemap array and (N,S,W,E) strings.
 // - Opens a window with a pixel at the center;
 // - Exits cleanly with ESC and Window X button;
-
-int sizeofmap_x(t_general *gen)
-{
-	int i = gen->map_start;
-	int j = 0;
-	int res = 0;
-
-	while(gen->file[i])
-	{
-		j = 0;
-		while(gen->file[i][j])
-			j++;
-		if(j > res)
-			res = j;
-		i++;
-	}
-	res -= 1;
-	return res;
-}
-
-int sizeofmap_y(t_general *gen)
-{
-	int i = gen->map_start;
-	int res = 0;
-
-	while(gen->file[i])
-	{
-		res++;
-		i++;
-	}
-	res -= 1;
-	return res;
-}
 
 int	main(int ac, char **av)
 {
@@ -68,8 +35,8 @@ int	main(int ac, char **av)
 		return 0;
 	
 	player_pos(gen, gen->map->tilemap);
-	printf("PLAYER Y:%i\n", gen->player->y);
-	printf("PLAYER X:%i\n", gen->player->x);
+	printf("PLAYER Y:%f\n", gen->player->y);
+	printf("PLAYER X:%f\n", gen->player->x);
 
 	gen->mlx = mlx_init();
 	gen->win = mlx_new_window(gen->mlx, gen->win_x, gen->win_y, "cub3d");
@@ -78,10 +45,10 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
 
-	//mlx_loop_hook(gen->mlx, minimap, gen);
 	gen->img = malloc(sizeof(t_data));
 	gen->map_width = sizeofmap_x(gen) * SCALE;
 	gen->map_height = sizeofmap_y(gen) * SCALE;
+	//mlx_loop_hook(gen->mlx, minimap, gen);
 	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return(0);

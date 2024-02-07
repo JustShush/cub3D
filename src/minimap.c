@@ -6,11 +6,42 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 12:47:50 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:46:12 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int sizeofmap_x(t_general *gen)
+{
+	int i;
+	int j;
+	int res;
+
+	res = 0;
+	i = 0;
+	while(gen->map->tilemap[i])
+	{
+		j = 0;
+		while(gen->map->tilemap[i][j])
+			j++;
+		if(j > res)
+			res = j;
+		i++;
+	}
+	return (i);
+}
+
+int sizeofmap_y(t_general *gen)
+{
+	int i = 0;
+
+	while(gen->map->tilemap[i])
+	{
+		i++;
+	}
+	return (i - 1);
+}
 
 void	put_square(t_general *gen, int y, int x, int color)
 {
@@ -23,7 +54,7 @@ void	put_square(t_general *gen, int y, int x, int color)
 		while (i < SCALE)
 		{
 			if (j == 0 || i == 0)
-				my_mlx_pixel_put(gen->img, x + i, y + j, 0x00000000);
+				my_mlx_pixel_put(gen->img, x + i, y + j, 0x000000);
 			else
 				my_mlx_pixel_put(gen->img, x + i, y + j, color);
 			i++;
@@ -32,21 +63,33 @@ void	put_square(t_general *gen, int y, int x, int color)
 	}
 }
 
-
 void	draw_player(t_general *gen)
 {
+	int	i;
+	int	j;
 	int	x;
 	int	y;
 
+	j = gen->player->an + 30;
 	x = gen->player->x * SCALE / 64;
 	y = (gen->player->y * SCALE / 64);
-	my_mlx_pixel_put(gen->img, x, y, 0x00FF0000);
+	while (j > gen->player->an - 30)
+	{
+		i = 0;
+		while (i < SCALE)
+		{
+			my_mlx_pixel_put(gen->img, x - (cos(toRad(j)) * i), y - (sin(toRad(j) ) * i), GREEN_PIXEL);
+			i++;
+		}
+		j--;
+	}
+	my_mlx_pixel_put(gen->img, x, y, ORANGE_PIXEL);
 }
 
 void	mini_ray(t_general *gen, t_ray *ray)
 {
-	mlx_pixel_put(gen->mlx, gen->win, (ray->hx * 20 / 64) + (sign(gen->player->an, 0)), (ray->hy * 20 / 64) + (sign(gen->player->an, 1)), BLUE_PIXEL);
-	mlx_pixel_put(gen->mlx, gen->win, (ray->vx * 20 / 64) + (sign(gen->player->an, 0)), ((ray->vy * 20 / 64) + 300) + (sign(gen->player->an, 1)), BLUE_PIXEL);
+	my_mlx_pixel_put(gen->img, (ray->hx * SCALE / 64) + (sign(gen->player->an, 0)), (ray->hy * SCALE / 64) + (sign(gen->player->an, 1)), BLUE_PIXEL);
+	my_mlx_pixel_put(gen->img, (ray->vx * SCALE / 64) + (sign(gen->player->an, 0)), ((ray->vy * SCALE / 64) + SCALE * 15) + (sign(gen->player->an, 1)), BLUE_PIXEL);
 }
 
 int	minimap(t_general *gen)
