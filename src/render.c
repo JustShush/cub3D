@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 11:58:26 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:23:28 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ float	ft_tan(float angle)
 
 	s = sin(toRad(angle));
 	c = cos(toRad(angle));
-	if (c != 0)
+	if (fabs(c) > 0.0001)
 		return (s / c);
 	return (s);
 }
@@ -33,13 +33,18 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 
 //Checks if point is inside the screen
+//Returns 1 if wall or invalid
 int	point_check(t_general *gen, int y, int x)
 {
 	if (y >= 0 && x >= 0 && y <= gen->win_y && x <= gen->win_x
 		&& y / 64 < gen->map->y 
 		&& x / 64 < ft_strlen(gen->map->tilemap[y / 64])
 		&& gen->map->tilemap[y / 64][x / 64] != '1')
+	{
+		/* printf("Line: %s\n", gen->map->tilemap[y / 64]);
+		printf("TILE: %c\n",gen->map->tilemap[y / 64][x / 64]); */
 		return (0);
+	}
 	return (1);
 }
 
@@ -63,14 +68,7 @@ float	dist(t_general *gen, t_ray *ray, float y, float x)
 void	draw_floor(t_general *gen, float draw_start, int i)
 {
 	while (draw_start < gen->win_y)
-	{
-//		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
-//		{
-//			draw_start++;
-//			continue ;
-//		}
 		my_mlx_pixel_put(gen->img, i, draw_start++, GREEN_PIXEL);
-	}
 }
 
 void	draw_ceiling(t_general *gen, float draw_start, int i)
@@ -79,9 +77,7 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 
 	j = 0;
 	while (j < draw_start)
-	{
 		my_mlx_pixel_put(gen->img, i, j++, BLUE_PIXEL);
-	}
 }
 
 void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
@@ -100,15 +96,11 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	draw_ceiling(gen, draw_start, i);
 	while (draw_start <= draw_end)
 	{
-//		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
-//		{
-//			draw_start++;
-//			continue ;
-//		}
 		if (flag == 0)
 			my_mlx_pixel_put(gen->img, i, draw_start, RED_PIXEL);
 		if (flag == 1)
 			my_mlx_pixel_put(gen->img, i, draw_start, ORANGE_PIXEL);
+		my_mlx_pixel_put(gen->img, gen->win_x/2, draw_start, 0xFFFFFF);
 		draw_start++;
 	}
 	draw_floor(gen, draw_start, i);
@@ -123,14 +115,14 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 
 	by = 0;
 	bx = 0;
-	if (sin(toRad(ray->an)) > 0.001) //If ray is facing up
+	if (sin(toRad(ray->an)) > 0.0001) //If ray is facing up
 	{	
-		ray->hy = (((int)gen->player->y >> 6) << 6) - 0.001;
+		ray->hy = (((int)gen->player->y >> 6) << 6) - 0.0001;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
 		by = -64;
 		bx = 64 / ft_tan(ray->an);
 	}
-	else if (sin(toRad(ray->an)) < -0.001)//If ray is facing down
+	else if (sin(toRad(ray->an)) < -0.0001)//If ray is facing down
 	{
 		ray->hy = (((int)gen->player->y >> 6) << 6) + 64;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
@@ -159,19 +151,21 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 
 	by = 0;
 	bx = 0;
-	if (cos(toRad(ray->an)) > 0.001) //If ray is facing left
+	if (cos(toRad(ray->an)) > 0.0001) //If ray is facing left
 	{
 		ray->vx = (((int)gen->player->x >> 6) << 6) + 64;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		bx = 64;
-		by = (-64) / ft_tan(ray->an);
+		by = (-64) * ft_tan(ray->an);
+		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
 	}
-	else if ((cos(toRad(ray->an)) < -0.001)) //If ray is facing right
+	else if ((cos(toRad(ray->an)) < -0.0001)) //If ray is facing right
 	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) - 0.001;
+		ray->vx = (((int)gen->player->x >> 6) << 6) - 0.0001;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		bx = -64;
-		by = 64 / ft_tan(ray->an);
+		by = 64 * ft_tan(ray->an);
+		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
 	}
 	else
 	{
@@ -183,6 +177,7 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	{
 		ray->vx += bx;
 		ray->vy += by;
+		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
 	}
 	// printf("ray->vy: %f\nray->vx: %f\n",ray->vy, ray->vx);
 }
@@ -209,11 +204,27 @@ int	raycast(t_general *gen, t_ray *ray)
 		vdist = dist(gen, ray, ray->vy, ray->vx);
 		if (hdist <= vdist)
 		{
+			if (i == gen->win_x / 2  && point_check(gen, gen->ray->hy, gen->ray->hx))
+			{
+				printf("\nDIR:%f\n", gen->ray->an);
+				printf("SIN:%f\n", sin(toRad(ray->an)));
+				printf("TAN:%f\n",ft_tan(ray->an));
+				printf("HY:%f\nHX:%f\n", gen->ray->hy, gen->ray->hx);
+				printf("HDIST:%f\n", hdist);
+			}
 			draw_wall(gen, hdist, i, 0);
 			/* mlx_pixel_put(gen->mlx, gen->win, ray->hx, ray->hy, 0xFFFFFF); */
 		}
 		else
 		{
+			if (i == gen->win_x / 2  && point_check(gen, gen->ray->vy, gen->ray->vx))
+			{
+				printf("\nDIR:%f\n", gen->ray->an);
+				printf("COS:%f\n", cos(toRad(ray->an)));
+				printf("TAN:%f\n",ft_tan(ray->an));
+				printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
+				printf("VDIST:%f\n", vdist);
+			}
 			draw_wall(gen, vdist, i, 1);
 			/* mlx_pixel_put(gen->mlx, gen->win, ray->vx, ray->vy, 0xFFFFFF); */
 		}
@@ -234,7 +245,7 @@ void	print_display(t_general *gen)
 	init_img(gen);
 	raycast(gen, gen->ray);
 	minimap(gen);
-	put_player(gen, gen->player->y, gen->player->x, 2);
+	raycast2d(gen);
 	mlx_put_image_to_window(gen->mlx, gen->win, gen->img->img, 0, 0);
 	mlx_destroy_image(gen->mlx, gen->img->img);
 }
@@ -243,9 +254,9 @@ void	print_display(t_general *gen)
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an + 1);
+		gen->player->an = norm(gen->player->an - 0.1);
 	if (gen->key->r == 1)
-		gen->player->an = norm(gen->player->an - 1);
+		gen->player->an = norm(gen->player->an + 0.1);
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));

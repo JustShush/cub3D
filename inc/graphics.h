@@ -15,7 +15,7 @@
 #include "../mlx_linux/mlx.h"
 #include "../gnl/gnl.h"
 
-#define SCALE 20
+#define SCALE 50
 
 typedef struct s_img
 {

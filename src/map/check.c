@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 13:01:12 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:45:37 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	save_img(t_general *gen, char *dir, char *line, int j)
 		gen->textures->WE = mlx_xpm_file_to_image(gen->mlx, path, &x, &y);
 	else if (dir[0] == 'E' && dir[1] == 'A')
 		gen->textures->EA = mlx_xpm_file_to_image(gen->mlx, path, &x, &y);
-	printf("dir: %s\n", dir);
 	free(path);
 }
 

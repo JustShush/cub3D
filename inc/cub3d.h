@@ -96,13 +96,16 @@ void		player_pos(t_general *gen, char **map);
 t_general	*init(t_general *gen, char **av);
 
 //render.c
+
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
 //minimap.c
+void		raycast2d(t_general *gen);
+/* void		draw_player(t_general *gen);
 void		put_player(t_general *gen, int py, int px, int r);
-void		put_rays(t_general *gen, int angle, int py, int px, int len);
+void		put_rays(t_general *gen, int angle, int py, int px, int len); */
 int			minimap(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
 int 		sizeofmap_x(t_general *gen);

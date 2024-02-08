@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:49:01 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/06 15:24:09 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:46:31 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ int	key_press(int key, t_general *gen)
 		gen->key->w = 1;
 	if (key == 115)//S
 		gen->key->s = 1;
-	printf("Player y: %f\n", gen->player->y);
-	printf("Player X: %f\n;", gen->player->x);
-	printf("Player Dir: %f\n", gen->player->an);
 	return (0);
 }
 

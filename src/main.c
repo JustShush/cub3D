@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 11:52:56 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:45:18 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	main(int ac, char **av)
 		return 0;
 	
 	player_pos(gen, gen->map->tilemap);
-	printf("PLAYER Y:%f\n", gen->player->y);
-	printf("PLAYER X:%f\n", gen->player->x);
+/* 	printf("PLAYER Y:%f\n", gen->player->y);
+	printf("PLAYER X:%f\n", gen->player->x); */
 
 	gen->mlx = mlx_init();
 	gen->win = mlx_new_window(gen->mlx, gen->win_x, gen->win_y, "cub3d");
