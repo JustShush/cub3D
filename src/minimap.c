@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 11:52:21 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 12:03:41 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,32 +75,9 @@ void	put_rays(t_general *gen, int angle, int py, int px, int len)
 	{
 		rx = round(px - (cos(toRad(angle)) * i));
 		ry = round(py - (sin(toRad(angle)) * i));
-		mlx_pixel_put(gen->mlx, gen->win, rx, ry, GREEN_PIXEL);
+		my_mlx_pixel_put(gen->img, rx, ry, 0x00FF00);
 		i++;
 	}
-}
-
-void	draw_player(t_general *gen)
-{
-	int	i;
-	int	j;
-	int	x;
-	int	y;
-
-	j = gen->player->an + 30;
-	x = gen->player->x * SCALE / 64;
-	y = (gen->player->y * SCALE / 64);
-	while (j > gen->player->an - 30)
-	{
-		i = 0;
-		while (i < SCALE)
-		{
-			my_mlx_pixel_put(gen->img, x - (cos(toRad(j)) * i), y - (sin(toRad(j) ) * i), GREEN_PIXEL);
-			i++;
-		}
-		j--;
-	}
-	my_mlx_pixel_put(gen->img, x, y, ORANGE_PIXEL);
 }
 
 //Takes player position and radius. Draws circle
@@ -112,7 +89,7 @@ void	put_player(t_general *gen, int py, int px, int r)
 	int	y;
 	
 	i = 0;
-	mlx_pixel_put(gen->mlx, gen->win, px, py, ORANGE_PIXEL);
+	my_mlx_pixel_put(gen->img, px, py, 0xFF8000);
 	while (i <= 360)
 	{
 		j = r;
@@ -120,7 +97,7 @@ void	put_player(t_general *gen, int py, int px, int r)
 		{
 			x = round(px + (j * cos(toRad(i))));
 			y = round(py + (j * sin(toRad(i))));
-			mlx_pixel_put(gen->mlx, gen->win, x, y, ORANGE_PIXEL);
+			my_mlx_pixel_put(gen->img, x, y, 0xFF8000);
 			j--;
 		}
 		i += 1;
@@ -141,10 +118,16 @@ void	raycast2d(t_general *gen)
 	ray_len = 50;
 	i = gen->player->an + (gen->pov / 2);
 	x = gen->player->x * 20 / 64;
-	y = (gen->player->y * 20 / 64) + 300;
+	y = (gen->player->y * 20 / 64);
 	while (i > gen->player->an - (gen->pov / 2))
 		put_rays(gen, i--, y, x, ray_len);
 	put_player(gen, y, x, pradius);
+}
+
+void	mini_ray(t_general *gen, t_ray *ray)
+{
+	my_mlx_pixel_put(gen->img, (ray->hx * SCALE / 64) + (sign(gen->player->an, 0)), (ray->hy * SCALE / 64) + (sign(gen->player->an, 1)), BLUE_PIXEL);
+	my_mlx_pixel_put(gen->img, (ray->vx * SCALE / 64) + (sign(gen->player->an, 0)), ((ray->vy * SCALE / 64) + SCALE * 15) + (sign(gen->player->an, 1)), BLUE_PIXEL);
 }
 
 int	minimap(t_general *gen)
@@ -154,7 +137,6 @@ int	minimap(t_general *gen)
 	int map_x = 0;
 	int map_y = 0;
 
-	raycast2d(gen);
 	while(gen->map->tilemap[y] && map_y <= gen->map_height && map_x <= gen->map_width)
 	{
 		while(gen->map->tilemap[y][x] && map_y <= gen->map_height && map_x <= gen->map_width && gen->map->tilemap[y][x] != '\n')

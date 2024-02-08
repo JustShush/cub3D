@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 11:55:46 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:58:26 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void	print_display(t_general *gen)
 	init_img(gen);
 	raycast(gen, gen->ray);
 	minimap(gen);
-	draw_player(gen);
+	put_player(gen, gen->player->y, gen->player->x, 2);
 	mlx_put_image_to_window(gen->mlx, gen->win, gen->img->img, 0, 0);
 	mlx_destroy_image(gen->mlx, gen->img->img);
 }
