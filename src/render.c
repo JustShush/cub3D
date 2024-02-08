@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/07 16:45:13 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:55:46 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ float	ft_tan(float angle)
 	if (c != 0)
 		return (s / c);
 	return (s);
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }
 
 //Checks if point is inside the screen
@@ -56,12 +64,12 @@ void	draw_floor(t_general *gen, float draw_start, int i)
 {
 	while (draw_start < gen->win_y)
 	{
-		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
-		{
-			draw_start++;
-			continue ;
-		}
-		mlx_pixel_put(gen->mlx, gen->win, i, draw_start++, GREEN_PIXEL);
+//		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
+//		{
+//			draw_start++;
+//			continue ;
+//		}
+		my_mlx_pixel_put(gen->img, i, draw_start++, GREEN_PIXEL);
 	}
 }
 
@@ -72,7 +80,7 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 	j = 0;
 	while (j < draw_start)
 	{
-		mlx_pixel_put(gen->mlx, gen->win, i, j++, BLUE_PIXEL);
+		my_mlx_pixel_put(gen->img, i, j++, BLUE_PIXEL);
 	}
 }
 
@@ -92,15 +100,15 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	draw_ceiling(gen, draw_start, i);
 	while (draw_start <= draw_end)
 	{
-		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
-		{
-			draw_start++;
-			continue ;
-		}
+//		if (draw_start >= gen->win_y - 100 && draw_start < gen->win_y && i >= 0 && i <= 120)
+//		{
+//			draw_start++;
+//			continue ;
+//		}
 		if (flag == 0)
-			mlx_pixel_put(gen->mlx, gen->win, i, draw_start, RED_PIXEL);
+			my_mlx_pixel_put(gen->img, i, draw_start, RED_PIXEL);
 		if (flag == 1)
-			mlx_pixel_put(gen->mlx, gen->win, i, draw_start, ORANGE_PIXEL);
+			my_mlx_pixel_put(gen->img, i, draw_start, ORANGE_PIXEL);
 		draw_start++;
 	}
 	draw_floor(gen, draw_start, i);
@@ -215,13 +223,29 @@ int	raycast(t_general *gen, t_ray *ray)
 	return (0);
 }
 
+void	init_img(t_general *gen)
+{
+	gen->img->img = mlx_new_image(gen->mlx, gen->win_x, gen->win_y);
+	gen->img->addr = mlx_get_data_addr(gen->img->img, &gen->img->bits_per_pixel, &gen->img->line_length, &gen->img->endian);
+}
+
+void	print_display(t_general *gen)
+{
+	init_img(gen);
+	raycast(gen, gen->ray);
+	minimap(gen);
+	draw_player(gen);
+	mlx_put_image_to_window(gen->mlx, gen->win, gen->img->img, 0, 0);
+	mlx_destroy_image(gen->mlx, gen->img->img);
+}
+
 //Raycast based on player's direction and pov
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an - 1);
-	if (gen->key->r == 1)
 		gen->player->an = norm(gen->player->an + 1);
+	if (gen->key->r == 1)
+		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));
@@ -242,7 +266,6 @@ int	render(t_general *gen)
 		gen->player->y -= sin(toRad(norm(gen->player->an + 90)));
 		gen->player->x -= cos(toRad(norm(gen->player->an + 90)));
 	}
-	raycast(gen, gen->ray);
-	minimap(gen);
+	print_display(gen);
 	return(0);
 }

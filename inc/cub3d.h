@@ -63,6 +63,10 @@ typedef struct	s_general
 	int			win_y;
 	int			win_x;
 	char		**file;
+	int			map_start;
+	int 		map_width;
+	int 		map_height;
+	t_data		*img;
 	t_key		*key;
 	t_ray		*ray;
 	t_map		*map;
@@ -96,14 +100,18 @@ int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
 //minimap.c
+void		draw_player(t_general *gen);
 void		put_rays(t_general *gen, int angle, int py, int px, int len);
 int			minimap(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
+int 		sizeofmap_x(t_general *gen);
+int			sizeofmap_y(t_general *gen);
 
 //render_utils.c
 double		norm(double angle);
 float		toRad(float d);
 int			sign(int an, int flag);
 int			first_str(char *s1, char *s2);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 #endif

@@ -6,26 +6,57 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/07 15:15:40 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:52:21 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int sizeofmap_x(t_general *gen)
+{
+	int i;
+	int j;
+	int res;
+
+	res = 0;
+	i = 0;
+	while(gen->map->tilemap[i])
+	{
+		j = 0;
+		while(gen->map->tilemap[i][j])
+			j++;
+		if(j > res)
+			res = j;
+		i++;
+	}
+	return (i);
+}
+
+int sizeofmap_y(t_general *gen)
+{
+	int i = 0;
+
+	while(gen->map->tilemap[i])
+	{
+		i++;
+	}
+	return (i - 1);
+}
 
 void	put_square(t_general *gen, int y, int x, int color)
 {
 	int	j = 0;
 	int	i = 0;
 
-	while (j < 20)
+	while (j < SCALE)
 	{
 		i = 0;
-		while (i < 20)
+		while (i < SCALE)
 		{
 			if (j == 0 || i == 0)
-				mlx_pixel_put(gen->mlx, gen->win, x + i, y + j, 0x000000);
+				my_mlx_pixel_put(gen->img, x + i, y + j, 0x000000);
 			else
-				mlx_pixel_put(gen->mlx, gen->win, x + i, y + j, color);
+				my_mlx_pixel_put(gen->img, x + i, y + j, color);
 			i++;
 		}
 		j++;
@@ -47,6 +78,29 @@ void	put_rays(t_general *gen, int angle, int py, int px, int len)
 		mlx_pixel_put(gen->mlx, gen->win, rx, ry, GREEN_PIXEL);
 		i++;
 	}
+}
+
+void	draw_player(t_general *gen)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	y;
+
+	j = gen->player->an + 30;
+	x = gen->player->x * SCALE / 64;
+	y = (gen->player->y * SCALE / 64);
+	while (j > gen->player->an - 30)
+	{
+		i = 0;
+		while (i < SCALE)
+		{
+			my_mlx_pixel_put(gen->img, x - (cos(toRad(j)) * i), y - (sin(toRad(j) ) * i), GREEN_PIXEL);
+			i++;
+		}
+		j--;
+	}
+	my_mlx_pixel_put(gen->img, x, y, ORANGE_PIXEL);
 }
 
 //Takes player position and radius. Draws circle
@@ -95,24 +149,31 @@ void	raycast2d(t_general *gen)
 
 int	minimap(t_general *gen)
 {
-	int	i;
-	int	j;
-	int	k;
+	int y = 0;
+	int x = 0;
+	int map_x = 0;
+	int map_y = 0;
 
-	k = 0;
-	j = gen->win_y - 100;
 	raycast2d(gen);
-	while (j < gen->win_y && k < 100)
+	while(gen->map->tilemap[y] && map_y <= gen->map_height && map_x <= gen->map_width)
 	{
-		i = 0;
-		while (i < 120)
+		while(gen->map->tilemap[y][x] && map_y <= gen->map_height && map_x <= gen->map_width && gen->map->tilemap[y][x] != '\n')
 		{
-			if (gen->map->tilemap[k / 20][i / 20] == '1')
-				put_square(gen, j, i, RED_PIXEL);
-			i += 20;
+			if(gen->map->tilemap[y][x] == '1')
+				put_square(gen, map_y, map_x, 0x00000FFF);
+			else if(gen->map->tilemap[y][x] == '0')
+				put_square(gen, map_y, map_x, 0x00FFF000);
+			else if(gen->map->tilemap[y][x] == 'W' || gen->map->tilemap[y][x] == 'E' || gen->map->tilemap[y][x] == 'N' || gen->map->tilemap[y][x] == 'S')
+				put_square(gen, map_y, map_x, 0x00FFF000);
+			else if(gen->map->tilemap[y][x] == ' ' || gen->map->tilemap[y][x] == '\t')
+				put_square(gen, map_y, map_x, 0x000000FF);
+			map_x += SCALE;
+			x++;
 		}
-		k += 20;
-		j += 20;
+		map_y += SCALE;
+		map_x = 0;
+		x = 0;
+		y++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/07 15:51:48 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:52:56 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	minimap(t_general *gen);
 // - Initializes a map struct and it's tilemap array and (N,S,W,E) strings.
 // - Opens a window with a pixel at the center;
 // - Exits cleanly with ESC and Window X button;
+
 int	main(int ac, char **av)
 {
 	t_general	*gen;
@@ -44,7 +45,9 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
 
-	//mlx_loop_hook(gen->mlx, minimap, gen);
+	gen->img = malloc(sizeof(t_data));
+	gen->map_width = sizeofmap_x(gen) * SCALE;
+	gen->map_height = sizeofmap_y(gen) * SCALE;
 	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return(0);

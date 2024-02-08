@@ -15,6 +15,8 @@
 #include "../mlx_linux/mlx.h"
 #include "../gnl/gnl.h"
 
+#define SCALE 20
+
 typedef struct s_img
 {
 	void		*img;
@@ -25,6 +27,14 @@ typedef struct s_img
 	int 		width;
 	int 		height;
 }				t_img;
+
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
 
 typedef struct RGB
 {
