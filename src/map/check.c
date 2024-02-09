@@ -12,6 +12,19 @@
 
 #include "../../inc/cub3d.h"
 
+void    free_array(char **array)
+{
+	int i;
+
+	i = 0;
+	while(array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 int	flood_fill(char **map, int x, int y)
 {
 	if (map[x] && map[x][y] == '0')
@@ -161,6 +174,8 @@ void	save_color(t_general *gen, char dir, char *line, int j)
 		gen->textures->F->g = ft_atoi(color[1]);
 		gen->textures->F->b = ft_atoi(color[2]);
 	}
+	free(path);
+	free_array(color);
 }
 
 int get_textures(t_general *gen)
