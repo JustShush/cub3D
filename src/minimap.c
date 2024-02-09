@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 12:55:43 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:57:47 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	put_rays(t_general *gen, int angle, int py, int px)
 	{
 		rx = round(px - (sin(toRad(angle - 90)) * i));
 		ry = round(py - (cos(toRad(angle - 90)) * i));
-		my_mlx_pixel_put(gen->img, rx, ry, RED_PIXEL);
+		if (rx >= 0 && ry >= 0 && rx <= gen->win_x && ry <= gen->win_y)
+			my_mlx_pixel_put(gen->img, rx, ry, RED_PIXEL);
 		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 14:23:28 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:55:33 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		bx = 64;
 		by = (-64) * ft_tan(ray->an);
-		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
+		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
 	}
 	else if ((cos(toRad(ray->an)) < -0.0001)) //If ray is facing right
 	{
@@ -165,7 +165,7 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		bx = -64;
 		by = 64 * ft_tan(ray->an);
-		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
+		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
 	}
 	else
 	{
@@ -177,7 +177,7 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	{
 		ray->vx += bx;
 		ray->vy += by;
-		printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
+		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
 	}
 	// printf("ray->vy: %f\nray->vx: %f\n",ray->vy, ray->vx);
 }
@@ -206,11 +206,11 @@ int	raycast(t_general *gen, t_ray *ray)
 		{
 			if (i == gen->win_x / 2  && point_check(gen, gen->ray->hy, gen->ray->hx))
 			{
-				printf("\nDIR:%f\n", gen->ray->an);
+				/* printf("\nDIR:%f\n", gen->ray->an);
 				printf("SIN:%f\n", sin(toRad(ray->an)));
 				printf("TAN:%f\n",ft_tan(ray->an));
 				printf("HY:%f\nHX:%f\n", gen->ray->hy, gen->ray->hx);
-				printf("HDIST:%f\n", hdist);
+				printf("HDIST:%f\n", hdist); */
 			}
 			draw_wall(gen, hdist, i, 0);
 			/* mlx_pixel_put(gen->mlx, gen->win, ray->hx, ray->hy, 0xFFFFFF); */
@@ -219,11 +219,11 @@ int	raycast(t_general *gen, t_ray *ray)
 		{
 			if (i == gen->win_x / 2  && point_check(gen, gen->ray->vy, gen->ray->vx))
 			{
-				printf("\nDIR:%f\n", gen->ray->an);
+				/* printf("\nDIR:%f\n", gen->ray->an);
 				printf("COS:%f\n", cos(toRad(ray->an)));
 				printf("TAN:%f\n",ft_tan(ray->an));
 				printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
-				printf("VDIST:%f\n", vdist);
+				printf("VDIST:%f\n", vdist); */
 			}
 			draw_wall(gen, vdist, i, 1);
 			/* mlx_pixel_put(gen->mlx, gen->win, ray->vx, ray->vy, 0xFFFFFF); */
@@ -254,9 +254,9 @@ void	print_display(t_general *gen)
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an - 0.1);
+		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->r == 1)
-		gen->player->an = norm(gen->player->an + 0.1);
+		gen->player->an = norm(gen->player->an + 1);
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));
