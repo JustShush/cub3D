@@ -6,7 +6,7 @@
 /*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 11:57:47 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/09 12:32:48 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	put_player(t_general *gen, int py, int px, int r)
 	int	y;
 	
 	i = 0;
-	my_mlx_pixel_put(gen->img, px, py, ORANGE_PIXEL);
+	if (px >= 0 && py >= 0 && px <= gen->win_x && py <= gen->win_y)
+		my_mlx_pixel_put(gen->img, px, py, ORANGE_PIXEL);
 	while (i <= 360)
 	{
 		j = r;
@@ -98,7 +99,8 @@ void	put_player(t_general *gen, int py, int px, int r)
 		{
 			x = round(px + (j * cos(toRad(i))));
 			y = round(py + (j * sin(toRad(i))));
-			my_mlx_pixel_put(gen->img, x, y, ORANGE_PIXEL);
+			if (x >= 0 && y >= 0 && x <= gen->win_x && py <= gen->win_y)
+				my_mlx_pixel_put(gen->img, x, y, ORANGE_PIXEL);
 			j--;
 		}
 		i += 1;
