@@ -6,42 +6,11 @@
 /*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 12:32:48 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/09 13:18:22 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-int sizeofmap_x(t_general *gen)
-{
-	int i;
-	int j;
-	int res;
-
-	res = 0;
-	i = 0;
-	while(gen->map->tilemap[i])
-	{
-		j = 0;
-		while(gen->map->tilemap[i][j])
-			j++;
-		if(j > res)
-			res = j;
-		i++;
-	}
-	return (i);
-}
-
-int sizeofmap_y(t_general *gen)
-{
-	int i = 0;
-
-	while(gen->map->tilemap[i])
-	{
-		i++;
-	}
-	return (i - 1);
-}
 
 void	put_square(t_general *gen, int y, int x, int color)
 {

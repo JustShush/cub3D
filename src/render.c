@@ -6,31 +6,11 @@
 /*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 13:11:02 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/09 15:04:03 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-float	ft_tan(float angle)
-{
-	float	s;
-	float	c;
-
-	s = sin(toRad(angle));
-	c = cos(toRad(angle));
-	if (fabs(c) > 0.0001)
-		return (s / c);
-	return (s);
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 //Checks if point is inside the screen
 //Returns 1 if wall or invalid
@@ -40,29 +20,8 @@ int	point_check(t_general *gen, int y, int x)
 		&& y / 64 < gen->map->y 
 		&& x / 64 < ft_strlen(gen->map->tilemap[y / 64])
 		&& gen->map->tilemap[y / 64][x / 64] != '1')
-	{
-		/* printf("Line: %s\n", gen->map->tilemap[y / 64]);
-		printf("TILE: %c\n",gen->map->tilemap[y / 64][x / 64]); */
 		return (0);
-	}
 	return (1);
-}
-
-//Takes ray x and y and and returns their distance to the player
-float	dist(t_general *gen, t_ray *ray, float y, float x)
-{
-	float	dx;
-	float	dy;
-	float	fix;
-	float	beta;
-	float	dist;
-
-	dx = cos(toRad(ray->an)) * (x - gen->player->x);
-	dy = sin(toRad(ray->an)) * (y - gen->player->y);
-	dist = (dx - dy);
-	beta = norm(gen->player->an - ray->an);
-	fix = (dist * cos(toRad(beta)));
-	return (fix);
 }
 
 void	draw_floor(t_general *gen, float draw_start, int i)
@@ -106,82 +65,6 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	draw_floor(gen, draw_start, i);
 }
 
-
-//Check intersection of ray and horizontal lines
-void	horizontal_intersection(t_general *gen, t_ray *ray)
-{
-	int	by;
-	int	bx;
-
-	by = 0;
-	bx = 0;
-	if (sin(toRad(ray->an)) > 0.0001) //If ray is facing up
-	{	
-		ray->hy = (((int)gen->player->y >> 6) << 6) - 0.0001;
-		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		by = -64;
-		bx = 64 / ft_tan(ray->an);
-	}
-	else if (sin(toRad(ray->an)) < -0.0001)//If ray is facing down
-	{
-		ray->hy = (((int)gen->player->y >> 6) << 6) + 64;
-		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		by = 64;
-		bx = -64 / ft_tan(ray->an);
-	}
-	else
-	{
-		ray->hx = gen->player->x;
-		ray->hy = gen->player->y;
-		return ;
-	}
-	while (!point_check(gen, ray->hy, ray->hx))
-	{
-		ray->hx += bx;
-		ray->hy += by;
-	}
-	// printf("ray->hy: %f\nray->hx: %f\n",ray->hy, ray->hx);
-}
-
-//Check intersection of ray and vertical lines
-void	vertical_intersection(t_general *gen, t_ray *ray)
-{
-	int	by;
-	int	bx;
-
-	by = 0;
-	bx = 0;
-	if (cos(toRad(ray->an)) > 0.0001) //If ray is facing left
-	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) + 64;
-		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		bx = 64;
-		by = (-64) * ft_tan(ray->an);
-		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
-	}
-	else if ((cos(toRad(ray->an)) < -0.0001)) //If ray is facing right
-	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) - 0.0001;
-		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		bx = -64;
-		by = 64 * ft_tan(ray->an);
-		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
-	}
-	else
-	{
-		ray->vx = gen->player->x;
-		ray->vy = gen->player->y;
-		return ;
-	}
-	while (!point_check(gen, ray->vy, ray->vx))
-	{
-		ray->vx += bx;
-		ray->vy += by;
-		/* printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx); */
-	}
-	// printf("ray->vy: %f\nray->vx: %f\n",ray->vy, ray->vx);
-}
-
 //Raycast loop. For each ray:
 //	- Find wall intersection point
 //	- Find distance between player and wall intersection point
@@ -203,41 +86,13 @@ int	raycast(t_general *gen, t_ray *ray)
 		vertical_intersection(gen, gen->ray);
 		vdist = dist(gen, ray, ray->vy, ray->vx);
 		if (hdist <= vdist)
-		{
-			if (i == gen->win_x / 2  && point_check(gen, gen->ray->hy, gen->ray->hx))
-			{
-				/* printf("\nDIR:%f\n", gen->ray->an);
-				printf("SIN:%f\n", sin(toRad(ray->an)));
-				printf("TAN:%f\n",ft_tan(ray->an));
-				printf("HY:%f\nHX:%f\n", gen->ray->hy, gen->ray->hx);
-				printf("HDIST:%f\n", hdist); */
-			}
 			draw_wall(gen, hdist, i, 0);
-			/* mlx_pixel_put(gen->mlx, gen->win, ray->hx, ray->hy, 0xFFFFFF); */
-		}
 		else
-		{
-			if (i == gen->win_x / 2  && point_check(gen, gen->ray->vy, gen->ray->vx))
-			{
-				/* printf("\nDIR:%f\n", gen->ray->an);
-				printf("COS:%f\n", cos(toRad(ray->an)));
-				printf("TAN:%f\n",ft_tan(ray->an));
-				printf("VY:%f\nVX:%f\n", gen->ray->vy, gen->ray->vx);
-				printf("VDIST:%f\n", vdist); */
-			}
 			draw_wall(gen, vdist, i, 1);
-			/* mlx_pixel_put(gen->mlx, gen->win, ray->vx, ray->vy, 0xFFFFFF); */
-		}
 		ray->an = norm(ray->an - column);
 		i++;
 	}
 	return (0);
-}
-
-void	init_img(t_general *gen)
-{
-	gen->img->img = mlx_new_image(gen->mlx, gen->win_x, gen->win_y);
-	gen->img->addr = mlx_get_data_addr(gen->img->img, &gen->img->bits_per_pixel, &gen->img->line_length, &gen->img->endian);
 }
 
 void	print_display(t_general *gen)

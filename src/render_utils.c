@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 11:52:27 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:33:47 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
 
 double	norm(double angle)
 {
@@ -26,25 +34,14 @@ float	toRad(float d)
 	return (d * PI / 180);
 }
 
-//If flag == 1, returns cos(angle) sign
-//If flag == 0, returns sin(angle) sign
-int	sign(int an, int flag)
+float	ft_tan(float angle)
 {
-	int sign;
+	float	s;
+	float	c;
 
-	if (flag == 0)
-		sign = (sin(toRad(an)) > 0) ? 1 : ((sin(toRad(an)) < 0) ? -1 : 0);
-	if (flag == 1)
-		sign = (cos(toRad(an)) > 0) ? 1 : ((cos(toRad(an)) < 0) ? -1 : 0);
-	return (sign);
-}
-
-//Returns 0 if s1's first non space chars are equal to s2
-int	first_str(char *s1, char *s2)
-{
-	while (*s1 == ' ')
-		s1++;
-	if (ft_strncmp(s1, s2, ft_strlen(s2)) == 0)
-		return (0);
-	return (1);
+	s = sin(toRad(angle));
+	c = cos(toRad(angle));
+	if (fabs(c) > 0.0001)
+		return (s / c);
+	return (s);
 }

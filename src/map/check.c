@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/08 12:45:37 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:23:16 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,48 +60,6 @@ int		check_map_closed(char **map)
 		}
 	}
 	return 0;
-}
-
-int line_empty(char *line)
-{
-	int i;
-
-	i = 0;
-	while(line[i])
-	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			return 0;
-		i++;
-	}
-	return 1;
-}
-
-int get_start_map(char **map)
-{
-	int i;
-
-	i = 0;
-	while(map[i])
-		i++;
-	i -= 1;
-	while(line_empty(map[i]) == 1)
-		i--;
-	while(line_empty(map[i]) == 0)
-		i--;
-	return (i);
-
-}
-
-//Checks if file_path has ".cub" suffix
-int	check_suffix(char *file_path)
-{
-	while (*file_path)
-	{
-		if (ft_strcmp(file_path, ".cub") == 0)
-			return (0);
-		file_path++;
-	}
-	return (1);
 }
 
 int check_char(char **map)

@@ -59,7 +59,6 @@ char	**map_init(char *file);
 void	printf_array(char **array);
 int		flood_fill(char **map, int x, int y);
 int		check_map_closed(char **map);
-int		line_empty(char *line);
 int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);

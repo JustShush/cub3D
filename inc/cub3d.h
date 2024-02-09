@@ -75,14 +75,21 @@ typedef struct	s_general
 }				t_general;
 
 //map
-void		save_img(t_general *gen, char *dir, char *line, int j);
-int			check_color(char *line);
-void		save_color(t_general *gen, char dir, char *line, int j);
-int			get_textures(t_general *gen);
-int			check_textures(t_general *gen);
+//map/check.c
 int			check_valid_color(t_general *gen);
 int			check_map(t_general *gen);
+int			check_textures(t_general *gen);
+int			get_textures(t_general *gen);
+void		save_color(t_general *gen, char dir, char *line, int j);
+int			check_color(char *line);
+void		save_img(t_general *gen, char *dir, char *line, int j);
+
+//map/map.c
 void		tilemap(t_map *map, char *map_path);
+
+//map/map_utils.c
+int			sizeofmap_x(t_general *gen);
+int			sizeofmap_y(t_general *gen);
 
 //close.c
 int			close_game(t_general *gen);
@@ -92,30 +99,35 @@ int			key_release(int key, t_general *gen);
 int			key_press(int key, t_general *gen);
 
 //init.c
+void		init_img(t_general *gen);
 void		player_pos(t_general *gen, char **map);
 t_general	*init(t_general *gen, char **av);
 
-//render.c
+//render_calc.c
+float		dist(t_general *gen, t_ray *ray, float y, float x);
+void		horizontal_intersection(t_general *gen, t_ray *ray);
+void		vertical_intersection(t_general *gen, t_ray *ray);
 
+//render_utils.c
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+double		norm(double angle);
+float		toRad(float d);
+float		ft_tan(float angle);
+
+//render.c
 int			render(t_general *gen);
 int			point_check(t_general *gen, int y, int x);
 
 //minimap.c
 void		raycast2d(t_general *gen);
-/* void		draw_player(t_general *gen);
-void		put_player(t_general *gen, int py, int px, int r);
-void		put_rays(t_general *gen, int angle, int py, int px, int len); */
 int			minimap(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
 int 		sizeofmap_x(t_general *gen);
 int			sizeofmap_y(t_general *gen);
 
-//render_utils.c
-double		norm(double angle);
-float		toRad(float d);
-int			sign(int an, int flag);
+
+//utils.c
 int			first_str(char *s1, char *s2);
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int			line_empty(char *line);
 
 #endif
