@@ -6,7 +6,7 @@
 /*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 12:34:03 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/09 13:11:02 by mira             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,23 +260,23 @@ int	render(t_general *gen)
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));
-		gen->player->x -= cos(toRad(gen->player->an));
+		gen->player->x += cos(toRad(gen->player->an));
 	}
 	if (gen->key->s == 1)
 	{
-		gen->player->y += sin(toRad(gen->player->an));
-		gen->player->x += cos(toRad(gen->player->an));
+		gen->player->y -= sin(toRad(norm(gen->player->an + 180)));
+		gen->player->x += cos(toRad(norm(gen->player->an + 180)));
 	}
 	if (gen->key->a == 1)
 	{
-		gen->player->y -= sin(toRad(norm(gen->player->an - 90)));
-		gen->player->x -= cos(toRad(norm(gen->player->an - 90)));
+		gen->player->y -= sin(toRad(norm(gen->player->an + 90)));
+		gen->player->x += cos(toRad(norm(gen->player->an + 90)));
 	}
 	if (gen->key->d == 1)
 	{
-		gen->player->y -= sin(toRad(norm(gen->player->an + 90)));
-		gen->player->x -= cos(toRad(norm(gen->player->an + 90)));
+		gen->player->y -= sin(toRad(norm(gen->player->an - 90)));
+		gen->player->x += cos(toRad(norm(gen->player->an - 90)));
 	}
 	print_display(gen);
 	return(0);
-}
+} 
