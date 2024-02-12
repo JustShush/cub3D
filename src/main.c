@@ -20,6 +20,30 @@ int	minimap(t_general *gen);
 // - Opens a window with a pixel at the center;
 // - Exits cleanly with ESC and Window X button;
 
+void	look_left(t_general *gen, int sens)
+{
+	gen->player->an -= 0.01f * sens;
+}
+
+void	look_right(t_general *gen, int sens)
+{
+	gen->player->an += 0.01f * sens;
+}
+
+int	mouse_move(int x, int y, t_general *gen)
+{
+	(void)y;
+	if (x != gen->win_x/2 || y != gen->win_y/2)
+	{
+		if (x > gen->win_x/2)
+			look_left(gen, (x - gen->win_x/2) * X_SENSE);
+		else if (x < gen->win_x/2)
+			look_right(gen, (gen->win_x/2 - x) * X_SENSE);
+	}
+	mlx_mouse_move(gen->mlx, gen->win, gen->win_x/2, gen->win_y/2);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_general	*gen;
@@ -44,10 +68,9 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 17, 0, close_game, gen);
 	mlx_hook(gen->win, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
+	mlx_hook(gen->win, 6, 1L << 6, mouse_move, gen);
+	mlx_mouse_hide(gen->mlx, gen->win);
 
-	gen->img = malloc(sizeof(t_data));
-	gen->map_width = sizeofmap_x(gen) * SCALE;
-	gen->map_height = sizeofmap_y(gen) * SCALE;
 	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return(0);

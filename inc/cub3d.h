@@ -17,6 +17,7 @@
 # define	ORANGE_PIXEL	0xFF8000
 # define	GREEN_PIXEL		0x00FF00
 # define	BLUE_PIXEL		0x0000FF
+# define X_SENSE		2
 
 typedef struct	s_map
 {
@@ -27,6 +28,13 @@ typedef struct	s_map
 	char	*south;
 	int		y;
 }				t_map;
+
+typedef struct s_anim
+{
+	t_img	*data;
+	int		frame;
+	int		frame_count;
+}				t_anim;
 
 typedef struct	s_key
 {
@@ -44,6 +52,12 @@ typedef struct	s_player
 	float		y;
 	float		an;
 }				t_player;
+
+typedef struct	s_mouse
+{
+	int		x;
+	int		y;
+}				t_mouse;
 
 typedef struct	s_ray
 {
@@ -63,9 +77,7 @@ typedef struct	s_general
 	int			win_y;
 	int			win_x;
 	char		**file;
-	int			map_start;
-	int 		map_width;
-	int 		map_height;
+	t_anim 		*anim;
 	t_data		*img;
 	t_key		*key;
 	t_ray		*ray;
@@ -102,6 +114,7 @@ int			key_press(int key, t_general *gen);
 void		init_img(t_general *gen);
 void		player_pos(t_general *gen, char **map);
 t_general	*init(t_general *gen, char **av);
+void		make_background(t_general *gen);
 
 //render_calc.c
 float		dist(t_general *gen, t_ray *ray, float y, float x);
@@ -109,7 +122,7 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color, t_general *gen);
 double		norm(double angle);
 float		toRad(float d);
 float		ft_tan(float angle);
