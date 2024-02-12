@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 15:04:03 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/12 12:17:03 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 			my_mlx_pixel_put(gen->img, i, draw_start, RED_PIXEL);
 		if (flag == 1)
 			my_mlx_pixel_put(gen->img, i, draw_start, ORANGE_PIXEL);
-		my_mlx_pixel_put(gen->img, gen->win_x/2, draw_start, 0xFFFFFF);
+		if (i == gen->win_x / 2)
+			my_mlx_pixel_put(gen->img, gen->win_x / 2, draw_start, 0xFFFFFF);
 		draw_start++;
 	}
 	draw_floor(gen, draw_start, i);
@@ -81,15 +82,22 @@ int	raycast(t_general *gen, t_ray *ray)
 	ray->an = norm(gen->player->an + (gen->pov / 2));
 	while (i < gen->win_x)
 	{
-		horizontal_intersection(gen, gen->ray);
-		hdist = dist(gen, ray, ray->hy, ray->hx);
 		vertical_intersection(gen, gen->ray);
 		vdist = dist(gen, ray, ray->vy, ray->vx);
+		horizontal_intersection(gen, gen->ray);
+		hdist = dist(gen, ray, ray->hy, ray->hx);
 		if (hdist <= vdist)
 			draw_wall(gen, hdist, i, 0);
 		else
 			draw_wall(gen, vdist, i, 1);
 		ray->an = norm(ray->an - column);
+		if (i == gen->win_x/2)
+		{
+			printf("DIR: %f\n", ray->an);
+			printf("hx: %f\nhy: %f\n", ray->hx, ray->hy);
+			printf("vx: %f\nvy: %f\n", ray->vx, ray->vy);
+			printf("HDIST: %f\nVDIST: %f\n", hdist, vdist);
+		}
 		i++;
 	}
 	return (0);
@@ -109,9 +117,9 @@ void	print_display(t_general *gen)
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an - 1);
+		gen->player->an = norm(gen->player->an - 0.1);
 	if (gen->key->r == 1)
-		gen->player->an = norm(gen->player->an + 1);
+		gen->player->an = norm(gen->player->an + 0.1);
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));

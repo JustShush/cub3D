@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_calc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:34:45 by mira              #+#    #+#             */
-/*   Updated: 2024/02/09 15:07:38 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/12 12:18:11 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ float	dist(t_general *gen, t_ray *ray, float y, float x)
 
 //Flag = 0 if horizontal
 //Flag = 1 if vertical
-void	intersection_iter(t_general *gen, t_ray *ray, int y, int x, int flag)
+void	intersection_iter(t_general *gen, t_ray *ray, float y, float x, int flag)
 {
 	if (flag == 0)
 	{
@@ -58,13 +58,13 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 	{	
 		ray->hy = (((int)gen->player->y >> 6) << 6) - 0.0001;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		intersection_iter(gen, ray, (-64), 64 / ft_tan(ray->an), 0);
+		intersection_iter(gen, ray, (-64.0), 64.0 / ft_tan(ray->an), 0);
 	}
 	else if (sin(toRad(ray->an)) < -0.0001)//If ray is facing down
 	{
-		ray->hy = (((int)gen->player->y >> 6) << 6) + 64;
+		ray->hy = (((int)gen->player->y >> 6) << 6) + 64.0;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		intersection_iter(gen, ray, 64, (-64) / ft_tan(ray->an), 0);
+		intersection_iter(gen, ray, 64.0, (-64.0) / ft_tan(ray->an), 0);
 	}
 	else
 	{
@@ -79,15 +79,15 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 {
 	if (cos(toRad(ray->an)) > 0.0001) //If ray is facing left
 	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) + 64;
+		ray->vx = (((int)gen->player->x >> 6) << 6) + 64.0;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		intersection_iter(gen, ray, (-64) * ft_tan(ray->an), 64, 1);
+		intersection_iter(gen, ray, (-64.0) * ft_tan(ray->an), 64.0, 1);
 	}
 	else if ((cos(toRad(ray->an)) < -0.0001)) //If ray is facing right
 	{
 		ray->vx = (((int)gen->player->x >> 6) << 6) - 0.0001;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		intersection_iter(gen, ray, 64 * ft_tan(ray->an), (-64), 1);
+		intersection_iter(gen, ray, 64.0 * ft_tan(ray->an), (-64.0), 1);
 	}
 	else
 	{
