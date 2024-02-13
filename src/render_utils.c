@@ -6,16 +6,18 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 13:39:32 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:00:43 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
+	if(x < 0 || x >= gen->win_x || y < 0 || y >= gen->win_y)
+		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -33,7 +35,7 @@ void	pixel_put_texture(t_general *gen, t_img *img, int x, int y)
 		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
 	else
 		color = 0;
-	my_mlx_pixel_put(gen->img, x, y, color);
+	my_mlx_pixel_put(gen, gen->img, x, y, color);
 }
 
 double	norm(double angle)

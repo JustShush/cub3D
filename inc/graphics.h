@@ -14,6 +14,7 @@
 #include <string.h>
 #include "../mlx_linux/mlx.h"
 #include "../gnl/gnl.h"
+#include <time.h>
 
 #define SCALE 20
 
