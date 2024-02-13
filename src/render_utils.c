@@ -3,21 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 13:33:47 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/13 13:39:32 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+void	pixel_put_texture(t_general *gen, t_img *img, int x, int y)
+{
+	unsigned int	color;
+	int			pixelx;
+	int			pixely;
+	
+	pixelx = x % 64;
+	pixely = y % 64;
+	
+	if (pixelx >= 0 && pixelx < img->width && pixely >= 0 && pixely < img->height)
+		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
+	else
+		color = 0;
+	my_mlx_pixel_put(gen->img, x, y, color);
 }
 
 double	norm(double angle)

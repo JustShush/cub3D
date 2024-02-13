@@ -5,7 +5,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
 RM = rm -rf
 
-SRC_CUB	=	close.c init.c input.c main.c minimap.c render_calc.c render_utils.c render.c utils.c
+SRC_CUB	=	close.c init.c input.c main.c minimap.c render_calc.c render_utils.c render.c textures.c utils.c
 SRC_GNL =	gnl/gnl.c gnl/gnl_utils.c
 SRC_MAP =	$(addprefix map/, check.c map.c map_utils.c)
 

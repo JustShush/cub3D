@@ -66,7 +66,7 @@ typedef struct	s_general
 	int			map_start;
 	int 		map_width;
 	int 		map_height;
-	t_data		*img;
+	t_img		*img;
 	t_key		*key;
 	t_ray		*ray;
 	t_map		*map;
@@ -109,7 +109,8 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		pixel_put_texture(t_general *gen, t_img *img, int x, int y);
+void		my_mlx_pixel_put(t_img *img, int x, int y, int color);
 double		norm(double angle);
 float		toRad(float d);
 float		ft_tan(float angle);

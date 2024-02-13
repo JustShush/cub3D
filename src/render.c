@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/12 12:17:03 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:42:36 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	float	draw_start;
 	float	proj_plane_dis;
 	float	proj_column_height;
-
+	
 	proj_plane_dis = (gen->win_x / 2) / ft_tan(gen->pov);
 	proj_column_height = ((64 / wall_dist) * proj_plane_dis);
 	draw_start = (gen->win_y / 2) - (proj_column_height / 2);
@@ -56,9 +56,19 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	while (draw_start <= draw_end)
 	{
 		if (flag == 0)
-			my_mlx_pixel_put(gen->img, i, draw_start, RED_PIXEL);
+		{
+			if (sin(toRad(gen->ray->an)) > 0.0001)
+				pixel_put_texture(gen, gen->textures->NO, i, draw_start);
+			else
+				pixel_put_texture(gen, gen->textures->SO, i, draw_start);
+		}
 		if (flag == 1)
-			my_mlx_pixel_put(gen->img, i, draw_start, ORANGE_PIXEL);
+		{
+			if (cos(toRad(gen->ray->an)) > 0.0001)
+				pixel_put_texture(gen, gen->textures->WE, i, draw_start);
+			else
+				pixel_put_texture(gen, gen->textures->EA, i, draw_start);
+		}
 		if (i == gen->win_x / 2)
 			my_mlx_pixel_put(gen->img, gen->win_x / 2, draw_start, 0xFFFFFF);
 		draw_start++;
@@ -117,9 +127,9 @@ void	print_display(t_general *gen)
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)
-		gen->player->an = norm(gen->player->an - 0.1);
+		gen->player->an = norm(gen->player->an - 1);
 	if (gen->key->r == 1)
-		gen->player->an = norm(gen->player->an + 0.1);
+		gen->player->an = norm(gen->player->an + 1);
 	if (gen->key->w == 1)//W
 	{
 		gen->player->y -= sin(toRad(gen->player->an));
