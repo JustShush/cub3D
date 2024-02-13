@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 16:00:43 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:13:00 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,25 @@ void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	pixel_put_texture(t_general *gen, t_img *img, int x, int y)
+unsigned int	get_pixel_color(t_img *img, int rx, int ry, int wall_h, int flag, int y)
 {
 	unsigned int	color;
-	int			pixelx;
-	int			pixely;
+	int				pixelx;
+	int				pixely;
+	int				step;
 	
-	pixelx = x % 64;
-	pixely = y % 64;
+	step = img->height / wall_h;
+	if (flag == 1)
+		pixelx = ((int)ry % 64);
+	else
+		pixelx = ((int)rx % 64);
+	pixely = (y % 64) + step;
 	
 	if (pixelx >= 0 && pixelx < img->width && pixely >= 0 && pixely < img->height)
 		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
 	else
 		color = 0;
-	my_mlx_pixel_put(gen, gen->img, x, y, color);
+	return (color);
 }
 
 double	norm(double angle)

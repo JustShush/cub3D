@@ -125,7 +125,7 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-void		pixel_put_texture(t_general *gen, t_img *img, int x, int y);
+unsigned int	get_pixel_color(t_img *img, int rx, int ry, int wall_h, int flag, int y);
 void		my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color);
 double		norm(double angle);
 float		toRad(float d);

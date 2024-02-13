@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 13:57:43 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:18:59 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,40 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 		my_mlx_pixel_put(gen, gen->img, i, j++, get_color(gen->textures->C));
 }
 
-void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
+void	draw_walls(t_general *gen, int x, int y, int h, int flag)
+{
+	unsigned int	color;
+
+	if (flag == 0)
+		{
+			if (sin(toRad(gen->ray->an)) > 0.0001)
+				color = get_pixel_color(gen->textures->NO, gen->ray->hx, gen->ray->hy, h, flag, y);
+			else
+				color = get_pixel_color(gen->textures->SO, gen->ray->hx, gen->ray->hy, h, flag, y);
+		}
+		if (flag == 1)
+		{
+			if (cos(toRad(gen->ray->an)) > 0.0001)
+				color = get_pixel_color(gen->textures->EA, gen->ray->vx, gen->ray->vy, h, flag, y);
+			else
+				color = get_pixel_color(gen->textures->WE, gen->ray->vx, gen->ray->vy, h, flag, y);
+		}
+		my_mlx_pixel_put(gen, gen->img, x, y, color);
+		if (x == gen->win_x / 2)
+			my_mlx_pixel_put(gen, gen->img, gen->win_x / 2, y, 0xFFFFFF);
+}
+
+void	draw(t_general *gen, float wall_dist, int i, int flag)
 {
 	float	draw_end;
 	float	draw_start;
 	float	proj_plane_dis;
-	float	proj_column_height;
+	float	line_h;
 	
 	proj_plane_dis = (gen->win_x / 2) / ft_tan(gen->pov);
-	proj_column_height = ((64 / wall_dist) * proj_plane_dis);
-	draw_start = (gen->win_y / 2) - (proj_column_height / 2);
-	draw_end = (gen->win_y / 2) + (proj_column_height / 2);
+	line_h = ((64 / wall_dist) * proj_plane_dis);
+	draw_start = (gen->win_y / 2) - (line_h / 2);
+	draw_end = (gen->win_y / 2) + (line_h / 2);
 	if (wall_dist < 0 || draw_start > gen->win_y)
 		return ;
 	else if(draw_start < 0)
@@ -64,22 +87,7 @@ void	draw_wall(t_general *gen, float wall_dist, int i, int flag)
 	draw_ceiling(gen, draw_start, i);
 	while (draw_start <= draw_end)
 	{
-		if (flag == 0)
-		{
-			if (sin(toRad(gen->ray->an)) > 0.0001)
-				pixel_put_texture(gen, gen->textures->NO, i, draw_start);
-			else
-				pixel_put_texture(gen, gen->textures->SO, i, draw_start);
-		}
-		if (flag == 1)
-		{
-			if (cos(toRad(gen->ray->an)) > 0.0001)
-				pixel_put_texture(gen, gen->textures->WE, i, draw_start);
-			else
-				pixel_put_texture(gen, gen->textures->EA, i, draw_start);
-		}
-		if (i == gen->win_x / 2)
-			my_mlx_pixel_put(gen, gen->img, gen->win_x / 2, draw_start, 0xFFFFFF);
+		draw_walls(gen, i, draw_start, line_h, flag);
 		draw_start++;
 	}
 	draw_floor(gen, draw_start, i);
@@ -106,9 +114,9 @@ int	raycast(t_general *gen, t_ray *ray)
 		vertical_intersection(gen, gen->ray);
 		vdist = dist(gen, ray, ray->vy, ray->vx);
 		if (hdist <= vdist)
-			draw_wall(gen, hdist, i, 0);
+			draw(gen, hdist, i, 0);
 		else
-			draw_wall(gen, vdist, i, 1);
+			draw(gen, vdist, i, 1);
 		ray->an = norm(ray->an - column);
 		i++;
 	}
