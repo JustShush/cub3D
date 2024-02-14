@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 14:20:14 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:44:48 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,43 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 		my_mlx_pixel_put(gen, gen->img, i, j++, get_color(gen->textures->C));
 }
 
+unsigned int get_pixel_color(t_img *img, float pixelx, float pixely)
+{
+	unsigned int		color;
+
+	if (pixelx >= 0 && pixelx < img->width && pixely >= 0 && pixely < img->height)
+		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
+	else
+		color = 0;
+	return (color);
+}
+
 void	draw_walls(t_general *gen, int x, int draw_start, int line_h, int flag)
 {
+	float			pixely;
+	float			pixelx;
 	unsigned int	color;
-	
+
+	pixely = (draw_start - gen->win_y/2 + line_h/2) * 64 / line_h;
 	if (flag == 0)
-		{
-			if (sin(toRad(gen->ray->an)) > 0.0001)
-				color = get_pixel_color(gen, gen->textures->NO, gen->ray->hx, gen->ray->hy, line_h, flag, draw_start);
-			else
-				color = get_pixel_color(gen, gen->textures->SO, gen->ray->hx, gen->ray->hy, line_h, flag, draw_start);
-		}
-		if (flag == 1)
-		{
-			if (cos(toRad(gen->ray->an)) > 0.0001)
-				color = get_pixel_color(gen, gen->textures->EA, gen->ray->vx, gen->ray->vy, line_h, flag, draw_start);
-			else
-				color = get_pixel_color(gen, gen->textures->WE, gen->ray->vx, gen->ray->vy, line_h, flag, draw_start);
-		}
-		my_mlx_pixel_put(gen, gen->img, x, draw_start, color);
-		if (x == gen->win_x / 2)
-			my_mlx_pixel_put(gen, gen->img, x, draw_start, 0xFFFFFF);
+	{
+		pixelx = (int)gen->ray->hx % 64;
+		if (sin(toRad(gen->ray->an)) > 0.0001)
+			color = get_pixel_color(gen->textures->NO, pixelx, pixely);
+		else
+			color = get_pixel_color(gen->textures->SO, pixelx, pixely);
+	}
+	if (flag == 1)
+	{
+		pixelx = (int)gen->ray->vy % 64;
+		if (cos(toRad(gen->ray->an)) > 0.0001)
+			color = get_pixel_color(gen->textures->EA, pixelx, pixely);
+		else
+			color = get_pixel_color(gen->textures->WE, pixelx, pixely);
+	}
+	my_mlx_pixel_put(gen, gen->img, x, draw_start, color);
+	if (x == gen->win_x / 2)
+		my_mlx_pixel_put(gen, gen->img, x, draw_start, 0xFFFFFF);
 }
 
 void	draw(t_general *gen, float wall_dist, int i, int flag)

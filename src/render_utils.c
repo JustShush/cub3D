@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 14:19:20 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:52:13 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,6 @@ void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color)
 		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-}
-
-unsigned int get_pixel_color(t_general *gen, t_img *img, int rx, int ry, int wall_h, int flag, int draw_start)
-{
-	unsigned int	color;
-	int				pixelx;
-	int				pixely;
-	float			wallx;
-	
-	(void)ry;
-	(void)rx;
-	(void)gen;
-	if (flag == 1)
-		wallx = ry;
-	else
-		wallx = rx;
-	wallx -= floor(wallx);
-	pixelx = wallx * img->width;
-
-	pixely = (draw_start - gen->win_y/2 + wall_h/2) * img->height / wall_h;
-	
-	if (pixelx >= 0 && pixelx < img->width && pixely >= 0 && pixely < img->height)
-		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
-	else
-		color = 0;
-	return (color);
 }
 
 double	norm(double angle)
