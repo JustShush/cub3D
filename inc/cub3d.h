@@ -12,12 +12,15 @@
 # include "../gnl/gnl.h"
 # include "graphics.h"
 
-# define	PI				3.14159265358979323846
+# define	X_SENSE			2
+# define	SPD				2
+# define	RSPD			2
+# define	CUB				64
 # define	RED_PIXEL		0xFF0000
 # define	ORANGE_PIXEL	0xFF8000
 # define	GREEN_PIXEL		0x00FF00
 # define	BLUE_PIXEL		0x0000FF
-# define	X_SENSE			2
+# define	PI				3.14159265358979323846
 
 typedef struct	s_map
 {
@@ -74,8 +77,8 @@ typedef struct	s_general
 	int			pov;
 	void		*win;
 	void		*mlx;
-	int			win_y;
 	int			win_x;
+	int			win_y;
 	char		**file;
 	int			map_start;
 	int 		map_width;
@@ -125,11 +128,11 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-unsigned int	get_pixel_color(t_img *img, int rx, int ry, int wall_h, int flag, int y);
-void		my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color);
-double		norm(double angle);
-float		toRad(float d);
-float		ft_tan(float angle);
+unsigned int	get_pixel_color(t_general *gen, t_img *img, int rx, int ry, int wall_h, int flag, int draw_start);
+void			my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color);
+double			norm(double angle);
+float			toRad(float d);
+float			ft_tan(float angle);
 
 //render.c
 int			render(t_general *gen);

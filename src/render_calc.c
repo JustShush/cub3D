@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:34:45 by mira              #+#    #+#             */
-/*   Updated: 2024/02/12 12:18:11 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:57:58 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,20 @@ void	intersection_iter(t_general *gen, t_ray *ray, float y, float x, int flag)
 //Check intersection of ray and horizontal lines
 void	horizontal_intersection(t_general *gen, t_ray *ray)
 {
+	int log2;
+
+	log2 = log(CUB) / log(2);
 	if (sin(toRad(ray->an)) > 0.0001) //If ray is facing up
 	{	
-		ray->hy = (((int)gen->player->y >> 6) << 6) - 0.0001;
+		ray->hy = (((int)gen->player->y >> log2) << log2) - 0.0001;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		intersection_iter(gen, ray, (-64.0), 64.0 / ft_tan(ray->an), 0);
+		intersection_iter(gen, ray, (-CUB), CUB / ft_tan(ray->an), 0);
 	}
 	else if (sin(toRad(ray->an)) < -0.0001)//If ray is facing down
 	{
-		ray->hy = (((int)gen->player->y >> 6) << 6) + 64.0;
+		ray->hy = (((int)gen->player->y >> log2) << log2) + CUB;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
-		intersection_iter(gen, ray, 64.0, (-64.0) / ft_tan(ray->an), 0);
+		intersection_iter(gen, ray, CUB, (-CUB) / ft_tan(ray->an), 0);
 	}
 	else
 	{
@@ -77,17 +80,20 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 //Check intersection of ray and vertical lines
 void	vertical_intersection(t_general *gen, t_ray *ray)
 {
+	int log2;
+
+	log2 = log(CUB) / log(2);
 	if (cos(toRad(ray->an)) > 0.0001) //If ray is facing left
 	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) + 64.0;
+		ray->vx = (((int)gen->player->x >> log2) << log2) + CUB;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		intersection_iter(gen, ray, (-64.0) * ft_tan(ray->an), 64.0, 1);
+		intersection_iter(gen, ray, (-CUB) * ft_tan(ray->an), CUB, 1);
 	}
 	else if ((cos(toRad(ray->an)) < -0.0001)) //If ray is facing right
 	{
-		ray->vx = (((int)gen->player->x >> 6) << 6) - 0.0001;
+		ray->vx = (((int)gen->player->x >> log2) << log2) - 0.0001;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
-		intersection_iter(gen, ray, 64.0 * ft_tan(ray->an), (-64.0), 1);
+		intersection_iter(gen, ray, CUB * ft_tan(ray->an), (-CUB), 1);
 	}
 	else
 	{

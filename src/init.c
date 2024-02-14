@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 13:51:42 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:09:48 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	player_pos(t_general *gen, char **map)
 				gen->player->an = 0;
 			if (map[y][x] == 'N' || map[y][x] == 'E' || map[y][x] == 'W' || map[y][x] == 'S')
 			{
-				gen->player->y = (y * 64) + 32;
-				gen->player->x = (x * 64) + 32;
+				gen->player->y = (y * CUB) + (CUB / 2);
+				gen->player->x = (x * CUB) + (CUB / 2);
 				return ;
 			}
 			x++;
@@ -90,6 +90,7 @@ t_general	*init(t_general *gen, char **av)
 	gen->anim = (t_anim *)malloc(sizeof(t_anim));
 	gen->ray = &ray;
 	gen->file = map_init(av[1]);
+	
 	tilemap(gen->map, av[1]);
 	gen->key->w = 0;
 	gen->key->d = 0;
@@ -97,9 +98,9 @@ t_general	*init(t_general *gen, char **av)
 	gen->key->a = 0;
 	gen->key->l = 0;
 	gen->key->r = 0;
+	gen->win_x = 1080;
+	gen->win_y = 720;
 	gen->pov = 60;
-	gen->win_x = 1280;
-	gen->win_y = 800;
 	gen->ray->an = 0;
 	return (gen);
 }

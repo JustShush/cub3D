@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:16:48 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 13:57:20 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:56:22 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	raycast2d(t_general *gen)
 
 	pradius = 2;
 	i = gen->player->an;
-	x = gen->player->x * SCALE / 64;
-	y = (gen->player->y * SCALE / 64);
+	x = gen->player->x * SCALE / CUB;
+	y = (gen->player->y * SCALE / CUB);
 	if (i >= gen->player->an - (gen->pov / 2))
 		put_rays(gen, i--, y, x);
 	put_player(gen, y, x, pradius);

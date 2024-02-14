@@ -41,7 +41,7 @@ val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3d
 
 a: $(NAME)
-	@./cub3d maps/map2.cub
+	@./cub3d maps/map1.cub
 
 clean:
 		@$(RM) $(OBJS) $(OBJ_DIR)
