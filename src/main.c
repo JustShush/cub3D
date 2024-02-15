@@ -51,9 +51,8 @@ int	main(int ac, char **av)
 	gen = NULL;
 	if (ac != 2)
 		return (printf("Error\nIncorrect ammount of arguments\n"));
-	
+
 	gen = init(gen, av);
-	gen->mlx = mlx_init();
 
 	if(check_map(gen) == 0)
 		return 0;

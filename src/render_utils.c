@@ -12,7 +12,7 @@
 
 #include "../inc/cub3d.h"
 
-void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, int color)
+void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, unsigned int color)
 {
 	char	*dst;
 
@@ -43,7 +43,8 @@ float	ft_tan(float angle)
 
 	s = sin(toRad(angle));
 	c = cos(toRad(angle));
-	if (fabs(c) > 0.0001)
+
+	if (fabs(c) > 0.000001)
 		return (s / c);
 	return (s);
 }

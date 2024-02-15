@@ -162,14 +162,66 @@ int check_collision(t_general *gen, int y, int x)
 	return (1);
 }
 
+t_img	duplicate_img(t_general *gen, t_img *img)
+{
+	t_img new;
+
+	new.img = mlx_new_image(gen->mlx, img->width, img->height);
+	new.addr = mlx_get_data_addr(new.img, &new.bits_per_pixel, &new.line_length, &new.endian);
+	new.width = img->width;
+	new.height = img->height;
+	return (new);
+}
+
+unsigned int	get_pixel_img(t_img *img, int x, int y)
+{
+	unsigned int	color;
+
+	color = *(unsigned int *)(img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8)));
+	return (color);
+}
+
+void	make_wheel(t_general *gen, int index)
+{
+	int i;
+	int j;
+
+	i = 0;
+//	(void)gen;
+	while(i < 500)
+	{
+		j = 0;
+		while (j < 640)
+		{
+			if((int)get_pixel_img(&gen->anim[index], j, i) != -16777216 && (int)get_pixel_img(&gen->anim[index], j, i) != 0)
+			{
+				my_mlx_pixel_put(gen, gen->img, j + gen->win_x / 2 - 320, i + gen->win_y - 500, get_pixel_img(&gen->anim[index], j, i));
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	print_anim(t_general *gen)
+{
+	static int i = 0;
+
+	make_wheel(gen, i);
+//	i++;
+//	if (i == 13)
+//		i = 0;
+}
+
 void	print_display(t_general *gen)
 {
 	init_img(gen);
 	raycast(gen, gen->ray);
 	minimap(gen);
 	raycast2d(gen);
+	print_anim(gen);
 	mlx_put_image_to_window(gen->mlx, gen->win, gen->img->img, 0, 0);
-	// display_position(gen);
+//	display_position(gen);
 	mlx_destroy_image(gen->mlx, gen->img->img);
 }
 

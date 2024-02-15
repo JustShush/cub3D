@@ -54,26 +54,25 @@ void	player_pos(t_general *gen, char **map)
 
 void	init_anim(t_general *gen)
 {
-	int i;
-	int x;
-	int y;
-	char *dir;
+	char *path;
 	char *tmp;
+	char *tmp2;
+	int i;
 
 	i = 1;
-	while(i <= 13)
+	gen->anim = (t_img *)malloc(sizeof(t_img) * 13);
+	while (i <= 13)
 	{
-		dir = ft_strdup("textures/anim/steering-wheel-");
 		tmp = ft_itoa(i);
-		dir = ft_strjoin(dir, tmp);
-		dir = ft_strjoin(dir, ".xpm");
-		gen->anim->data->img = mlx_xpm_file_to_image(gen->mlx, dir, &x, &y);
-		free(dir);
+		path = ft_strjoin("./textures/anim/steering-wheel-", tmp);
+		tmp2 = ft_strjoin(path, ".xpm");
+		gen->anim[i - 1].img = mlx_xpm_file_to_image(gen->mlx, tmp2, &gen->anim[i - 1].width, &gen->anim[i - 1].height);
+		gen->anim[i - 1].addr = mlx_get_data_addr(gen->anim[i - 1].img, &(gen->anim[i - 1].bits_per_pixel), &(gen->anim[i - 1].line_length), &(gen->anim[i - 1].endian));
+		free(path);
 		free(tmp);
+		free(tmp2);
 		i++;
 	}
-	gen->anim->frame = 0;
-	gen->anim->frame_count = 0;
 }
 
 t_general	*init(t_general *gen, char **av)
@@ -87,20 +86,21 @@ t_general	*init(t_general *gen, char **av)
 	gen->key = (t_key *)malloc(sizeof(t_key));
 	gen->player = (t_player *)malloc(sizeof(t_player));
 	gen->img = (t_img *)malloc(sizeof(t_img));
-	gen->anim = (t_anim *)malloc(sizeof(t_anim));
 	gen->ray = &ray;
 	gen->file = map_init(av[1]);
-	
 	tilemap(gen->map, av[1]);
+	gen->mlx = mlx_init();
+	init_anim(gen);
 	gen->key->w = 0;
 	gen->key->d = 0;
 	gen->key->s = 0;
 	gen->key->a = 0;
 	gen->key->l = 0;
 	gen->key->r = 0;
-	gen->win_x = 1080;
-	gen->win_y = 720;
+	gen->win_x = 1920;
+	gen->win_y = 1080;
 	gen->pov = 60;
 	gen->ray->an = 0;
+
 	return (gen);
 }
