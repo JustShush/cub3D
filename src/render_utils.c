@@ -44,7 +44,7 @@ float	ft_tan(float angle)
 	s = sin(toRad(angle));
 	c = cos(toRad(angle));
 
-	if (fabs(c) > 0.000001)
+	if (fabs(c) > 0.000000001)
 		return (s / c);
 	return (s);
 }

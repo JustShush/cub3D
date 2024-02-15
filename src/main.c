@@ -22,11 +22,13 @@ int	minimap(t_general *gen);
 
 void	look_left(t_general *gen, int sens)
 {
+	gen->player->old_an = gen->player->an;
 	gen->player->an -= 0.01f * sens;
 }
 
 void	look_right(t_general *gen, int sens)
 {
+	gen->player->old_an = gen->player->an;
 	gen->player->an += 0.01f * sens;
 }
 

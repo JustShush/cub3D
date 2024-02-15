@@ -97,10 +97,9 @@ t_general	*init(t_general *gen, char **av)
 	gen->key->a = 0;
 	gen->key->l = 0;
 	gen->key->r = 0;
-	gen->win_x = 1920;
-	gen->win_y = 1080;
+	gen->win_x = 1280;
+	gen->win_y = 800;
 	gen->pov = 60;
 	gen->ray->an = 0;
-
 	return (gen);
 }

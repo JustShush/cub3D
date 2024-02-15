@@ -47,6 +47,7 @@ typedef struct	s_player
 	float		x;
 	float		y;
 	float		an;
+	float		old_an;
 }				t_player;
 
 typedef struct	s_mouse

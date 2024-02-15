@@ -187,7 +187,6 @@ void	make_wheel(t_general *gen, int index)
 	int j;
 
 	i = 0;
-//	(void)gen;
 	while(i < 500)
 	{
 		j = 0;
@@ -205,12 +204,39 @@ void	make_wheel(t_general *gen, int index)
 
 void	print_anim(t_general *gen)
 {
-	static int i = 0;
+	static int i = 6;
 
 	make_wheel(gen, i);
-//	i++;
-//	if (i == 13)
-//		i = 0;
+//	printf("old_an: %f\n", gen->player->old_an);
+//	printf("an: %f\n", gen->player->an);
+	if(gen->key->l == 1)
+	{
+		if(i < 12)
+			i++;
+	}
+	else if(gen->key->r == 1)
+	{
+		if(i > 0)
+			i--;
+	}
+	else if(gen->player->an > gen->player->old_an)
+	{
+		if(i > 0)
+			i--;
+	}
+	else if(gen->player->an < gen->player->old_an)
+	{
+		if(i < 12)
+			i++;
+	}
+	else
+	{
+		if(i < 6)
+			i++;
+		else if(i > 6)
+			i--;
+	}
+	gen->player->old_an = gen->player->an;
 }
 
 void	print_display(t_general *gen)
