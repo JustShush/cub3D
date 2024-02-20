@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 14:52:13 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:24:02 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ float	ft_tan(float angle)
 
 	if (fabs(c) > 0.000000001)
 		return (s / c);
-	return (s);
+	return (1);
 }

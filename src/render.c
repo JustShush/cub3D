@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 16:44:48 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:28:50 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	point_check(t_general *gen, int y, int x)
 	return (1);
 }
 
-void	draw_floor(t_general *gen, float draw_start, int i)
+void	draw_floor(t_general *gen, int draw_start, int i)
 {
 	while (draw_start < gen->win_y)
 		my_mlx_pixel_put(gen, gen->img, i, draw_start++, get_color(gen->textures->F));
 }
 
-void	draw_ceiling(t_general *gen, float draw_start, int i)
+void	draw_ceiling(t_general *gen, int draw_start, int i)
 {
 	int	j;
 
@@ -43,12 +43,13 @@ void	draw_ceiling(t_general *gen, float draw_start, int i)
 		my_mlx_pixel_put(gen, gen->img, i, j++, get_color(gen->textures->C));
 }
 
-unsigned int get_pixel_color(t_img *img, float pixelx, float pixely)
+unsigned int get_pixel_color(t_img *img, int pixelx, int pixely)
 {
 	unsigned int		color;
 
 	if (pixelx >= 0 && pixelx < img->width && pixely >= 0 && pixely < img->height)
-		color = *(unsigned int *)(img->addr + ((int)pixely * img->line_length) + ((int)pixelx * img->bits_per_pixel / 8));
+		color = *(unsigned int *)(img->addr + (pixely * img->line_length) +
+			(pixelx * img->bits_per_pixel / 4));
 	else
 		color = 0;
 	return (color);
@@ -56,38 +57,36 @@ unsigned int get_pixel_color(t_img *img, float pixelx, float pixely)
 
 void	draw_walls(t_general *gen, int x, int draw_start, int line_h, int flag)
 {
-	float			pixely;
-	float			pixelx;
+	int				pixely;
+	int				pixelx;
 	unsigned int	color;
 
-	pixely = (draw_start - gen->win_y/2 + line_h/2) * 64 / line_h;
+	pixely = (draw_start - gen->win_y / 2 + line_h / 2) * 64 / line_h;
 	if (flag == 0)
 	{
-		pixelx = (int)gen->ray->hx % 64;
+		pixelx = (int)gen->ray->hx % 32;
 		if (sin(toRad(gen->ray->an)) > 0.0001)
 			color = get_pixel_color(gen->textures->NO, pixelx, pixely);
-		else
+		else if (sin(toRad(gen->ray->an)) < -0.0001)
 			color = get_pixel_color(gen->textures->SO, pixelx, pixely);
 	}
 	if (flag == 1)
 	{
-		pixelx = (int)gen->ray->vy % 64;
+		pixelx = (int)gen->ray->vy % 32;
 		if (cos(toRad(gen->ray->an)) > 0.0001)
 			color = get_pixel_color(gen->textures->EA, pixelx, pixely);
-		else
+		else if (cos(toRad(gen->ray->an)) < -0.0001)
 			color = get_pixel_color(gen->textures->WE, pixelx, pixely);
 	}
 	my_mlx_pixel_put(gen, gen->img, x, draw_start, color);
-	if (x == gen->win_x / 2)
-		my_mlx_pixel_put(gen, gen->img, x, draw_start, 0xFFFFFF);
 }
 
 void	draw(t_general *gen, float wall_dist, int i, int flag)
 {
-	float	draw_end;
-	float	draw_start;
-	float	proj_plane_dis;
-	float	line_h;
+	int	draw_end;
+	int	draw_start;
+	int	proj_plane_dis;
+	int	line_h;
 	
 	proj_plane_dis = (gen->win_x / 2) / ft_tan(gen->pov);
 	line_h = ((CUB / wall_dist) * proj_plane_dis);
@@ -101,7 +100,7 @@ void	draw(t_general *gen, float wall_dist, int i, int flag)
 		draw_start = 0;
 	}
 	draw_ceiling(gen, draw_start, i);
-	while (draw_start <= draw_end)
+	while (draw_start < draw_end)
 	{
 		draw_walls(gen, i, draw_start, line_h, flag);
 		draw_start++;
@@ -160,17 +159,6 @@ int check_collision(t_general *gen, int y, int x)
 		&& gen->map->tilemap[y / CUB][x / CUB] != '1')
 		return (0);
 	return (1);
-}
-
-t_img	duplicate_img(t_general *gen, t_img *img)
-{
-	t_img new;
-
-	new.img = mlx_new_image(gen->mlx, img->width, img->height);
-	new.addr = mlx_get_data_addr(new.img, &new.bits_per_pixel, &new.line_length, &new.endian);
-	new.width = img->width;
-	new.height = img->height;
-	return (new);
 }
 
 unsigned int	get_pixel_img(t_img *img, int x, int y)

@@ -114,7 +114,6 @@ int			key_press(int key, t_general *gen);
 void		init_img(t_general *gen);
 void		player_pos(t_general *gen, char **map);
 t_general	*init(t_general *gen, char **av);
-void		make_background(t_general *gen);
 
 //render_calc.c
 float		dist(t_general *gen, t_ray *ray, float y, float x);
@@ -122,7 +121,7 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-void	my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, unsigned int color);
+void			my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, unsigned int color);
 double			norm(double angle);
 float			toRad(float d);
 float			ft_tan(float angle);
