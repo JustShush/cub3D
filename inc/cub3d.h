@@ -13,7 +13,7 @@
 # include "graphics.h"
 
 # define	X_SENSE			2
-# define	SPD				2
+# define	SPD				5
 # define	RSPD			2
 # define	CUB				64
 # define	RED_PIXEL		0xFF0000
@@ -142,5 +142,6 @@ int			sizeofmap_y(t_general *gen);
 //utils.c
 int			first_str(char *s1, char *s2);
 int			line_empty(char *line);
+void	free_array(char **array);
 
 #endif

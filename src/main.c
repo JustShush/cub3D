@@ -61,7 +61,6 @@ int	main(int ac, char **av)
 	
 	player_pos(gen, gen->map->tilemap);
 
-	gen->mlx = mlx_init();
 	gen->win = mlx_new_window(gen->mlx, gen->win_x, gen->win_y, "cub3d");
 
 	mlx_hook(gen->win, 17, 0, close_game, gen);

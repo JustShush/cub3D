@@ -246,6 +246,7 @@ void	print_display(t_general *gen)
 	minimap(gen);
 	raycast2d(gen);
 	print_anim(gen);
+	mlx_clear_window(gen->mlx, gen->win);
 	mlx_put_image_to_window(gen->mlx, gen->win, gen->img->img, 0, 0);
 //	display_position(gen);
 	mlx_destroy_image(gen->mlx, gen->img->img);

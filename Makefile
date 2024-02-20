@@ -1,8 +1,8 @@
 # - * - Makefile - * -
 
-NAME = cub3d
+NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux #-fsanitize=address
 RM = rm -rf
 
 SRC_CUB	=	close.c init.c input.c main.c minimap.c render_calc.c render_utils.c render.c textures.c utils.c

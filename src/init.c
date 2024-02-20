@@ -101,5 +101,6 @@ t_general	*init(t_general *gen, char **av)
 	gen->win_y = 800;
 	gen->pov = 60;
 	gen->ray->an = 0;
+	gen->player->old_an = 0;
 	return (gen);
 }
