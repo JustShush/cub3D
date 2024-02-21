@@ -24,7 +24,7 @@ void	readmap(char **map, char *file)
 	{
 		printf("Error - Map not found\n");
 		close(fd);
-		return;
+		return ;
 	}
 	line = gnl(fd);
 	while (line)
@@ -58,7 +58,7 @@ int	numberoflines(char *file)
 	return (i);
 }
 
-int	getY(char *file)
+int	get_y(char *file)
 {
 	int		i;
 	int		fd;
@@ -81,38 +81,40 @@ int	getY(char *file)
 	return (i);
 }
 
-void	tilemap(t_map *map, char *map_path)
+void	support_tile(t_map *map, char *buf)
+{
+	if (!first_str(buf, "NO"))
+		map->north = ft_strdup(buf);
+	if (!first_str(buf, "SO"))
+		map->south = ft_strdup(buf);
+	if (!first_str(buf, "WE"))
+		map->west = ft_strdup(buf);
+	if (!first_str(buf, "EA"))
+		map->east = ft_strdup(buf);
+}
+
+int	tilemap(t_map *map, char *map_path)
 {
 	int		i;
 	int		fd;
 	char	*buf;
 
 	i = 0;
-	map->y = getY(map_path);
+	map->y = get_y(map_path);
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
-	{
-		printf("Error\nCould not open file\n");
-		return ;
-	}
+		return (printf("Error\nCould not open file\n"));
 	map->tilemap = malloc(sizeof(char *) * (map->y + 1));
 	while (i < map->y)
 	{
 		buf = gnl(fd);
 		if (!first_str(buf, "1"))
 			map->tilemap[i++] = ft_strdup(buf);
-		if (!first_str(buf, "NO"))
-			map->north = ft_strdup(buf);
-		if (!first_str(buf, "SO"))
-			map->south = ft_strdup(buf);
-		if (!first_str(buf, "WE"))
-			map->west = ft_strdup(buf);
-		if (!first_str(buf, "EA"))
-			map->east = ft_strdup(buf);
+		support_tile(map, buf);
 		free(buf);
 	}
 	map->tilemap[i] = 0;
-	return ;
+	return (0);
 }
 
 char	**map_init(char *file)
@@ -121,7 +123,7 @@ char	**map_init(char *file)
 
 	map = malloc(sizeof(char *) * (numberoflines(file) + 1));
 	if (!map)
-		return NULL;
+		return (NULL);
 	readmap(map, file);
 	return (map);
 }

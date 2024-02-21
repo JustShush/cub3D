@@ -1,24 +1,33 @@
-//
-// Created by ldiogo on 1/24/24.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   graphics.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldiogo <ldiogo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/21 17:05:21 by ldiogo            #+#    #+#             */
+/*   Updated: 2024/02/21 17:05:34 by ldiogo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef BUC3D_BUC3D_H
-#define BUC3D_BUC3D_H
+#ifndef GRAPHICS_H
+# define GRAPHICS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <math.h>
-#include <ctype.h>
-#include <string.h>
-#include "../mlx_linux/mlx.h"
-#include "../gnl/gnl.h"
-#include <time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <math.h>
+# include <ctype.h>
+# include <string.h>
+# include "../mlx_linux/mlx.h"
+# include "../gnl/gnl.h"
+# include <time.h>
 
-#define SCALE 20
+# define SCALE 20
 
-typedef struct	s_img {
+typedef struct s_img
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -37,12 +46,12 @@ typedef struct RGB
 
 typedef struct textures
 {
-	t_img	*NO;
-	t_img	*SO;
-	t_img	*WE;
-	t_img	*EA;
-	t_RGB	*C;
-	t_RGB	*F;
+	t_img	*no;
+	t_img	*so;
+	t_img	*we;
+	t_img	*ea;
+	t_RGB	*c;
+	t_RGB	*f;
 }				t_textures;
 
 void	readmap(char **map, char *file);
@@ -54,7 +63,7 @@ int		check_map_closed(char **map);
 int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);
-int		getY(char *file);
+int		get_y(char *file);
 int		check_suffix(char *file_path);
 
 #endif //BUC3D_BUC3D_H

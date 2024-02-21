@@ -12,86 +12,73 @@
 
 #include "../../inc/cub3d.h"
 
-int sizeofmap_x(t_general *gen)
+int	sizeofmap_x(t_general *gen)
 {
-	int i;
-	int j;
-	int res;
+	int	i;
+	int	j;
+	int	res;
 
 	res = 0;
 	i = 0;
-	while(gen->map->tilemap[i])
+	while (gen->map->tilemap[i])
 	{
 		j = 0;
-		while(gen->map->tilemap[i][j])
+		while (gen->map->tilemap[i][j])
 			j++;
-		if(j > res)
+		if (j > res)
 			res = j;
 		i++;
 	}
 	return (i);
 }
 
-int sizeofmap_y(t_general *gen)
+int	sizeofmap_y(t_general *gen)
 {
-	int i = 0;
+	int	i;
 
-	while(gen->map->tilemap[i])
-	{
+	i = 0;
+	while (gen->map->tilemap[i])
 		i++;
-	}
 	return (i - 1);
-}
-
-void	printf_array(char **array)
-{
-	int i = 0;
-	while(array[i])
-	{
-		printf("%s", array[i]);
-		i++;
-	}
 }
 
 char	*ft_chrtrim(char *line, char c)
 {
-	int i;
-	int j;
-	char *str;
+	int		i;
+	int		j;
+	char	*str;
 
 	i = 0;
-	j = 0;
-	while(line[i] == c)
+	while (line[i] == c)
 		i++;
 	j = i;
-	while(line[j] != c && line[j])
+	while (line[j] != c && line[j])
 		j++;
 	str = (char *)malloc(sizeof(char) * (j - i + 1));
-	if(!str)
-		return NULL;
+	if (!str)
+		return (NULL);
 	j = 0;
-	while(line[i] != c && line[i] && line[i] != '\n')
+	while (line[i] != c && line[i] && line[i] != '\n')
 	{
 		str[j] = line[i];
 		i++;
 		j++;
 	}
 	str[j] = '\0';
-	return str;
+	return (str);
 }
 
-int get_start_map(char **map)
+int	get_start_map(char **map)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(map[i])
+	while (map[i])
 		i++;
 	i -= 1;
-	while(line_empty(map[i]) == 1)
+	while (line_empty(map[i]) == 1)
 		i--;
-	while(line_empty(map[i]) == 0)
+	while (line_empty(map[i]) == 0)
 		i--;
 	return (i);
-
 }

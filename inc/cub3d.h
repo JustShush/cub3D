@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldiogo <ldiogo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
+/*   Updated: 2024/02/21 17:05:34 by ldiogo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -12,17 +24,17 @@
 # include "../gnl/gnl.h"
 # include "graphics.h"
 
-# define	X_SENSE			2
-# define	SPD				5
-# define	RSPD			2
-# define	CUB				64
-# define	RED_PIXEL		0xFF0000
-# define	ORANGE_PIXEL	0xFF8000
-# define	GREEN_PIXEL		0x00FF00
-# define	BLUE_PIXEL		0x0000FF
-# define	PI				3.14159265358979323846
+# define X_SENSE			2
+# define SPD				5
+# define RSPD			2
+# define CUB				64
+# define RED_PIXEL		0xFF0000
+# define ORANGE_PIXEL	0xFF8000
+# define GREEN_PIXEL		0x00FF00
+# define BLUE_PIXEL		0x0000FF
+# define PI				3.14159265358979323846
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**tilemap;
 	char	*north;
@@ -32,7 +44,7 @@ typedef struct	s_map
 	int		y;
 }				t_map;
 
-typedef struct	s_key
+typedef struct s_key
 {
 	int	w;
 	int	a;
@@ -42,7 +54,7 @@ typedef struct	s_key
 	int	r;
 }				t_key;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	float		x;
 	float		y;
@@ -50,13 +62,7 @@ typedef struct	s_player
 	float		old_an;
 }				t_player;
 
-typedef struct	s_mouse
-{
-	int		x;
-	int		y;
-}				t_mouse;
-
-typedef struct	s_ray
+typedef struct s_ray
 {
 	float		hx;
 	float		hy;
@@ -66,7 +72,15 @@ typedef struct	s_ray
 	float		wall_dist;
 }				t_ray;
 
-typedef struct	s_general
+typedef struct s_su
+{
+	int	draw_end;
+	int	draw_start;
+	int	proj_plane_dis;
+	int	line_h;
+}				t_su;
+
+typedef struct s_general
 {
 	int			pov;
 	void		*win;
@@ -74,10 +88,7 @@ typedef struct	s_general
 	int			win_x;
 	int			win_y;
 	char		**file;
-	int			map_start;
-	int 		map_width;
-	int 		map_height;
-	t_img 		*anim;
+	t_img		*anim;
 	t_img		*img;
 	t_key		*key;
 	t_ray		*ray;
@@ -97,11 +108,7 @@ int			check_color(char *line);
 void		save_img(t_general *gen, char *dir, char *line, int j);
 
 //map/map.c
-void		tilemap(t_map *map, char *map_path);
-
-//map/map_utils.c
-int			sizeofmap_x(t_general *gen);
-int			sizeofmap_y(t_general *gen);
+int			tilemap(t_map *map, char *map_path);
 
 //close.c
 int			close_game(t_general *gen);
@@ -121,10 +128,10 @@ void		horizontal_intersection(t_general *gen, t_ray *ray);
 void		vertical_intersection(t_general *gen, t_ray *ray);
 
 //render_utils.c
-void			my_mlx_pixel_put(t_general *gen, t_img *img, int x, int y, unsigned int color);
-double			norm(double angle);
-float			toRad(float d);
-float			ft_tan(float angle);
+void		my_mlx_pixel_put(t_general *gen, int x, int y, unsigned int color);
+double		norm(double angle);
+float		to_rad(float d);
+float		ft_tan(float angle);
 
 //render.c
 int			render(t_general *gen);
@@ -134,13 +141,10 @@ int			point_check(t_general *gen, int y, int x);
 void		raycast2d(t_general *gen);
 int			minimap(t_general *gen);
 void		put_square(t_general *gen, int y, int x, int color);
-int 		sizeofmap_x(t_general *gen);
-int			sizeofmap_y(t_general *gen);
-
 
 //utils.c
 int			first_str(char *s1, char *s2);
 int			line_empty(char *line);
-void	free_array(char **array);
+void		free_array(char **array);
 
 #endif

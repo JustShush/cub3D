@@ -22,18 +22,18 @@ int	first_str(char *s1, char *s2)
 	return (1);
 }
 
-int line_empty(char *line)
+int	line_empty(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
-		if(line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			return 0;
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 //Checks if file_path has ".cub" suffix

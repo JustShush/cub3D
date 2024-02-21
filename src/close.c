@@ -29,22 +29,18 @@ void	free_map(t_map *map)
 
 int	close_game(t_general *gen)
 {
-	int i;
+	int	i;
 
-	i = 0;
-	while(i < 13)
-	{
+	i = -1;
+	while (++i < 13)
 		mlx_destroy_image(gen->mlx, gen->anim[i].img);
-		i++;
-	}
 	free(gen->anim);
-	free(gen->textures->F);
-	free(gen->textures->C);
-	free_t_img(gen->textures->NO, gen->mlx);
-	free_t_img(gen->textures->SO, gen->mlx);
-	free_t_img(gen->textures->WE, gen->mlx);
-	free_t_img(gen->textures->EA, gen->mlx);
-
+	free(gen->textures->f);
+	free(gen->textures->c);
+	free_t_img(gen->textures->no, gen->mlx);
+	free_t_img(gen->textures->so, gen->mlx);
+	free_t_img(gen->textures->we, gen->mlx);
+	free_t_img(gen->textures->ea, gen->mlx);
 	free(gen->textures);
 	free_map(gen->map);
 	free_array(gen->file);
@@ -52,7 +48,6 @@ int	close_game(t_general *gen)
 	free(gen->player);
 	free(gen->img);
 	free(gen->map);
-//	mlx_mouse_show(gen->mlx, gen->win);
 	mlx_destroy_window(gen->mlx, gen->win);
 	mlx_destroy_display(gen->mlx);
 	free(gen->mlx);
