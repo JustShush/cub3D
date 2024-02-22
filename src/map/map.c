@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 12:38:23 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:30:45 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,6 @@ int	numberoflines(char *file)
 		line = gnl(fd);
 	}
 	free(line);
-	close(fd);
-	return (i);
-}
-
-int	get_y(char *file)
-{
-	int		i;
-	int		fd;
-	char	*str;
-
-	i = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (printf("Error\nCould not open file\n"));
-	while (1)
-	{
-		str = gnl(fd);
-		if (str == NULL)
-			break ;
-		if (!first_str(str, "1"))
-			i++;
-		free(str);
-	}
 	close(fd);
 	return (i);
 }

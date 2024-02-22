@@ -5,9 +5,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux #-fsanitize=address
 RM = rm -rf
 
-SRC_CUB	=	close.c init.c input.c main.c minimap.c render_calc.c render_utils.c render.c textures.c utils.c
+SRC_CUB	=	close.c init_player.c init.c input.c main.c minimap_put.c minimap.c render_anim.c render_calc.c render_draw.c render_utils.c render_utils2.c render.c textures.c utils.c
 SRC_GNL =	gnl/gnl.c gnl/gnl_utils.c
-SRC_MAP =	$(addprefix map/, check.c map.c map_utils.c)
+SRC_MAP =	$(addprefix map/, check.c map_utils.c map_utils2.c map.c)
 
 SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB) $(SRC_MAP)) $(SRC_GNL)
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
@@ -41,7 +41,7 @@ val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3d
 
 a: $(NAME)
-	@./cub3D maps/map1.cub
+	@./cub3D maps/map2.cub
 
 clean:
 		@$(RM) $(OBJS) $(OBJ_DIR)

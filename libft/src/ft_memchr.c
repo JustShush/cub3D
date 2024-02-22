@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 17:29:30 by mortins-          #+#    #+#             */
-/*   Updated: 2024/01/31 15:27:52 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:57:56 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	*ft_memchr(const void *s, int c, int n)
 {
-	int	i;
+	int		i;
 	char	*buff;
 
 	i = 0;

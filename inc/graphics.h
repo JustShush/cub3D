@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldiogo <ldiogo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:21 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/21 17:05:34 by ldiogo           ###   ########.fr       */
+/*   Updated: 2024/02/22 10:54:10 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct textures
 void	readmap(char **map, char *file);
 int		numberoflines(char *file);
 char	**map_init(char *file);
-void	printf_array(char **array);
 int		flood_fill(char **map, int x, int y);
 int		check_map_closed(char **map);
 int		get_start_map(char **map);

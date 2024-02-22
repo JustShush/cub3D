@@ -6,24 +6,11 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/13 11:49:48 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:30:14 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 int	flood_fill(char **map, int x, int y)
 {
@@ -119,48 +106,6 @@ int	check_color(char *line)
 	if (j != 2)
 		return (0);
 	return (1);
-}
-
-void	save_color(t_general *gen, char dir, char *line, int j)
-{
-	char	*path;
-	char	**color;
-
-	path = ft_chrtrim(&line[j], ' ');
-	color = ft_split(path, ',');
-	if (check_color(path) == 0)
-		return ;
-	if (dir == 'C')
-	{
-		gen->textures->c->r = ft_atoi(color[0]);
-		gen->textures->c->g = ft_atoi(color[1]);
-		gen->textures->c->b = ft_atoi(color[2]);
-	}
-	else if (dir == 'F')
-	{
-		gen->textures->f->r = ft_atoi(color[0]);
-		gen->textures->f->g = ft_atoi(color[1]);
-		gen->textures->f->b = ft_atoi(color[2]);
-	}
-	free(path);
-	free_array(color);
-}
-
-int	check_valid_color(t_general *gen)
-{
-	if (gen->textures->c->r > 255 || gen->textures->c->r < 0)
-		return (printf("Error - Invalid color\n"));
-	if (gen->textures->c->g > 255 || gen->textures->c->g < 0)
-		return (printf("Error - Invalid color\n"));
-	if (gen->textures->c->b > 255 || gen->textures->c->b < 0)
-		return (printf("Error - Invalid color\n"));
-	if (gen->textures->f->r > 255 || gen->textures->f->r < 0)
-		return (printf("Error - Invalid color\n"));
-	if (gen->textures->f->g > 255 || gen->textures->f->g < 0)
-		return (printf("Error - Invalid color\n"));
-	if (gen->textures->f->b > 255 || gen->textures->f->b < 0)
-		return (printf("Error - Invalid color\n"));
-	return (0);
 }
 
 int	check_map(t_general *gen)

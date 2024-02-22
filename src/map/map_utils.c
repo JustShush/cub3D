@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mira <mira@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:02 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/09 13:27:38 by mira             ###   ########.fr       */
+/*   Updated: 2024/02/22 10:29:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,17 @@ int	get_start_map(char **map)
 	while (line_empty(map[i]) == 0)
 		i--;
 	return (i);
+}
+
+void	free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }

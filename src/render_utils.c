@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:21:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/20 15:24:02 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:58:46 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,16 @@ float	ft_tan(float angle)
 	c = cos(to_rad(angle));
 	if (fabs(c) > 0.000000001)
 		return (s / c);
+	return (1);
+}
+
+//Checks if point is inside the screen
+//Returns 1 if wall or invalid
+int	point_check(t_general *gen, int y, int x)
+{
+	if (y >= 0 && x >= 0 && y / CUB < gen->map->y
+		&& x / CUB < ft_strlen(gen->map->tilemap[y / CUB])
+		&& gen->map->tilemap[y / CUB][x / CUB] != '1')
+		return (0);
 	return (1);
 }

@@ -6,17 +6,11 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 12:48:10 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:35:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-//What the program does:
-// - Checks for correct arguments;
-// - Initializes a map struct and it's tilemap array and (N,S,W,E) strings.
-// - Opens a window with a pixel at the center;
-// - Exits cleanly with ESC and Window X button;
 
 void	look_left(t_general *gen, int sens)
 {

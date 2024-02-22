@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:03:55 by mortins-          #+#    #+#             */
-/*   Updated: 2024/01/31 15:27:53 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:58:14 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	ft_memcmp(const void *s1, const void *s2, int n)
 {
-	int			i;
+	int				i;
 	unsigned char	*st1;
 	unsigned char	*st2;
 

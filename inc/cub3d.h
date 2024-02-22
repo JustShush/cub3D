@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldiogo <ldiogo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/21 17:05:34 by ldiogo           ###   ########.fr       */
+/*   Updated: 2024/02/22 10:55:51 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,54 +97,78 @@ typedef struct s_general
 	t_textures	*textures;
 }				t_general;
 
-//map
-//map/check.c
-int			check_valid_color(t_general *gen);
-int			check_map(t_general *gen);
-int			check_textures(t_general *gen);
-int			get_textures(t_general *gen);
-void		save_color(t_general *gen, char dir, char *line, int j);
-int			check_color(char *line);
-void		save_img(t_general *gen, char *dir, char *line, int j);
+//---------------------------------------map/----------------------------------
+// check.c
+int				check_color(char *line);
+int				check_map(t_general *gen);
 
-//map/map.c
-int			tilemap(t_map *map, char *map_path);
+// map_utils2.c
+void			save_color(t_general *gen, char dir, char *line, int j);
+int				check_valid_color(t_general *gen);
 
-//close.c
-int			close_game(t_general *gen);
+// map.c
+int				tilemap(t_map *map, char *map_path);
 
-//input.c
-int			key_release(int key, t_general *gen);
-int			key_press(int key, t_general *gen);
+//-----------------------------------------------------------------------------
+// close.c
+int				close_game(t_general *gen);
 
-//init.c
-void		init_img(t_general *gen);
-void		player_pos(t_general *gen, char **map);
-t_general	*init(t_general *gen, char **av);
+// input.c
+int				key_release(int key, t_general *gen);
+int				key_press(int key, t_general *gen);
 
-//render_calc.c
-float		dist(t_general *gen, t_ray *ray, float y, float x);
-void		horizontal_intersection(t_general *gen, t_ray *ray);
-void		vertical_intersection(t_general *gen, t_ray *ray);
+// init.c
+void			init_img(t_general *gen);
+void			player_pos(t_general *gen, char **map);
+t_general		*init(t_general *gen, char **av);
 
-//render_utils.c
-void		my_mlx_pixel_put(t_general *gen, int x, int y, unsigned int color);
-double		norm(double angle);
-float		to_rad(float d);
-float		ft_tan(float angle);
+// minimap_put.c
+void			put_map(t_general *gen, int *num);
+void			put_player(t_general *gen, int py, int px, int r);
+void			put_rays(t_general *gen, int angle, int py, int px);
 
-//render.c
-int			render(t_general *gen);
-int			point_check(t_general *gen, int y, int x);
+// render_anim.c
+void			display_position(t_general *gen);
+void			print_anim(t_general *gen);
 
-//minimap.c
-void		raycast2d(t_general *gen);
-int			minimap(t_general *gen);
-void		put_square(t_general *gen, int y, int x, int color);
+// render_calc.c
+float			dist(t_general *gen, t_ray *ray, float y, float x);
+void			horizontal_intersection(t_general *gen, t_ray *ray);
+void			vertical_intersection(t_general *gen, t_ray *ray);
 
-//utils.c
-int			first_str(char *s1, char *s2);
-int			line_empty(char *line);
-void		free_array(char **array);
+// render_draw.c
+void			draw(t_general *gen, float wall_dist, int i, int flag);
+
+// render_utils.c
+void			my_mlx_pixel_put(t_general *gen, int x, int y, unsigned int color);
+double			norm(double angle);
+float			to_rad(float d);
+float			ft_tan(float angle);
+
+// render_utils2.c
+unsigned int	get_pixel_img(t_img *img, int x, int y);
+int				get_color(t_RGB *color);
+unsigned int	get_pixel_color(t_img *img, int pixelx, int pixely);
+int				check_collision(t_general *gen, int y, int x);
+
+// render.c
+int				render(t_general *gen);
+int				point_check(t_general *gen, int y, int x);
+
+// minimap.c
+void			raycast2d(t_general *gen);
+int				minimap(t_general *gen);
+void			put_square(t_general *gen, int y, int x, int color);
+
+//textures.c
+int				check_textures(t_general *gen);
+int				get_textures(t_general *gen);
+void			save_img(t_general *gen, char *dir, char *line, int j);
+
+
+// utils.c
+int				first_str(char *s1, char *s2);
+int				line_empty(char *line);
+void			free_array(char **array);
 
 #endif
