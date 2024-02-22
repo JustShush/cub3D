@@ -1,0 +1,8 @@
+Leaks:
+Empty map file
+Texture path missing
+Color missing
+
+Wrong Behaviour:
+Negative Color
+No RBG values, only F

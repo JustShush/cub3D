@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 13:53:04 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:33:48 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	*error_free(t_general *gen)
 	free(gen->player);
 	free(gen->img);
 	free(gen->map);
+	free(gen->mlx);
 	free(gen);
 	return (NULL);
 }
