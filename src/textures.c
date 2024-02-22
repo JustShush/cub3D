@@ -35,6 +35,8 @@ void	save_img(t_general *gen, char *dir, char *line, int j)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
+		free(path);
+		make_img_null(gen, dir);
 		printf("Error - Invalid texture path\n");
 		return ;
 	}
