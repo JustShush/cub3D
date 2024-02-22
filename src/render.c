@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:37:35 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 11:01:07 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:25:41 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	raycast(t_general *gen, t_ray *ray)
 		vdist = dist(gen, ray, ray->vy, ray->vx);
 		if (hdist <= vdist)
 			draw(gen, hdist, i, 0);
-		else
+		else if (hdist > vdist)
 			draw(gen, vdist, i, 1);
 		ray->an = norm(ray->an - column);
 		i++;
@@ -64,7 +64,6 @@ void	print_display(t_general *gen)
 	mlx_destroy_image(gen->mlx, gen->img->img);
 }
 
-//Raycast based on player's direction and gen->pov
 int	render(t_general *gen)
 {
 	if (gen->key->l == 1)

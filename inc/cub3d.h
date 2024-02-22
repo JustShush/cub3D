@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/22 10:55:51 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:09:28 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define X_SENSE			2
 # define SPD				5
-# define RSPD			2
+# define RSPD				3
 # define CUB				64
 # define RED_PIXEL		0xFF0000
 # define ORANGE_PIXEL	0xFF8000
@@ -148,7 +148,7 @@ float			ft_tan(float angle);
 // render_utils2.c
 unsigned int	get_pixel_img(t_img *img, int x, int y);
 int				get_color(t_RGB *color);
-unsigned int	get_pixel_color(t_img *img, int pixelx, int pixely);
+unsigned int	get_pixel_color(t_img *img, float pixelx, float pixely);
 int				check_collision(t_general *gen, int y, int x);
 
 // render.c

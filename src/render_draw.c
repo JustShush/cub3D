@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:37:30 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:58:58 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:29:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,29 @@ void	draw_ceiling(t_general *gen, int draw_start, int i)
 		my_mlx_pixel_put(gen, i, j++, get_color(gen->textures->c));
 }
 
-void	draw_walls(t_general *gen, int x, t_su su, int flag)
+unsigned int	get_pixel_color(t_img *img, float pixelx, float pixely)
 {
-	int				pixely;
-	int				pixelx;
 	unsigned int	color;
 
-	pixely = (su.draw_start - gen->win_y / 2 + su.line_h / 2) * 64 / su.line_h;
+	if (pixelx >= 0 && pixelx < img->width
+		&& pixely >= 0 && pixely < img->height)
+		color = *(unsigned int *)(img->addr + (int)((pixely * img->line_length)
+				+ (pixelx * img->bits_per_pixel / 2)));
+	else
+		color = 0;
+	return (color);
+}
+
+void	draw_walls(t_general *gen, int x, t_su su, int flag)
+{
+	float			pixely;
+	float			pixelx;
+	unsigned int	color;
+
+	pixely = (su.draw_start - (gen->win_y / 2) + (su.line_h / 2)) * 64 / su.line_h;
 	if (flag == 0)
 	{
-		pixelx = (int)gen->ray->hx % 32;
+		pixelx = (int)((gen->ray->hx + gen->ray->hy)) % 16;
 		if (sin(to_rad(gen->ray->an)) > 0.0001)
 			color = get_pixel_color(gen->textures->no, pixelx, pixely);
 		else if (sin(to_rad(gen->ray->an)) < -0.0001)
@@ -45,7 +58,7 @@ void	draw_walls(t_general *gen, int x, t_su su, int flag)
 	}
 	if (flag == 1)
 	{
-		pixelx = (int)gen->ray->vy % 32;
+		pixelx = (int)((gen->ray->vx + gen->ray->vy)) % 16;
 		if (cos(to_rad(gen->ray->an)) > 0.0001)
 			color = get_pixel_color(gen->textures->ea, pixelx, pixely);
 		else if (cos(to_rad(gen->ray->an)) < -0.0001)

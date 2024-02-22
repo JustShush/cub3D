@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:34:17 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:26:59 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	more_init(t_general *gen)
 	gen->key->a = 0;
 	gen->key->l = 0;
 	gen->key->r = 0;
-	gen->win_x = 1280;
+	gen->win_x = 800;
 	gen->win_y = 800;
-	gen->pov = 60;
+	gen->pov = 66;
 	gen->ray->an = 0;
 	gen->player->old_an = 0;
 }

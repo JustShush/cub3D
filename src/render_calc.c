@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:34:45 by mira              #+#    #+#             */
-/*   Updated: 2024/02/20 15:05:42 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:08:57 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	horizontal_intersection(t_general *gen, t_ray *ray)
 		if (cos(to_rad(ray->an)) < -0.001)
 			intersection_iter(gen, 0, -CUB, 0);
 	}
-	else if (sin(to_rad(ray->an)) > 0.0001)
+	else if (sin(to_rad(ray->an)) > 1.0E-8)
 	{
-		ray->hy = (((int)gen->player->y >> log2) << log2) - 0.001;
+		ray->hy = (((int)gen->player->y >> log2) << log2) - 0.0001;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
 		intersection_iter(gen, (-CUB), CUB / ft_tan(ray->an), 0);
 	}
-	else if (sin(to_rad(ray->an)) < -0.0001)
+	else if (sin(to_rad(ray->an)) < -1.0E-8)
 	{
 		ray->hy = (((int)gen->player->y >> log2) << log2) + CUB;
 		ray->hx = gen->player->x + (gen->player->y - ray->hy) / ft_tan(ray->an);
@@ -90,22 +90,22 @@ void	vertical_intersection(t_general *gen, t_ray *ray)
 	int	log2;
 
 	log2 = log(CUB) / log(2);
-	if (cos(to_rad(ray->an)) > 0.0001)
+	if (cos(to_rad(ray->an)) < 1.0E-8 && (cos(to_rad(ray->an)) > -1.0E-8))
+	{
+		ray->vx = gen->player->x;
+		ray->vy = gen->player->y;
+		intersection_iter(gen, (-CUB), 0, 1);
+	}
+	else if (cos(to_rad(ray->an)) > 1.0E-8)
 	{
 		ray->vx = (((int)gen->player->x >> log2) << log2) + CUB;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		intersection_iter(gen, (-CUB) * ft_tan(ray->an), CUB, 1);
 	}
-	else if ((cos(to_rad(ray->an)) < -0.0001))
+	else if ((cos(to_rad(ray->an)) < -1.0E-8))
 	{
-		ray->vx = (((int)gen->player->x >> log2) << log2) - 0.001;
+		ray->vx = (((int)gen->player->x >> log2) << log2) - 0.0001;
 		ray->vy = gen->player->y + (gen->player->x - ray->vx) * ft_tan(ray->an);
 		intersection_iter(gen, CUB * ft_tan(ray->an), (-CUB), 1);
-	}
-	else if (cos(to_rad(ray->an)) < 1.0E-8 && (cos(to_rad(ray->an)) > -1.0E-8))
-	{
-		ray->vx = gen->player->x;
-		ray->vy = gen->player->y;
-		intersection_iter(gen, (-CUB), 0, 1);
 	}
 }
