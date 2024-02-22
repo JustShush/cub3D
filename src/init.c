@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 13:26:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:53:04 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,19 @@ void	more_init(t_general *gen)
 	gen->player->old_an = 0;
 }
 
+void	*error_free(t_general *gen)
+{
+	free(gen->textures->f);
+	free(gen->textures->c);
+	free(gen->textures);
+	free(gen->key);
+	free(gen->player);
+	free(gen->img);
+	free(gen->map);
+	free(gen);
+	return (NULL);
+}
+
 t_general	*init(t_general *gen, char **av)
 {
 	t_ray	ray;
@@ -75,6 +88,8 @@ t_general	*init(t_general *gen, char **av)
 	gen->img = (t_img *)malloc(sizeof(t_img));
 	gen->ray = &ray;
 	gen->file = map_init(av[1]);
+	if (!gen->file)
+		return (error_free(gen));
 	tilemap(gen->map, av[1]);
 	gen->mlx = mlx_init();
 	init_anim(gen);

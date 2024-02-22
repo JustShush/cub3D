@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:35:07 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:52:47 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("Error\nIncorrect ammount of arguments\n"));
 	gen = init(gen, av);
-	if (check_map(gen) == 0)
+	if (!gen || check_map(gen) == 0)
 		return (0);
 	player_pos(gen, gen->map->tilemap);
 	gen->win = mlx_new_window(gen->mlx, gen->win_x, gen->win_y, "cub3d");

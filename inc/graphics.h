@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:21 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/22 10:54:10 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:44:31 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct textures
 	t_RGB	*f;
 }				t_textures;
 
-void	readmap(char **map, char *file);
+int		readmap(char **map, char *file);
 int		numberoflines(char *file);
 char	**map_init(char *file);
 int		flood_fill(char **map, int x, int y);

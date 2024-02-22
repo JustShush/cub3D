@@ -6,13 +6,13 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:30:45 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:53:32 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-void	readmap(char **map, char *file)
+int	readmap(char **map, char *file)
 {
 	int		fd;
 	int		i;
@@ -24,7 +24,7 @@ void	readmap(char **map, char *file)
 	{
 		printf("Error - Map not found\n");
 		close(fd);
-		return ;
+		return (1);
 	}
 	line = gnl(fd);
 	while (line)
@@ -36,6 +36,7 @@ void	readmap(char **map, char *file)
 	}
 	map[i] = NULL;
 	close(fd);
+	return (0);
 }
 
 int	numberoflines(char *file)
@@ -101,6 +102,10 @@ char	**map_init(char *file)
 	map = malloc(sizeof(char *) * (numberoflines(file) + 1));
 	if (!map)
 		return (NULL);
-	readmap(map, file);
+	if (readmap(map, file))
+	{
+		free(map);
+		return (NULL);
+	}
 	return (map);
 }
