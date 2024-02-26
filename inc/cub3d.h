@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/22 13:49:34 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:59:03 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@
 typedef struct s_map
 {
 	char	**tilemap;
-	char	*north;
-	char	*west;
-	char	*east;
-	char	*south;
 	int		y;
 }				t_map;
 
@@ -171,12 +167,8 @@ int				line_empty(char *line);
 void			free_array(char **array);
 void			*error_free(t_general *gen);
 void			exit_free_check(t_general *gen);
-void			free_map(t_map *map);
 void			free_t_img(t_img *img, void *mlx);
 void			make_null(t_general *gen, char dir);
 void			make_img_null(t_general *gen, char *dir);
-
-
-
 
 #endif

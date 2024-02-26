@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 14:33:48 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:58:58 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,12 @@ void	more_init(t_general *gen)
 	gen->win_y = 800;
 	gen->pov = 66;
 	gen->ray->an = 0;
-	gen->map->north = NULL;
-	gen->map->south = NULL;
-	gen->map->west = NULL;
-	gen->map->east = NULL;
 	gen->player->old_an = 0;
 }
 
 void	support_free(t_general *gen)
 {
-	free_map(gen->map);
+	free_array(gen->map->tilemap);
 	free_array(gen->file);
 	free(gen->key);
 	free(gen->player);
@@ -86,14 +82,10 @@ void	exit_free_check(t_general *gen)
 	free(gen->anim);
 	free(gen->textures->f);
 	free(gen->textures->c);
-	if (gen->textures->no != NULL)
-		free_t_img(gen->textures->no, gen->mlx);
-	if (gen->textures->so != NULL)
-		free_t_img(gen->textures->so, gen->mlx);
-	if (gen->textures->we != NULL)
-		free_t_img(gen->textures->we, gen->mlx);
-	if (gen->textures->ea != NULL)
-		free_t_img(gen->textures->ea, gen->mlx);
+	free_t_img(gen->textures->no, gen->mlx);
+	free_t_img(gen->textures->so, gen->mlx);
+	free_t_img(gen->textures->we, gen->mlx);
+	free_t_img(gen->textures->ea, gen->mlx);
 	mlx_destroy_display(gen->mlx);
 	support_free(gen);
 	free(gen->mlx);
@@ -110,7 +102,6 @@ void	*error_free(t_general *gen)
 	free(gen->player);
 	free(gen->img);
 	free(gen->map);
-	free(gen->mlx);
 	free(gen);
 	return (NULL);
 }

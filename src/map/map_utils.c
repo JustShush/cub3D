@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:02 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:29:07 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:30:14 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ int	get_start_map(char **map)
 	i = 0;
 	while (map[i])
 		i++;
-	i -= 1;
-	while (line_empty(map[i]) == 1)
+	i--;
+	while (i > 0 && line_empty(map[i]) == 1)
 		i--;
-	while (line_empty(map[i]) == 0)
+	while (i > 0 && line_empty(map[i]) == 0)
 		i--;
 	return (i);
 }

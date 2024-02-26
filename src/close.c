@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:46 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 13:49:31 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:59:19 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 void	free_t_img(t_img *img, void *mlx)
 {
-	mlx_destroy_image(mlx, img->img);
-	free(img);
-}
-
-void	free_map(t_map *map)
-{
-	free(map->east);
-	free(map->north);
-	free(map->south);
-	free(map->west);
-	free_array(map->tilemap);
+	if (!img)
+	{
+		mlx_destroy_image(mlx, img->img);
+		free(img);
+	}
 }
 
 int	close_game(t_general *gen)
@@ -42,7 +36,7 @@ int	close_game(t_general *gen)
 	free_t_img(gen->textures->we, gen->mlx);
 	free_t_img(gen->textures->ea, gen->mlx);
 	free(gen->textures);
-	free_map(gen->map);
+	free_array(gen->map->tilemap);
 	free_array(gen->file);
 	free(gen->key);
 	free(gen->player);

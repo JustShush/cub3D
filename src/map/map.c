@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 13:53:32 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:56:35 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,6 @@ int	numberoflines(char *file)
 	return (i);
 }
 
-void	support_tile(t_map *map, char *buf)
-{
-	if (!first_str(buf, "NO"))
-		map->north = ft_strdup(buf);
-	if (!first_str(buf, "SO"))
-		map->south = ft_strdup(buf);
-	if (!first_str(buf, "WE"))
-		map->west = ft_strdup(buf);
-	if (!first_str(buf, "EA"))
-		map->east = ft_strdup(buf);
-}
-
 int	tilemap(t_map *map, char *map_path)
 {
 	int		i;
@@ -90,7 +78,6 @@ int	tilemap(t_map *map, char *map_path)
 		buf = gnl(fd);
 		if (!first_str(buf, "1"))
 			map->tilemap[i++] = ft_strdup(buf);
-		support_tile(map, buf);
 		free(buf);
 	}
 	map->tilemap[i] = 0;

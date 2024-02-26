@@ -2,7 +2,7 @@
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
 RM = rm -rf
 
 SRC_CUB	=	close.c init_player.c init.c input.c main.c minimap_put.c minimap.c render_anim.c render_calc.c render_draw.c render_utils.c render_utils2.c render.c textures.c utils.c
@@ -41,7 +41,7 @@ val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D
 
 a: $(NAME)
-	@./cub3D maps/map2.cub
+	@./cub3D maps/neg_color.c
 
 valtest: $(NAME)
 	@for map_file in ./maps/*.cub; do \

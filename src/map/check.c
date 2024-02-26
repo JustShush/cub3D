@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:30:14 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:47:25 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_map_closed(char **map)
 	int	i;
 	int	j;
 
-	i = get_start_map(map) - 1;
+	i = get_start_map(map);
 	while (map[++i])
 	{
 		j = -1;
@@ -122,14 +122,12 @@ int	check_map(t_general *gen)
 	{
 		printf("Error - Map is not valid (Map is not closed 2)\n");
 		exit_free_check(gen);
-		return (0);
 	}
 	if (check_textures(gen) || check_valid_color(gen)
 		|| check_char(gen->file) != 1)
 	{
 		printf("Error - Map is not valid (Invalid color)\n");
 		exit_free_check(gen);
-		return (0);
 	}
 	return (1);
 }
