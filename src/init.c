@@ -58,7 +58,47 @@ void	more_init(t_general *gen)
 	gen->win_y = 800;
 	gen->pov = 66;
 	gen->ray->an = 0;
+	gen->map->north = NULL;
+	gen->map->south = NULL;
+	gen->map->west = NULL;
+	gen->map->east = NULL;
 	gen->player->old_an = 0;
+}
+
+void	support_free(t_general *gen)
+{
+	free_map(gen->map);
+	free_array(gen->file);
+	free(gen->key);
+	free(gen->player);
+	free(gen->img);
+	free(gen->textures);
+	free(gen->map);
+}
+
+void	exit_free_check(t_general *gen)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 13)
+		mlx_destroy_image(gen->mlx, gen->anim[i].img);
+	free(gen->anim);
+	free(gen->textures->f);
+	free(gen->textures->c);
+	if (gen->textures->no != NULL)
+		free_t_img(gen->textures->no, gen->mlx);
+	if (gen->textures->so != NULL)
+		free_t_img(gen->textures->so, gen->mlx);
+	if (gen->textures->we != NULL)
+		free_t_img(gen->textures->we, gen->mlx);
+	if (gen->textures->ea != NULL)
+		free_t_img(gen->textures->ea, gen->mlx);
+	mlx_destroy_display(gen->mlx);
+	support_free(gen);
+	free(gen->mlx);
+	free(gen);
+	exit(0);
 }
 
 void	*error_free(t_general *gen)
@@ -75,14 +115,26 @@ void	*error_free(t_general *gen)
 	return (NULL);
 }
 
+void	print_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		printf("%s\n", array[i]);
+		i++;
+	}
+}
+
 t_general	*init(t_general *gen, char **av)
 {
 	t_ray	ray;
 
 	gen = (t_general *)malloc(sizeof(t_general));
 	gen->textures = (t_textures *)malloc(sizeof(t_textures));
-	gen->textures->c = (t_RGB *)malloc(sizeof(t_RGB));
-	gen->textures->f = (t_RGB *)malloc(sizeof(t_RGB));
+	gen->textures->c = NULL;
+	gen->textures->f = NULL;
 	gen->map = (t_map *)malloc(sizeof(t_map));
 	gen->key = (t_key *)malloc(sizeof(t_key));
 	gen->player = (t_player *)malloc(sizeof(t_player));
@@ -92,6 +144,7 @@ t_general	*init(t_general *gen, char **av)
 	if (!gen->file)
 		return (error_free(gen));
 	tilemap(gen->map, av[1]);
+	print_array(gen->map->tilemap);
 	gen->mlx = mlx_init();
 	init_anim(gen);
 	more_init(gen);

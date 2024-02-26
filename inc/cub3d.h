@@ -99,7 +99,7 @@ typedef struct s_general
 
 //---------------------------------------map/----------------------------------
 // check.c
-int				check_color(char *line);
+int				check_color(char *line, char **color);
 int				check_map(t_general *gen);
 
 // map_utils2.c
@@ -128,7 +128,6 @@ void			put_player(t_general *gen, int py, int px, int r);
 void			put_rays(t_general *gen, int angle, int py, int px);
 
 // render_anim.c
-void			display_position(t_general *gen);
 void			print_anim(t_general *gen);
 
 // render_calc.c
@@ -170,5 +169,14 @@ void			save_img(t_general *gen, char *dir, char *line, int j);
 int				first_str(char *s1, char *s2);
 int				line_empty(char *line);
 void			free_array(char **array);
+void			*error_free(t_general *gen);
+void			exit_free_check(t_general *gen);
+void			free_map(t_map *map);
+void			free_t_img(t_img *img, void *mlx);
+void			make_null(t_general *gen, char dir);
+void			make_img_null(t_general *gen, char *dir);
+
+
+
 
 #endif

@@ -23,12 +23,12 @@ int	readmap(char **map, char *file)
 	if (fd < 0)
 	{
 		printf("Error - Map not found\n");
-		close(fd);
 		return (1);
 	}
 	line = gnl(fd);
 	while (line)
 	{
+		printf("%s\n", line);
 		map[i] = ft_strdup(line);
 		free(line);
 		i++;
@@ -47,6 +47,8 @@ int	numberoflines(char *file)
 
 	i = 0;
 	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	line = gnl(fd);
 	while (line)
 	{

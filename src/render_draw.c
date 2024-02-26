@@ -35,7 +35,7 @@ unsigned int	get_pixel_color(t_img *img, float pixelx, float pixely)
 	if (pixelx >= 0 && pixelx < img->width
 		&& pixely >= 0 && pixely < img->height)
 		color = *(unsigned int *)(img->addr + (int)((pixely * img->line_length)
-				+ (pixelx * img->bits_per_pixel / 2)));
+					+ (pixelx * img->bits_per_pixel / 2)));
 	else
 		color = 0;
 	return (color);
@@ -47,7 +47,8 @@ void	draw_walls(t_general *gen, int x, t_su su, int flag)
 	float			pixelx;
 	unsigned int	color;
 
-	pixely = (su.draw_start - (gen->win_y / 2) + (su.line_h / 2)) * 64 / su.line_h;
+	pixely = (su.draw_start
+			- (gen->win_y / 2) + (su.line_h / 2)) * 64 / su.line_h;
 	if (flag == 0)
 	{
 		pixelx = (int)((gen->ray->hx + gen->ray->hy)) % 16;

@@ -34,4 +34,3 @@ int	get_color(t_RGB *color)
 {
 	return (color->r << 16 | color->g << 8 | color->b);
 }
-

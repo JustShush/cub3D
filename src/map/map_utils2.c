@@ -12,6 +12,58 @@
 
 #include "../../inc/cub3d.h"
 
+void	make_null(t_general *gen, char dir)
+{
+	if (dir == 'C')
+	{
+		free(gen->textures->c);
+		gen->textures->c = NULL;
+	}
+	else if (dir == 'F')
+	{
+		free(gen->textures->f);
+		gen->textures->f = NULL;
+	}
+}
+
+void	make_img_null(t_general *gen, char *dir)
+{
+	if (dir[0] == 'N' && dir[1] == 'O')
+	{
+		gen->textures->no = NULL;
+	}
+	else if (dir[0] == 'S' && dir[1] == 'O')
+	{
+		gen->textures->so = NULL;
+	}
+	else if (dir[0] == 'W' && dir[1] == 'E')
+	{
+		gen->textures->we = NULL;
+	}
+	else if (dir[0] == 'E' && dir[1] == 'A')
+	{
+		gen->textures->ea = NULL;
+	}
+}
+
+void	assign_color(t_general *gen, char dir, char **color)
+{
+	if (dir == 'C')
+	{
+		gen->textures->c = (t_RGB *)malloc(sizeof(t_RGB));
+		gen->textures->c->r = ft_atoi(color[0]);
+		gen->textures->c->g = ft_atoi(color[1]);
+		gen->textures->c->b = ft_atoi(color[2]);
+	}
+	else if (dir == 'F')
+	{
+		gen->textures->f = (t_RGB *)malloc(sizeof(t_RGB));
+		gen->textures->f->r = ft_atoi(color[0]);
+		gen->textures->f->g = ft_atoi(color[1]);
+		gen->textures->f->b = ft_atoi(color[2]);
+	}
+}
+
 void	save_color(t_general *gen, char dir, char *line, int j)
 {
 	char	*path;
@@ -19,20 +71,14 @@ void	save_color(t_general *gen, char dir, char *line, int j)
 
 	path = ft_chrtrim(&line[j], ' ');
 	color = ft_split(path, ',');
-	if (check_color(path) == 0)
+	if (check_color(path, color) == 0)
+	{
+		make_null(gen, dir);
+		free(path);
+		free_array(color);
 		return ;
-	if (dir == 'C')
-	{
-		gen->textures->c->r = ft_atoi(color[0]);
-		gen->textures->c->g = ft_atoi(color[1]);
-		gen->textures->c->b = ft_atoi(color[2]);
 	}
-	else if (dir == 'F')
-	{
-		gen->textures->f->r = ft_atoi(color[0]);
-		gen->textures->f->g = ft_atoi(color[1]);
-		gen->textures->f->b = ft_atoi(color[2]);
-	}
+	assign_color(gen, dir, color);
 	free(path);
 	free_array(color);
 }

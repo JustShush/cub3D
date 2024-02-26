@@ -88,13 +88,20 @@ int	check_char(char **map)
 	return (1);
 }
 
-int	check_color(char *line)
+int	check_color(char *line, char **color)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
+	while (i < 3)
+	{
+		if (color[i] == NULL)
+			return (0);
+		i++;
+	}
+	i = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] == ',')
@@ -111,12 +118,17 @@ int	check_color(char *line)
 int	check_map(t_general *gen)
 {
 	get_textures(gen);
-	if (check_textures(gen) || check_valid_color(gen)
-		|| check_char(gen->file) != 1)
-		return (0);
 	if (check_map_closed(gen->file) == 1)
 	{
 		printf("Error - Map is not valid (Map is not closed 2)\n");
+		exit_free_check(gen);
+		return (0);
+	}
+	if (check_textures(gen) || check_valid_color(gen)
+		|| check_char(gen->file) != 1)
+	{
+		printf("Error - Map is not valid (Invalid color)\n");
+		exit_free_check(gen);
 		return (0);
 	}
 	return (1);

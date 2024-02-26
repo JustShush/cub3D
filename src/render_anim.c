@@ -12,20 +12,6 @@
 
 #include "../inc/cub3d.h"
 
-void	display_position(t_general *gen)
-{
-	char	*x;
-	char	*y;
-
-	x = ft_itoa(gen->player->x);
-	y = ft_itoa(gen->player->y);
-	mlx_string_put(gen->mlx, gen->win, 10, 20, 0xFFFFFF, "Player position:");
-	mlx_string_put(gen->mlx, gen->win, 10, 40, 0xFFFFFF, x);
-	mlx_string_put(gen->mlx, gen->win, 10, 60, 0xFFFFFF, y);
-	free(x);
-	free(y);
-}
-
 void	make_wheel(t_general *gen, int index)
 {
 	int	i;
