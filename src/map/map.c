@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 11:56:35 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:06:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	readmap(char **map, char *file)
 	line = gnl(fd);
 	while (line)
 	{
-		printf("%s\n", line);
 		map[i] = ft_strdup(line);
 		free(line);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 11:58:58 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:10:12 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ t_general	*init(t_general *gen, char **av)
 	if (!gen->file)
 		return (error_free(gen));
 	tilemap(gen->map, av[1]);
-	print_array(gen->map->tilemap);
 	gen->mlx = mlx_init();
 	init_anim(gen);
 	more_init(gen);

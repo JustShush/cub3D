@@ -41,7 +41,7 @@ val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D
 
 a: $(NAME)
-	@./cub3D maps/neg_color.c
+	@./cub3D maps/subject.cub
 
 valtest: $(NAME)
 	@for map_file in ./maps/*.cub; do \
