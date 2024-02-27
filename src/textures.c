@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:48:14 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/14 12:51:56 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:54:49 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ void	save_img(t_general *gen, char *dir, char *line, int j)
 
 	path = ft_chrtrim(&line[j], ' ');
 	fd = open(path, O_RDONLY);
-	if (fd == -1)
+	if (fd == -1 || check_suffix(path, ".xpm"))
 	{
+		if (check_suffix(path, ".xpm"))
+			close(fd);
 		free(path);
 		make_img_null(gen, dir);
-		printf("Error - Invalid texture path\n");
+		printf("Error\nInvalid texture path\n");
 		return ;
 	}
 	close(fd);
@@ -90,22 +92,22 @@ int	get_textures(t_general *gen)
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	check_textures(t_general *gen)
 {
 	if (gen->textures->no == NULL)
-		return (printf("Error - NO texture not found\n"));
+		return (printf("Error\nNO texture not found\n"));
 	if (gen->textures->so == NULL)
-		return (printf("Error - SO texture not found\n"));
+		return (printf("Error\nSO texture not found\n"));
 	if (gen->textures->we == NULL)
-		return (printf("Error - WE texture not found\n"));
+		return (printf("Error\nWE texture not found\n"));
 	if (gen->textures->ea == NULL)
-		return (printf("Error - EA texture not found\n"));
+		return (printf("Error\nEA texture not found\n"));
 	if (gen->textures->c == NULL)
-		return (printf("Error - C color not found\n"));
+		return (printf("Error\nC color not found\n"));
 	if (gen->textures->f == NULL)
-		return (printf("Error - F color not found\n"));
+		return (printf("Error\nF color not found\n"));
 	return (0);
 }

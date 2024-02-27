@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/26 11:59:03 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:54:42 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_general
 // check.c
 int				check_color(char *line, char **color);
 int				check_map(t_general *gen);
+int				flood_fill(char **map, int x, int y, int lines);
+int				check_map_closed(t_map *map, char **bmap);
 
 // map_utils2.c
 void			save_color(t_general *gen, char dir, char *line, int j);

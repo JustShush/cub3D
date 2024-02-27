@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:07 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 13:06:07 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:38:50 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	readmap(char **map, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("Error - Map not found\n");
+		printf("Error\nMap not found\n");
 		return (1);
 	}
 	line = gnl(fd);
@@ -80,6 +80,7 @@ int	tilemap(t_map *map, char *map_path)
 		free(buf);
 	}
 	map->tilemap[i] = 0;
+	close(fd);
 	return (0);
 }
 

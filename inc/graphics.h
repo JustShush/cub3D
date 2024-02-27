@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:21 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/26 13:26:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:18:03 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ typedef struct textures
 int		readmap(char **map, char *file);
 int		numberoflines(char *file);
 char	**map_init(char *file);
-int		flood_fill(char **map, int x, int y);
-int		check_map_closed(char **map);
 int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);
 int		get_y(char *file);
-int	check_suffix(char *file_path, char *suf);
+int		check_suffix(char *file_path, char *suf);
 
 #endif //BUC3D_BUC3D_H

@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 12:10:12 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:52:21 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ void	init_anim(t_general *gen)
 
 void	more_init(t_general *gen)
 {
+	gen->textures->no = NULL;
+	gen->textures->so = NULL;
+	gen->textures->we = NULL;
+	gen->textures->ea = NULL;
 	gen->key->w = 0;
 	gen->key->d = 0;
 	gen->key->s = 0;
@@ -72,6 +76,19 @@ void	support_free(t_general *gen)
 	free(gen->map);
 }
 
+void	*error_free(t_general *gen)
+{
+	free(gen->textures->f);
+	free(gen->textures->c);
+	free(gen->textures);
+	free(gen->key);
+	free(gen->player);
+	free(gen->img);
+	free(gen->map);
+	free(gen);
+	return (NULL);
+}
+
 void	exit_free_check(t_general *gen)
 {
 	int	i;
@@ -91,19 +108,6 @@ void	exit_free_check(t_general *gen)
 	free(gen->mlx);
 	free(gen);
 	exit(0);
-}
-
-void	*error_free(t_general *gen)
-{
-	free(gen->textures->f);
-	free(gen->textures->c);
-	free(gen->textures);
-	free(gen->key);
-	free(gen->player);
-	free(gen->img);
-	free(gen->map);
-	free(gen);
-	return (NULL);
 }
 
 void	print_array(char **array)

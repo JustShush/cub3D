@@ -38,10 +38,10 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 val: $(NAME)
-	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D
+	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D ./maps/color_invalid_rgb.cub
 
 a: $(NAME)
-	@./cub3D maps/subject.cub
+	@./cub3D ./maps/textures_none.cub
 
 valtest: $(NAME)
 	@for map_file in ./maps/*.cub; do \

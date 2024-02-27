@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:46 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 11:59:19 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:56:04 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	close_game(t_general *gen)
 	free_t_img(gen->textures->so, gen->mlx);
 	free_t_img(gen->textures->we, gen->mlx);
 	free_t_img(gen->textures->ea, gen->mlx);
-	free(gen->textures);
 	free_array(gen->map->tilemap);
 	free_array(gen->file);
+	free(gen->textures);
 	free(gen->key);
 	free(gen->player);
 	free(gen->img);

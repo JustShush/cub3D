@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:21:27 by mira              #+#    #+#             */
-/*   Updated: 2024/02/26 13:26:49 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:25:35 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	line_empty(char *line)
 	return (1);
 }
 
-//Checks if file_path has ".cub" suffix
+//Return 0 if file_path has suffix
 int	check_suffix(char *file_path, char *suf)
 {
 	while (*file_path)

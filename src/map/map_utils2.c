@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:29:36 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:31:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:58:01 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,17 @@ void	save_color(t_general *gen, char dir, char *line, int j)
 int	check_valid_color(t_general *gen)
 {
 	if (gen->textures->c->r > 255 || gen->textures->c->r < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	if (gen->textures->c->g > 255 || gen->textures->c->g < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	if (gen->textures->c->b > 255 || gen->textures->c->b < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	if (gen->textures->f->r > 255 || gen->textures->f->r < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	if (gen->textures->f->g > 255 || gen->textures->f->g < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	if (gen->textures->f->b > 255 || gen->textures->f->b < 0)
-		return (printf("Error - Invalid color\n"));
+		return (printf("Error\nInvalid color\n"));
 	return (0);
 }
 
