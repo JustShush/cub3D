@@ -43,7 +43,8 @@ int	minimap(t_general *gen)
 		while (gen->map->tilemap[num[0]][num[1]]
 			&& gen->map->tilemap[num[0]][num[1]] != '\n')
 		{
-			put_map(gen, num);
+			if(gen->map->tilemap[num[0]][num[1]] != ' ')
+				put_map(gen, num);
 			num[2] += SCALE;
 			num[1]++;
 		}

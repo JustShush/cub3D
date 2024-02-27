@@ -2,7 +2,7 @@
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux #-fsanitize=address
 RM = rm -rf
 
 SRC_CUB	=	close.c init_player.c init.c input.c main.c minimap_put.c minimap.c render_anim.c render_calc.c render_draw.c render_utils.c render_utils2.c render.c textures.c utils.c

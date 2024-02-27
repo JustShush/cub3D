@@ -63,6 +63,7 @@ void	more_init(t_general *gen)
 	gen->pov = 66;
 	gen->ray->an = 0;
 	gen->player->old_an = 0;
+	gen->c_texture = 0;
 }
 
 void	support_free(t_general *gen)

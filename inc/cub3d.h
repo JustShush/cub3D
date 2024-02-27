@@ -79,6 +79,7 @@ typedef struct s_su
 typedef struct s_general
 {
 	int			pov;
+	int 		c_texture;
 	void		*win;
 	void		*mlx;
 	int			win_x;

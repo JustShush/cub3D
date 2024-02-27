@@ -12,50 +12,108 @@
 
 #include "../../inc/cub3d.h"
 
+int	flood_fill_support(char **map, int x, int y, int lines)
+{
+	if (flood_fill(map, x + 1, y, lines) == 1)
+		return (1);
+	if (flood_fill(map, x - 1, y, lines) == 1)
+		return (1);
+	if (flood_fill(map, x, y + 1, lines) == 1)
+		return (1);
+	if (flood_fill(map, x, y - 1, lines) == 1)
+		return (1);
+	if (flood_fill(map, x + 1, y + 1, lines) == 1)
+		return (1);
+	if (flood_fill(map, x - 1, y - 1, lines) == 1)
+		return (1);
+	if (flood_fill(map, x + 1, y - 1, lines) == 1)
+		return (1);
+	if (flood_fill(map, x - 1, y + 1, lines) == 1)
+		return (1);
+	return (0);
+}
+
 int	flood_fill(char **map, int x, int y, int lines)
 {
-	if (x >= 0 && y >= 0 && x < lines && y < ft_strlen(map[x]) && map[x][y] == '0')
+	if (x >= 0 && y >= 0 && x < lines && y < ft_strlen(map[x])
+		&& (map[x][y] == '0' || map[x][y] == 'E'
+		|| map[x][y] == 'W' || map[x][y] == 'N'
+		|| map[x][y] == 'S'))
 	{
 		map[x][y] = '1';
-		if (flood_fill(map, x + 1, y, lines) == 1)
-			return (1);
-		if (flood_fill(map, x - 1, y, lines) == 1)
-			return (1);
-		if (flood_fill(map, x, y + 1, lines) == 1)
-			return (1);
-		if (flood_fill(map, x, y - 1, lines) == 1)
+		if (flood_fill_support(map, x, y, lines) == 1)
 			return (1);
 	}
-	else if (x >= 0 && y >= 0 && x < lines && y < ft_strlen(map[x]) && map[x][y] == '1')
+	else if (x >= 0 && y >= 0 && x < lines
+		&& y < ft_strlen(map[x]) && map[x][y] == '1')
 		return (0);
-	else if (x < 0 || y < 0 || x >= lines || y >= ft_strlen(map[x]) || (map[x][y] != '1'
+	else if (x < 0 || y < 0 || x >= lines
+		|| y >= ft_strlen(map[x]) || (map[x][y] != '1'
 		&& map[x][y] != 'E' && map[x][y] != 'W'
 		&& map[x][y] != 'N' && map[x][y] != 'S'))
 		return (1);
 	return (2);
 }
 
-int	check_map_closed(t_map *map, char **bmap)
+char	**copy_array(char **array)
 {
-	int	i;
-	int	j;
+	int		i;
+	char	**new;
 
-	i = get_start_map(bmap);
-	if (i + 1 < 0 || !bmap[i + 1] 
-		|| first_str(bmap[i + 1], "1"))
-		return (1);
-	while (bmap[++i])
+	i = 0;
+	while (array[i])
+		i++;
+	new = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (array[i])
+	{
+		new[i] = ft_strdup(array[i]);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+int	support_check_map(char **copy, int i, int j, t_map *map)
+{
+	while (copy[++i])
 	{
 		j = -1;
-		while (bmap[i][++j])
+		while (copy[i][++j])
 		{
-			if (bmap[i][j] == '0')
+			if (copy[i][j] == '0')
 			{
-				if (flood_fill(bmap, i, j, map->y + i) == 1)
+				if (flood_fill(copy, i, j, map->y + i) == 1)
+				{
+					free_array(copy);
 					return (1);
+				}
 			}
 		}
 	}
+	return (0);
+}
+
+int	check_map_closed(t_map *map, char **bmap)
+{
+	int		i;
+	int		j;
+	char	**copy;
+
+	j = 0;
+	i = get_start_map(bmap);
+	copy = copy_array(bmap);
+	if (i + 1 < 0 || !bmap[i + 1] 
+		|| first_str(bmap[i + 1], "1"))
+	{
+		free_array(copy);
+		return (1);
+	}
+	if (support_check_map(copy, i, j, map) == 1)
+		return (1);
+	free_array(copy);
 	return (0);
 }
 
@@ -115,34 +173,14 @@ int	check_color(char *line, char **color)
 	return (1);
 }
 
-// void	free_test(t_general *gen)
-// {
-// 	int i = 0;
-// 	while (++i < 13)
-// 		mlx_destroy_image(gen->mlx, gen->anim[i].img);
-// 	free(gen->anim);
-// 	free(gen->textures->f);
-// 	free(gen->textures->c);
-// 	mlx_destroy_display(gen->mlx);
-// 	free_array(gen->map->tilemap);
-// 	free_array(gen->file);
-// 	free(gen->key);
-// 	free(gen->player);
-// 	free(gen->img);
-// 	free(gen->textures);
-// 	free(gen->map);
-// 	free(gen->mlx);
-// 	free(gen);
-// }
-
 int	check_map(t_general *gen)
 {
 	get_textures(gen);
-	if (!gen->file || check_map_closed(gen->map, gen->file) == 1)
+	if (!gen->file || check_map_closed(gen->map, gen->file) == 1
+		|| gen->c_texture != 6)
 	{
 		printf("Error\nMap is not valid\n");
 		exit_free_check(gen);
-
 	}
 	else if (check_textures(gen) || check_char(gen->file) != 1)
 	{
@@ -152,7 +190,6 @@ int	check_map(t_general *gen)
 	{
 		printf("Error\nMap is not valid\n");
 		exit_free_check(gen);
-
 	}
 	return (1);
 }

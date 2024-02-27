@@ -71,6 +71,7 @@ void	save_color(t_general *gen, char dir, char *line, int j)
 
 	path = ft_chrtrim(&line[j], ' ');
 	color = ft_split(path, ',');
+	gen->c_texture++;
 	if (check_color(path, color) == 0)
 	{
 		make_null(gen, dir);

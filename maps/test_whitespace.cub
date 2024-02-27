@@ -19,8 +19,8 @@ SO ./textures/SO.xpm
                         WE ./textures/WE.xpm
         EA ./textures/EA.xpm            
 
-        F 20,           20,             20
-C 200,          200,200
+        F 20,20,20
+C 200,200,200
 
 11111
 10001

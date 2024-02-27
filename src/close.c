@@ -14,7 +14,7 @@
 
 void	free_t_img(t_img *img, void *mlx)
 {
-	if (!img)
+	if (img)
 	{
 		mlx_destroy_image(mlx, img->img);
 		free(img);
