@@ -169,9 +169,10 @@ int				first_str(char *s1, char *s2);
 int				line_empty(char *line);
 void			free_array(char **array);
 void			*error_free(t_general *gen);
-void			exit_free_check(t_general *gen);
+void	exit_free_check(t_general *gen, char *error);
 void			free_t_img(t_img *img, void *mlx);
 void			make_null(t_general *gen, char dir);
 void			make_img_null(t_general *gen, char *dir);
+int				first_char(char *line, char c);
 
 #endif

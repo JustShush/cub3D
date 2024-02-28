@@ -28,8 +28,8 @@ void	move_player(t_general *gen, float y, float x)
 int	raycast(t_general *gen, t_ray *ray)
 {
 	int			i;
-	double		hdist;
-	double		vdist;
+	float		hdist;
+	float		vdist;
 	float		column;
 
 	i = 0;

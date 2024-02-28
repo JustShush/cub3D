@@ -90,11 +90,12 @@ void	*error_free(t_general *gen)
 	return (NULL);
 }
 
-void	exit_free_check(t_general *gen)
+void	exit_free_check(t_general *gen, char *error)
 {
 	int	i;
 
 	i = -1;
+	printf("Error\n%s\n", error);
 	while (++i < 13)
 		mlx_destroy_image(gen->mlx, gen->anim[i].img);
 	free(gen->anim);

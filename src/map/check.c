@@ -173,23 +173,61 @@ int	check_color(char *line, char **color)
 	return (1);
 }
 
+int first_char(char *line, char c)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == c)
+		return (1);
+	return (0);
+}
+
+int check_double_map(t_general *gen)
+{
+	int	i;
+	int j;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (gen->file[i])
+	{
+		if(first_char(gen->file[i], '1'))
+			j++;
+		i++;
+	}
+	i -= 1;
+	while(i >= 0)
+	{
+		if(first_char(gen->file[i], '1'))
+			k++;
+		if (line_empty(gen->file[i]))
+			break ;
+		i--;
+	}
+	if(j != k)
+		exit_free_check(gen, "Error\nInvalid Map\n");
+	return (0);
+}
+
 int	check_map(t_general *gen)
 {
+	check_double_map(gen);
 	get_textures(gen);
 	if (!gen->file || check_map_closed(gen->map, gen->file) == 1
 		|| gen->c_texture != 6)
-	{
-		printf("Error\nMap is not valid\n");
-		exit_free_check(gen);
-	}
+		exit_free_check(gen, "Error\nMap is not valid\n");
 	else if (check_textures(gen) || check_char(gen->file) != 1)
 	{
-		exit_free_check(gen);
+		exit_free_check(gen, "Error\nMap is not valid\n");
 	}
 	else if (check_valid_color(gen))
 	{
-		printf("Error\nMap is not valid\n");
-		exit_free_check(gen);
+		exit_free_check(gen, "Error\nColor is not valid\n");
 	}
 	return (1);
 }
