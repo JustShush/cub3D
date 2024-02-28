@@ -42,14 +42,14 @@ void	save_img(t_general *gen, char *dir, char *line, int j)
 		return ;
 	}
 	close(fd);
-	if (dir[0] == 'N' && dir[1] == 'O' && gen->textures->no == NULL)
-		gen->textures->no = init_texture(gen, path);
-	else if (dir[0] == 'S' && dir[1] == 'O' && gen->textures->so == NULL)
+	if (dir[0] == 'N' && dir[1] == 'O' && gen->textures->so == NULL)
 		gen->textures->so = init_texture(gen, path);
-	else if (dir[0] == 'W' && dir[1] == 'E' && gen->textures->we == NULL)
-		gen->textures->we = init_texture(gen, path);
-	else if (dir[0] == 'E' && dir[1] == 'A' && gen->textures->ea == NULL)
+	else if (dir[0] == 'S' && dir[1] == 'O' && gen->textures->no == NULL)
+		gen->textures->no = init_texture(gen, path);
+	else if (dir[0] == 'W' && dir[1] == 'E' && gen->textures->ea == NULL)
 		gen->textures->ea = init_texture(gen, path);
+	else if (dir[0] == 'E' && dir[1] == 'A' && gen->textures->we == NULL)
+		gen->textures->we = init_texture(gen, path);
 	free(path);
 }
 
