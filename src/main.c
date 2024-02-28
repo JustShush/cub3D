@@ -54,7 +54,7 @@ int	main(int ac, char **av)
 	mlx_hook(gen->win, 2, 1L << 0, key_press, gen);
 	mlx_hook(gen->win, 3, 1L << 1, key_release, gen);
 	mlx_hook(gen->win, 6, 1L << 6, mouse_move, gen);
-	mlx_mouse_hide(gen->mlx, gen->win);
+//	mlx_mouse_hide(gen->mlx, gen->win);
 	mlx_loop_hook(gen->mlx, render, gen);
 	mlx_loop(gen->mlx);
 	return (0);
