@@ -6,95 +6,11 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:16 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/27 13:53:18 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:52:35 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-
-int	flood_fill_support(char **map, int x, int y, int lines)
-{
-	if (flood_fill(map, x + 1, y, lines) == 1)
-		return (1);
-	if (flood_fill(map, x - 1, y, lines) == 1)
-		return (1);
-	if (flood_fill(map, x, y + 1, lines) == 1)
-		return (1);
-	if (flood_fill(map, x, y - 1, lines) == 1)
-		return (1);
-	if (flood_fill(map, x + 1, y + 1, lines) == 1)
-		return (1);
-	if (flood_fill(map, x - 1, y - 1, lines) == 1)
-		return (1);
-	if (flood_fill(map, x + 1, y - 1, lines) == 1)
-		return (1);
-	if (flood_fill(map, x - 1, y + 1, lines) == 1)
-		return (1);
-	return (0);
-}
-
-int	flood_fill(char **map, int x, int y, int lines)
-{
-	if (x >= 0 && y >= 0 && x < lines && y < ft_strlen(map[x])
-		&& (map[x][y] == '0' || map[x][y] == 'E'
-		|| map[x][y] == 'W' || map[x][y] == 'N'
-		|| map[x][y] == 'S'))
-	{
-		map[x][y] = '1';
-		if (flood_fill_support(map, x, y, lines) == 1)
-			return (1);
-	}
-	else if (x >= 0 && y >= 0 && x < lines
-		&& y < ft_strlen(map[x]) && map[x][y] == '1')
-		return (0);
-	else if (x < 0 || y < 0 || x >= lines
-		|| y >= ft_strlen(map[x]) || (map[x][y] != '1'
-		&& map[x][y] != 'E' && map[x][y] != 'W'
-		&& map[x][y] != 'N' && map[x][y] != 'S'))
-		return (1);
-	return (2);
-}
-
-char	**copy_array(char **array)
-{
-	int		i;
-	char	**new;
-
-	i = 0;
-	while (array[i])
-		i++;
-	new = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (array[i])
-	{
-		new[i] = ft_strdup(array[i]);
-		i++;
-	}
-	new[i] = NULL;
-	return (new);
-}
-
-int	support_check_map(char **copy, int i, int j, t_map *map)
-{
-	while (copy[++i])
-	{
-		j = -1;
-		while (copy[i][++j])
-		{
-			if (copy[i][j] == '0')
-			{
-				if (flood_fill(copy, i, j, map->y + i) == 1)
-				{
-					free_array(copy);
-					return (1);
-				}
-			}
-		}
-	}
-	return (0);
-}
 
 int	check_map_closed(t_map *map, char **bmap)
 {
@@ -136,13 +52,13 @@ int	check_char(char **map)
 			else if (map[i][j] != '1' && map[i][j] != '0'
 				&& map[i][j] != '\n' && map[i][j] != ' ' && map[i][j] != '\t')
 				return (printf(
-						"Error\nMap is not valid - Invalid character found\n"));
+						"Error\nInvalid character found\n"));
 			j++;
 		}
 		i++;
 	}
 	if (check != 1)
-		return (printf("Error\nMap is not valid - Wrong player count\n"));
+		return (printf("Error\nWrong player count\n"));
 	return (1);
 }
 
@@ -173,44 +89,32 @@ int	check_color(char *line, char **color)
 	return (1);
 }
 
-int first_char(char *line, char c)
+int	check_double_map(t_general *gen)
 {
 	int	i;
-
-	i = 0;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] == c)
-		return (1);
-	return (0);
-}
-
-int check_double_map(t_general *gen)
-{
-	int	i;
-	int j;
-	int k;
+	int	j;
+	int	k;
 
 	i = 0;
 	j = 0;
 	k = 0;
 	while (gen->file[i])
 	{
-		if(first_char(gen->file[i], '1'))
+		if (first_char(gen->file[i], '1'))
 			j++;
 		i++;
 	}
 	i -= 1;
-	while(i >= 0)
+	while (i >= 0)
 	{
-		if(first_char(gen->file[i], '1'))
+		if (first_char(gen->file[i], '1'))
 			k++;
 		if (line_empty(gen->file[i]))
 			break ;
 		i--;
 	}
-	if(j != k)
-		exit_free_check(gen, "Error\nInvalid Map\n");
+	if (j != k)
+		exit_free_check(gen, "Error\nInvalid Map");
 	return (0);
 }
 
@@ -220,14 +124,14 @@ int	check_map(t_general *gen)
 	get_textures(gen);
 	if (!gen->file || check_map_closed(gen->map, gen->file) == 1
 		|| gen->c_texture != 6)
-		exit_free_check(gen, "Error\nMap is not valid\n");
+		exit_free_check(gen, "Error\nInvalid map");
 	else if (check_textures(gen) || check_char(gen->file) != 1)
 	{
-		exit_free_check(gen, "Error\nMap is not valid\n");
+		exit_free_check(gen, NULL);
 	}
 	else if (check_valid_color(gen))
 	{
-		exit_free_check(gen, "Error\nColor is not valid\n");
+		exit_free_check(gen, "Error\nInvalid Color");
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:21:27 by mira              #+#    #+#             */
-/*   Updated: 2024/02/27 10:25:35 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:41:22 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,38 @@ int	check_suffix(char *file_path, char *suf)
 		file_path++;
 	}
 	return (1);
+}
+
+void	make_null(t_general *gen, char dir)
+{
+	if (dir == 'C')
+	{
+		free(gen->textures->c);
+		gen->textures->c = NULL;
+	}
+	else if (dir == 'F')
+	{
+		free(gen->textures->f);
+		gen->textures->f = NULL;
+	}
+}
+
+void	make_img_null(t_general *gen, char *dir)
+{
+	if (dir[0] == 'N' && dir[1] == 'O')
+	{
+		gen->textures->no = NULL;
+	}
+	else if (dir[0] == 'S' && dir[1] == 'O')
+	{
+		gen->textures->so = NULL;
+	}
+	else if (dir[0] == 'W' && dir[1] == 'E')
+	{
+		gen->textures->we = NULL;
+	}
+	else if (dir[0] == 'E' && dir[1] == 'A')
+	{
+		gen->textures->ea = NULL;
+	}
 }

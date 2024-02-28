@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:35:45 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/22 10:36:34 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:54:33 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	put_rays(t_general *gen, int angle, int py, int px)
 	int	ry;
 
 	i = 0;
-	while (i < SCALE * 3)
+	while (i < SCALE * 2)
 	{
 		rx = round(px - (sin(to_rad(angle - 90)) * i));
 		ry = round(py - (cos(to_rad(angle - 90)) * i));

@@ -2,12 +2,14 @@
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -I ./mlx_linux #-fsanitize=address
 RM = rm -rf
 
-SRC_CUB	=	close.c init_player.c init.c input.c main.c minimap_put.c minimap.c render_anim.c render_calc.c render_draw.c render_utils.c render_utils2.c render.c textures.c utils.c
+SRC_CUB	=	close.c free.c init_player.c init.c input.c main.c minimap_put.c \
+	minimap.c render_anim.c render_calc.c render_draw.c render_utils.c \
+	render_utils2.c render.c textures.c utils.c
 SRC_GNL =	gnl/gnl.c gnl/gnl_utils.c
-SRC_MAP =	$(addprefix map/, check.c map_utils.c map_utils2.c map.c)
+SRC_MAP =	$(addprefix map/, check_utils.c check.c map_utils.c map_utils2.c map.c)
 
 SRCS	=	$(addprefix $(SRC_DIR)/, $(SRC_CUB) $(SRC_MAP)) $(SRC_GNL)
 OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
@@ -41,16 +43,16 @@ val: $(NAME)
 	@valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D ./maps/color_invalid_rgb.cub
 
 a: $(NAME)
-	@./cub3D ./maps/textures_none.cub
+	@./cub3D ./maps/subject.cub
 
 valtest: $(NAME)
-	@for map_file in ./maps/*.cub; do \
+	@for map_file in ./maps/error/*.cub; do \
 		echo $(YELLOW)"$$map_file"$(NC); \
 		valgrind --track-fds=yes --leak-check=full --track-origins=yes --show-leak-kinds=all ./cub3D $$map_file; \
 	done
 
 test: $(NAME)
-	@for map_file in ./maps/*.cub; do \
+	@for map_file in ./maps/error/*.cub; do \
 		echo $(YELLOW)"$$map_file"$(NC); \
 		./cub3D $$map_file; \
 	done

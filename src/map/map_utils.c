@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:24:02 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/26 13:15:32 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:44:26 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,4 @@ int	get_start_map(char **map)
 	while (i > 0 && line_empty(map[i]) == 0)
 		i--;
 	return (i);
-}
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
 }

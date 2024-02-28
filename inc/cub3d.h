@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/27 13:54:42 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:43:59 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_su
 typedef struct s_general
 {
 	int			pov;
-	int 		c_texture;
+	int			c_texture;
 	void		*win;
 	void		*mlx;
 	int			win_x;
@@ -95,6 +95,12 @@ typedef struct s_general
 }				t_general;
 
 //---------------------------------------map/----------------------------------
+// check_utils.c
+int				flood_fill(char **map, int x, int y, int lines);
+char			**copy_array(char **array);
+int				first_char(char *line, char c);
+int				support_check_map(char **copy, int i, int j, t_map *map);
+
 // check.c
 int				check_color(char *line, char **color);
 int				check_map(t_general *gen);
@@ -111,6 +117,11 @@ int				tilemap(t_map *map, char *map_path);
 //-----------------------------------------------------------------------------
 // close.c
 int				close_game(t_general *gen);
+
+// free.c
+void			free_t_img(t_img *img, void *mlx);
+void			*error_free(t_general *gen);
+void			exit_free_check(t_general *gen, char *error);
 
 // input.c
 int				key_release(int key, t_general *gen);
@@ -138,7 +149,8 @@ void			vertical_intersection(t_general *gen, t_ray *ray);
 void			draw(t_general *gen, float wall_dist, int i, int flag);
 
 // render_utils.c
-void			my_mlx_pixel_put(t_general *gen, int x, int y, unsigned int color);
+void			my_mlx_pixel_put(t_general *gen, int x, int y,
+					unsigned int color);
 double			norm(double angle);
 float			to_rad(float d);
 float			ft_tan(float angle);
@@ -163,16 +175,12 @@ int				check_textures(t_general *gen);
 int				get_textures(t_general *gen);
 void			save_img(t_general *gen, char *dir, char *line, int j);
 
-
 // utils.c
 int				first_str(char *s1, char *s2);
 int				line_empty(char *line);
-void			free_array(char **array);
-void			*error_free(t_general *gen);
-void	exit_free_check(t_general *gen, char *error);
-void			free_t_img(t_img *img, void *mlx);
+int				check_suffix(char *file_path, char *suf);
 void			make_null(t_general *gen, char dir);
 void			make_img_null(t_general *gen, char *dir);
-int				first_char(char *line, char c);
 
+void			free_array(char **array);
 #endif

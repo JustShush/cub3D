@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 11:48:14 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/27 13:54:49 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:47:07 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,6 @@ void	save_img(t_general *gen, char *dir, char *line, int j)
 	free(path);
 }
 
-int check_map_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'S' && line[i] != 'W' && line[i] != 'E' && line[i] != '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	save_textures(t_general *gen, int i, int j)
 {
 	if (gen->file[i][j] == 'N' && gen->file[i][j + 1] == 'O'
@@ -86,7 +72,7 @@ void	save_textures(t_general *gen, int i, int j)
 	else if (gen->file[i][j] == 'F' && gen->file[i][j + 1] == ' ')
 		save_color(gen, 'F', gen->file[i], j + 1);
 	else if (line_empty(gen->file[i]) == 0)
-		exit_free_check(gen, "Invalid line in file");
+		exit_free_check(gen, "Error\nInvalid line in file");
 }
 
 int	get_textures(t_general *gen)
@@ -98,7 +84,7 @@ int	get_textures(t_general *gen)
 	while (gen->file[i])
 	{
 		j = 0;
-		if(first_char(gen->file[i], '1') == 1)
+		if (first_char(gen->file[i], '1') == 1)
 			break ;
 		while (gen->file[i][j])
 		{

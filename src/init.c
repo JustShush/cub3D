@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:07:05 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/27 13:52:21 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:59:42 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,52 +64,6 @@ void	more_init(t_general *gen)
 	gen->ray->an = 0;
 	gen->player->old_an = 0;
 	gen->c_texture = 0;
-}
-
-void	support_free(t_general *gen)
-{
-	free_array(gen->map->tilemap);
-	free_array(gen->file);
-	free(gen->key);
-	free(gen->player);
-	free(gen->img);
-	free(gen->textures);
-	free(gen->map);
-}
-
-void	*error_free(t_general *gen)
-{
-	free(gen->textures->f);
-	free(gen->textures->c);
-	free(gen->textures);
-	free(gen->key);
-	free(gen->player);
-	free(gen->img);
-	free(gen->map);
-	free(gen);
-	return (NULL);
-}
-
-void	exit_free_check(t_general *gen, char *error)
-{
-	int	i;
-
-	i = -1;
-	printf("Error\n%s\n", error);
-	while (++i < 13)
-		mlx_destroy_image(gen->mlx, gen->anim[i].img);
-	free(gen->anim);
-	free(gen->textures->f);
-	free(gen->textures->c);
-	free_t_img(gen->textures->no, gen->mlx);
-	free_t_img(gen->textures->so, gen->mlx);
-	free_t_img(gen->textures->we, gen->mlx);
-	free_t_img(gen->textures->ea, gen->mlx);
-	mlx_destroy_display(gen->mlx);
-	support_free(gen);
-	free(gen->mlx);
-	free(gen);
-	exit(0);
 }
 
 void	print_array(char **array)

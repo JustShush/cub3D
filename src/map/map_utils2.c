@@ -6,45 +6,11 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:29:36 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/27 11:58:01 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:41:18 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
-
-void	make_null(t_general *gen, char dir)
-{
-	if (dir == 'C')
-	{
-		free(gen->textures->c);
-		gen->textures->c = NULL;
-	}
-	else if (dir == 'F')
-	{
-		free(gen->textures->f);
-		gen->textures->f = NULL;
-	}
-}
-
-void	make_img_null(t_general *gen, char *dir)
-{
-	if (dir[0] == 'N' && dir[1] == 'O')
-	{
-		gen->textures->no = NULL;
-	}
-	else if (dir[0] == 'S' && dir[1] == 'O')
-	{
-		gen->textures->so = NULL;
-	}
-	else if (dir[0] == 'W' && dir[1] == 'E')
-	{
-		gen->textures->we = NULL;
-	}
-	else if (dir[0] == 'E' && dir[1] == 'A')
-	{
-		gen->textures->ea = NULL;
-	}
-}
 
 void	assign_color(t_general *gen, char dir, char **color)
 {

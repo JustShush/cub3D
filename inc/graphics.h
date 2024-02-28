@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:21 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/27 11:18:03 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:58:32 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "../gnl/gnl.h"
 # include <time.h>
 
-# define SCALE 20
+# define SCALE 10
 
 typedef struct s_img
 {
@@ -61,6 +61,5 @@ int		get_start_map(char **map);
 int		check_char(char **map);
 char	*ft_chrtrim(char *line, char c);
 int		get_y(char *file);
-int		check_suffix(char *file_path, char *suf);
 
 #endif //BUC3D_BUC3D_H
