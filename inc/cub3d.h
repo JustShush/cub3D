@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:05:13 by ldiogo            #+#    #+#             */
-/*   Updated: 2024/02/28 14:43:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/03/06 10:24:57 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define CUB				64
 # define RED_PIXEL		0xFF0000
 # define ORANGE_PIXEL	0xFF8000
-# define GREEN_PIXEL		0x00FF00
+# define GREEN_PIXEL	0x00FF00
 # define BLUE_PIXEL		0x0000FF
 # define PI				3.14159265358979323846
 
