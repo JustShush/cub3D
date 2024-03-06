@@ -6,7 +6,7 @@
 /*   By: ddiniz-m <ddiniz-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 10:48:54 by ddiniz-m          #+#    #+#             */
-/*   Updated: 2024/02/29 11:33:59 by ddiniz-m         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:22:44 by ddiniz-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("Error\nIncorrect ammount of arguments\n"));
 	if (check_suffix(av[1], ".cub"))
-		return(printf("Wrong file type\n"));
+		return (printf("Wrong file type\n"));
 	gen = init(gen, av);
 	if (!gen || check_map(gen) == 0)
 		return (0);
